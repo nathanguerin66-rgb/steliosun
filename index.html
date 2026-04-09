@@ -3,768 +3,1381 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STELIOSUN - Predimensionnement Solaire PV</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>STELIOSUN — Énergie Solaire · Bureau d'Études · Exploitation · R&D</title>
+<meta name="description" content="STELIOSUN : bureau d'études indépendant, exploitation & maintenance de champs solaires PV, R&D. Expertise performance, productible et optimisation ROI.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--navy:#0b1628;--navy2:#131f35;--navy3:#1a2843;--navy4:#223054;--gold:#f5a623;--gold2:#ffd064;--text:#e8eef8;--text2:#8a9dc0;--text3:#4d6080;--green:#27ae60;--teal:#1abc9c;--red:#e74c3c;--r:8px;--r2:16px}
+:root{
+  --navy:#0b1628;--navy2:#131f35;--navy3:#1a2843;--navy4:#223054;
+  --gold:#f5a623;--gold2:#ffd064;
+  --text:#e8eef8;--text2:#8a9dc0;--text3:#4d6080;
+  --green:#27ae60;--teal:#1abc9c;--red:#e74c3c;--orange:#e67e22;
+  --r:8px;--r2:16px;
+}
 html{scroll-behavior:smooth}
 body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(11,22,40,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(245,166,35,.15)}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.08em;color:var(--gold);text-decoration:none}
-.logo span{color:var(--text2)}
-nav ul{display:flex;gap:2rem;list-style:none}
-nav ul a{color:var(--text2);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s}
-nav ul a:hover{color:var(--gold)}
-.nav-cta{background:var(--gold)!important;color:var(--navy)!important;padding:.45rem 1.2rem;border-radius:4px;font-weight:600!important}
-.hero{min-height:100vh;display:flex;align-items:center;padding:80px 2rem 2rem;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 65% 50%,rgba(245,166,35,.07),transparent 70%)}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(245,166,35,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,.04) 1px,transparent 1px);background-size:60px 60px}
-.hero-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;width:100%}
-.hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.3);color:var(--gold);font-size:.78rem;font-weight:600;letter-spacing:.1em;padding:.35rem .9rem;border-radius:20px;text-transform:uppercase;margin-bottom:1.5rem}
-.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,5.5rem);line-height:.95;letter-spacing:.03em;margin-bottom:1.5rem}
-h1 em{color:var(--gold);font-style:normal;display:block}
-.hero-sub{font-size:1.05rem;color:var(--text2);line-height:1.75;max-width:480px;margin-bottom:2.5rem}
-.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.8rem;border-radius:6px;font-weight:600;font-size:.95rem;cursor:pointer;text-decoration:none;border:none;transition:all .2s;font-family:'DM Sans',sans-serif}
-.btn-primary{background:var(--gold);color:var(--navy)}
-.btn-primary:hover{background:var(--gold2);transform:translateY(-1px)}
-.btn-outline{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
-.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
-.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
-.stat-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);letter-spacing:.05em;display:block}
-.stat-lbl{font-size:.78rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em}
-.hero-visual{display:flex;justify-content:center;align-items:center}
-.sun-wrap{position:relative;width:300px;height:300px}
-.sun-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(245,166,35,.15);animation:spin 20s linear infinite}
-.sun-ring:nth-child(2){inset:22px;animation-direction:reverse;animation-duration:15s;border-style:dashed}
-.sun-ring:nth-child(3){inset:44px;animation-duration:28s}
-.sun-core{position:absolute;inset:80px;border-radius:50%;background:rgba(245,166,35,.06);border:2px solid rgba(245,166,35,.35);display:flex;align-items:center;justify-content:center}
-.sun-kw{font-family:'Bebas Neue',sans-serif;font-size:.9rem;color:var(--gold);letter-spacing:.05em;text-align:center}
-.panels-wrap{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
-.spanel{width:44px;height:32px;background:var(--navy3);border:1px solid rgba(245,166,35,.3);border-radius:3px;position:relative;overflow:hidden}
-.spanel::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0,transparent 12px,rgba(245,166,35,.15) 12px,rgba(245,166,35,.15) 13px),repeating-linear-gradient(0,transparent 0,transparent 8px,rgba(245,166,35,.15) 8px,rgba(245,166,35,.15) 9px)}
-@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-.section{padding:5rem 2rem}
-.container{max-width:1200px;margin:0 auto}
-.stag{font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem}
-.stitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:.03em;margin-bottom:1rem}
-.ssub{color:var(--text2);max-width:520px;line-height:1.7;margin-bottom:3rem}
-.srv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem}
-.srv-card{background:var(--navy2);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.75rem;position:relative;overflow:hidden;transition:border-color .2s,transform .2s}
-.srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s}
-.srv-card:hover{border-color:rgba(245,166,35,.3);transform:translateY(-4px)}
-.srv-card:hover::before{transform:scaleX(1)}
-.srv-ico{width:44px;height:44px;border-radius:10px;background:rgba(245,166,35,.1);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.3rem}
-.srv-card h3{font-size:1rem;font-weight:600;margin-bottom:.4rem}
-.srv-card p{font-size:.85rem;color:var(--text2);line-height:1.6}
-.badge{display:inline-block;margin-top:.75rem;font-size:.7rem;font-weight:600;letter-spacing:.07em;padding:.2rem .6rem;border-radius:4px;text-transform:uppercase}
-.badge-free{background:rgba(39,174,96,.15);color:#27ae60;border:1px solid rgba(39,174,96,.3)}
-.badge-pro{background:rgba(245,166,35,.1);color:var(--gold);border:1px solid rgba(245,166,35,.3)}
-.calc-section{background:var(--navy2);border-top:1px solid rgba(255,255,255,.06)}
-.calc-wrap{max-width:880px;margin:0 auto}
-.prog-bar{display:flex;align-items:center;margin-bottom:.75rem}
-.pdot{width:32px;height:32px;border-radius:50%;border:2px solid var(--navy4);background:var(--navy3);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:var(--text3);transition:all .3s;flex-shrink:0;z-index:1}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:64px;background:rgba(11,22,40,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(245,166,35,.1);display:flex;align-items:center;padding:0 2rem;gap:0}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:.08em;text-decoration:none;margin-right:2.5rem;flex-shrink:0}
+.logo-s{color:var(--text2)}.logo-g{color:var(--gold)}
+.nav-tabs{display:flex;gap:.25rem;flex:1}
+.nav-tab{padding:.45rem 1.1rem;border-radius:6px;font-size:.85rem;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:inherit;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:.4rem}
+.nav-tab:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.nav-tab.active{background:rgba(245,166,35,.1);color:var(--gold);border:1px solid rgba(245,166,35,.2)}
+.nav-tab .tab-ico{font-size:1rem}
+.nav-contact{margin-left:auto;background:var(--gold);color:var(--navy);padding:.45rem 1.2rem;border-radius:5px;font-size:.85rem;font-weight:600;text-decoration:none;transition:background .2s;white-space:nowrap}
+.nav-contact:hover{background:var(--gold2)}
+
+/* ── PAGES ── */
+.page{display:none;padding-top:64px;min-height:100vh}
+.page.active{display:block}
+
+/* ── HERO GÉNÉRIQUE ── */
+.hero{min-height:88vh;display:flex;align-items:center;padding:4rem 2rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 60% 40%,rgba(245,166,35,.06),transparent 65%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(245,166,35,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,.03) 1px,transparent 1px);background-size:55px 55px}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.1fr 1fr;gap:4.5rem;align-items:center;position:relative;width:100%}
+.page-kicker{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold-dim,rgba(245,166,35,.1));border:1px solid rgba(245,166,35,.22);color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:.12em;padding:.38rem .95rem;border-radius:20px;text-transform:uppercase;margin-bottom:1.2rem}
+.kicker-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.page h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.6rem,5vw,4.5rem);line-height:.97;letter-spacing:.03em;margin-bottom:1.3rem}
+.page h1 em{color:var(--gold);font-style:normal;display:block}
+.hero-desc{font-size:1rem;color:var(--text2);line-height:1.8;max-width:500px;margin-bottom:2rem}
+.hero-actions{display:flex;gap:.9rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.8rem 1.75rem;border-radius:6px;font-weight:600;font-size:.92rem;cursor:pointer;text-decoration:none;border:none;transition:all .2s;font-family:'DM Sans',sans-serif}
+.btn-p{background:var(--gold);color:var(--navy)}.btn-p:hover{background:var(--gold2);transform:translateY(-1px)}
+.btn-o{background:transparent;color:var(--text);border:1.5px solid rgba(255,255,255,.2)}.btn-o:hover{border-color:var(--gold);color:var(--gold)}
+.hero-visual{position:relative}
+
+/* ── SECTIONS ── */
+.sec{padding:4.5rem 2rem}
+.sec-alt{background:var(--navy2)}
+.ctr{max-width:1200px;margin:0 auto}
+.sk{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.st{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);letter-spacing:.03em;margin-bottom:.9rem}
+.sb{color:var(--text2);max-width:540px;line-height:1.75;margin-bottom:2.5rem;font-size:.96rem}
+
+/* ── CARDS GRILLES ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+.card{background:var(--navy2);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.75rem;transition:transform .2s,border-color .2s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.card:hover{transform:translateY(-3px);border-color:rgba(245,166,35,.22)}.card:hover::before{transform:scaleX(1)}
+.card-ico{font-size:1.8rem;margin-bottom:.85rem;display:block}
+.card h3{font-size:1rem;font-weight:700;margin-bottom:.45rem}
+.card p{font-size:.85rem;color:var(--text2);line-height:1.7}
+.card-sm{background:var(--navy3);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:1.2rem}
+.card-sm h4{font-size:.88rem;font-weight:600;margin-bottom:.3rem}
+.card-sm p{font-size:.8rem;color:var(--text2);line-height:1.6}
+.badge{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.06em;padding:.18rem .6rem;border-radius:4px;text-transform:uppercase;margin-top:.75rem}
+.bg{background:rgba(39,174,96,.12);color:#27ae60;border:1px solid rgba(39,174,96,.22)}
+.bo{background:rgba(245,166,35,.1);color:var(--gold);border:1px solid rgba(245,166,35,.22)}
+.bt2{background:rgba(26,188,156,.1);color:var(--teal);border:1px solid rgba(26,188,156,.22)}
+
+/* ── KPI ROW ── */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:3rem}
+.kpi{background:var(--navy3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.4rem;text-align:center}
+.kpi-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gold);letter-spacing:.04em;display:block;line-height:1}
+.kpi-lbl{font-size:.75rem;color:var(--text2);margin-top:.35rem;text-transform:uppercase;letter-spacing:.07em}
+
+/* ── PROCESSUS STEPS ── */
+.steps{display:flex;flex-direction:column;gap:1.25rem}
+.step{display:flex;gap:1.25rem;align-items:flex-start}
+.step-num{width:40px;height:40px;border-radius:50%;background:rgba(245,166,35,.12);border:2px solid rgba(245,166,35,.3);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--gold);flex-shrink:0;margin-top:.1rem}
+.step-body h4{font-weight:600;margin-bottom:.25rem;font-size:.95rem}
+.step-body p{font-size:.84rem;color:var(--text2);line-height:1.65}
+
+/* ── CHART BOX ── */
+.chart-box{background:var(--navy3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.5rem;margin-bottom:1.5rem}
+.chart-title{font-weight:600;font-size:.92rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.chart-h{height:280px;position:relative}
+.chart-h2{height:220px;position:relative}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse;font-size:.84rem}
+.tbl th{background:rgba(245,166,35,.08);color:var(--gold);font-weight:600;padding:.65rem 1rem;text-align:left;border-bottom:1px solid rgba(245,166,35,.15);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em}
+.tbl td{padding:.65rem 1rem;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text2)}
+.tbl tr:last-child td{border:none}
+.tbl tr:hover td{background:rgba(255,255,255,.03);color:var(--text)}
+.dot-green{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:.4rem}
+.dot-gold{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:.4rem}
+.dot-red{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:.4rem}
+
+/* ── IRRADIATION MAP SVG ── */
+.irr-map-wrap{background:var(--navy3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);overflow:hidden}
+.irr-legend{display:flex;gap:1rem;padding:.75rem 1rem;border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap}
+.irr-leg-item{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text2)}
+.irr-leg-swatch{width:14px;height:10px;border-radius:2px}
+
+/* ── PERF CALC ── */
+.perf-calc{background:linear-gradient(135deg,var(--navy2),rgba(245,166,35,.04));border:1px solid rgba(245,166,35,.2);border-radius:var(--r2);padding:2rem;margin-bottom:2rem}
+.perf-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.04em;margin-bottom:.35rem}
+.perf-sub{font-size:.88rem;color:var(--text2);margin-bottom:1.5rem}
+.perf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+.perf-field{display:flex;flex-direction:column;gap:.4rem}
+.perf-field label{font-size:.78rem;font-weight:500;color:var(--text2)}
+.perf-field input{background:var(--navy3);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:.65rem 1rem;color:var(--text);font-size:.95rem;font-family:inherit;outline:none;transition:border-color .2s;width:100%}
+.perf-field input:focus{border-color:var(--gold)}
+.perf-res{display:none;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.5rem}
+.pr-card{background:var(--navy3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.2rem;text-align:center}
+.pr-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);letter-spacing:.03em;line-height:1}
+.pr-unit{font-size:.7rem;color:var(--text3);margin:.1rem 0 .2rem}
+.pr-div{width:24px;height:2px;background:rgba(245,166,35,.22);margin:.3rem auto}
+.pr-lbl{font-size:.77rem;color:var(--text2);font-weight:500}
+.pr-card.ok{border-color:rgba(39,174,96,.3);background:rgba(39,174,96,.05)}
+.pr-card.warn{border-color:rgba(245,166,35,.3)}
+.pr-card.bad{border-color:rgba(231,76,60,.3);background:rgba(231,76,60,.05)}
+.pr-gauge{width:100%;height:8px;background:var(--navy4);border-radius:4px;margin-top:.75rem;overflow:hidden}
+.pr-gauge-fill{height:100%;border-radius:4px;transition:width .8s}
+
+/* ── SIMULATEUR ── */
+.calc-wrap{max-width:900px;margin:0 auto}
+.prog-bar{display:flex;align-items:center;margin-bottom:.65rem}
+.pdot{width:32px;height:32px;border-radius:50%;border:2px solid var(--navy4);background:var(--navy3);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:700;color:var(--text3);transition:all .3s;flex-shrink:0;z-index:1}
 .pdot.active{border-color:var(--gold);color:var(--gold);background:rgba(245,166,35,.1)}
 .pdot.done{background:var(--gold);border-color:var(--gold);color:var(--navy)}
-.pline{flex:1;height:2px;background:var(--navy4);transition:background .3s}
-.pline.done{background:var(--gold)}
+.pline{flex:1;height:2px;background:var(--navy4);transition:background .3s}.pline.done{background:var(--gold)}
 .plabels{display:flex;justify-content:space-between;margin-bottom:2.5rem}
-.plbl{font-size:.68rem;color:var(--text3);text-align:center;width:32px;white-space:nowrap}
-.plbl.active{color:var(--gold)}
-.fstep{display:none;animation:fIn .3s}
-.fstep.active{display:block}
-@keyframes fIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.fstep h2{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.04em;margin-bottom:.4rem}
-.fstep>p{color:var(--text2);font-size:.9rem;margin-bottom:1.75rem}
-.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
-.opt{background:var(--navy3);border:2px solid transparent;border-radius:var(--r2);padding:1.4rem;cursor:pointer;text-align:center;transition:all .2s;position:relative}
-.opt:hover{border-color:rgba(245,166,35,.4)}
-.opt.sel{border-color:var(--gold);background:rgba(245,166,35,.07)}
-.opt.sel::after{content:'OK';position:absolute;top:.5rem;right:.6rem;font-size:.65rem;color:var(--gold);font-weight:700}
-.opt-ico{font-size:1.8rem;margin-bottom:.5rem;display:block}
-.opt-name{font-weight:600;font-size:.88rem}
-.opt-sub{font-size:.75rem;color:var(--text2);margin-top:.2rem}
-.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem}
-.field{display:flex;flex-direction:column;gap:.4rem}
-.field.full{grid-column:1/-1}
-label{font-size:.8rem;font-weight:500;color:var(--text2)}
-input,select{background:var(--navy3);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:.7rem 1rem;color:var(--text);font-size:.95rem;font-family:inherit;transition:border-color .2s;outline:none;width:100%}
-input:focus,select:focus{border-color:var(--gold)}
-select option{background:var(--navy3)}
+.plbl{font-size:.64rem;color:var(--text3);text-align:center;width:32px;white-space:nowrap}.plbl.active{color:var(--gold)}
+.fstep{display:none;animation:fIn .3s}.fstep.active{display:block}
+@keyframes fIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.fstep h2{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.04em;margin-bottom:.35rem}
+.fstep>p{color:var(--text2);font-size:.88rem;margin-bottom:1.6rem}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.9rem;margin-bottom:1.75rem}
+.opt{background:var(--navy3);border:2px solid transparent;border-radius:var(--r2);padding:1.3rem;cursor:pointer;text-align:center;transition:all .2s;position:relative}
+.opt:hover{border-color:rgba(245,166,35,.38)}.opt.sel{border-color:var(--gold);background:rgba(245,166,35,.07)}
+.opt.sel::after{content:'✓';position:absolute;top:.5rem;right:.6rem;font-size:.7rem;color:var(--gold);font-weight:700}
+.opt-ico{font-size:1.7rem;margin-bottom:.45rem;display:block}.opt-name{font-weight:600;font-size:.86rem}.opt-sub{font-size:.72rem;color:var(--text2);margin-top:.18rem}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.4rem}
+.fi{display:flex;flex-direction:column;gap:.38rem}.fi.full{grid-column:1/-1}
+label{font-size:.78rem;font-weight:500;color:var(--text2)}
+input,select{background:var(--navy3);border:1px solid rgba(255,255,255,.11);border-radius:var(--r);padding:.68rem 1rem;color:var(--text);font-size:.92rem;font-family:inherit;transition:border-color .2s;outline:none;width:100%}
+input:focus,select:focus{border-color:var(--gold)}select option{background:var(--navy3)}
 input[type=range]{padding:0;cursor:pointer;accent-color:var(--gold)}
-.rlbls{display:flex;justify-content:space-between;font-size:.7rem;color:var(--text3);margin-top:.2rem}
-.rval{font-size:1rem;font-weight:600;color:var(--gold)}
-.note{font-size:.8rem;color:var(--text3);background:rgba(245,166,35,.05);border-left:3px solid rgba(245,166,35,.3);padding:.65rem 1rem;border-radius:0 var(--r) var(--r) 0;line-height:1.6;margin-bottom:1.5rem}
-.fnav{display:flex;justify-content:space-between;align-items:center;margin-top:2rem}
-.bnav{padding:.7rem 1.8rem;border-radius:6px;border:none;cursor:pointer;font-family:inherit;font-size:.9rem;font-weight:600;transition:all .2s}
-.bprev{background:transparent;color:var(--text2);border:1px solid rgba(255,255,255,.15)}
-.bprev:hover{color:var(--text);border-color:rgba(255,255,255,.3)}
-.bnext{background:var(--gold);color:var(--navy)}
-.bnext:hover:not(:disabled){background:var(--gold2)}
-.bnext:disabled{opacity:.35;cursor:not-allowed}
-.addr-wrap{position:relative;margin-bottom:1rem}
+.rlbls{display:flex;justify-content:space-between;font-size:.68rem;color:var(--text3);margin-top:.18rem}
+.rv{font-size:.95rem;font-weight:600;color:var(--gold)}
+.note{font-size:.78rem;color:var(--text3);background:rgba(245,166,35,.05);border-left:3px solid rgba(245,166,35,.25);padding:.6rem .95rem;border-radius:0 var(--r) var(--r) 0;line-height:1.6;margin-bottom:.9rem}
+.fnav{display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem}
+.bnav{padding:.68rem 1.75rem;border-radius:6px;border:none;cursor:pointer;font-family:inherit;font-size:.9rem;font-weight:600;transition:all .2s}
+.bprev{background:transparent;color:var(--text2);border:1px solid rgba(255,255,255,.13)}.bprev:hover{color:var(--text)}
+.bnext{background:var(--gold);color:var(--navy)}.bnext:hover:not(:disabled){background:var(--gold2)}.bnext:disabled{opacity:.3;cursor:not-allowed}
+.addr-wrap{position:relative;margin-bottom:.7rem}
 .addr-wrap input{padding-right:3rem}
-.addr-btn{position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gold);font-size:1.1rem}
-.addr-results{position:absolute;top:100%;left:0;right:0;background:var(--navy3);border:1px solid rgba(245,166,35,.3);border-radius:0 0 var(--r) var(--r);z-index:500;max-height:240px;overflow-y:auto;display:none}
-.addr-item{padding:.7rem 1rem;font-size:.875rem;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);transition:background .15s}
-.addr-item:last-child{border:none}
-.addr-item:hover{background:rgba(245,166,35,.1)}
-.addr-item strong{color:var(--gold);font-size:.72rem;display:block}
-#map{width:100%;height:260px;border-radius:var(--r2);border:1px solid rgba(255,255,255,.1);margin-top:1rem;overflow:hidden}
-.map-ph{width:100%;height:260px;border-radius:var(--r2);border:1px solid rgba(255,255,255,.08);background:var(--navy3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:.88rem;margin-top:1rem}
-.loc-info{display:flex;align-items:center;gap:.75rem;background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.2);border-radius:var(--r);padding:.65rem 1rem;font-size:.85rem;margin-top:.75rem;flex-wrap:wrap}
-#loading{display:none;text-align:center;padding:4rem 2rem}
-.spin{width:72px;height:72px;border-radius:50%;border:3px solid rgba(245,166,35,.15);border-top-color:var(--gold);animation:spin 1s linear infinite;margin:0 auto 1.5rem}
-#loading h3{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;margin-bottom:.4rem}
-#loading p{color:var(--text2);font-size:.9rem}
-.lsteps{margin:1.5rem auto;max-width:320px;text-align:left;display:flex;flex-direction:column;gap:.65rem}
-.ls{display:flex;align-items:center;gap:.7rem;font-size:.85rem;color:var(--text3);transition:color .3s}
-.ls.done{color:var(--teal)}.ls.active{color:var(--text)}
-.ls-dot{width:7px;height:7px;border-radius:50%;background:var(--navy4);flex-shrink:0;transition:background .3s}
-.ls.done .ls-dot{background:var(--teal)}.ls.active .ls-dot{background:var(--gold);animation:pulse 1s infinite}
+.addr-btn{position:absolute;right:.7rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gold);font-size:1.05rem}
+.addr-results{position:absolute;top:100%;left:0;right:0;background:var(--navy3);border:1px solid rgba(245,166,35,.25);border-radius:0 0 var(--r) var(--r);z-index:500;max-height:220px;overflow-y:auto;display:none}
+.addr-item{padding:.65rem 1rem;font-size:.85rem;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.05);transition:background .15s}
+.addr-item:last-child{border:none}.addr-item:hover{background:rgba(245,166,35,.09)}
+.addr-item strong{color:var(--gold);font-size:.7rem;display:block}
+#sim-map{width:100%;height:300px;border-radius:var(--r2);border:2px solid rgba(245,166,35,.18);margin-top:.5rem;overflow:hidden}
+.loc-info{display:flex;align-items:center;gap:.75rem;background:rgba(39,174,96,.07);border:1px solid rgba(39,174,96,.17);border-radius:var(--r);padding:.6rem .95rem;font-size:.84rem;margin-top:.7rem;flex-wrap:wrap}
+.pw-box{background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.14);border-radius:var(--r);padding:.8rem 1rem}
+.pw-val{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--gold);letter-spacing:.03em;line-height:1}
+.pw-sub{font-size:.76rem;color:var(--text2);margin-top:.18rem}
+#loading{display:none;text-align:center;padding:3.5rem 2rem}
+.lspin{width:68px;height:68px;border-radius:50%;border:3px solid rgba(245,166,35,.1);border-top-color:var(--gold);animation:spin 1s linear infinite;margin:0 auto 1.4rem}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+#loading h3{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;margin-bottom:.3rem}
+#loading p{color:var(--text2);font-size:.87rem}
+.lsteps{margin:1.4rem auto;max-width:300px;text-align:left;display:flex;flex-direction:column;gap:.6rem}
+.lstep{display:flex;align-items:center;gap:.65rem;font-size:.82rem;color:var(--text3);transition:color .3s}
+.lstep.done{color:var(--teal)}.lstep.active{color:var(--text)}
+.lstep-dot{width:7px;height:7px;border-radius:50%;background:var(--navy4);flex-shrink:0;transition:background .3s}
+.lstep.done .lstep-dot{background:var(--teal)}.lstep.active .lstep-dot{background:var(--gold);animation:blink 1s infinite}
 #results{display:none}
-.res-hdr{text-align:center;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,.07)}
-.pvgis-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(26,188,156,.1);border:1px solid rgba(26,188,156,.3);color:var(--teal);font-size:.72rem;font-weight:600;padding:.3rem .75rem;border-radius:10px;text-transform:uppercase;margin-bottom:.75rem}
-.rcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:1rem;margin-bottom:1.5rem}
-.rc{background:var(--navy3);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:1.3rem;text-align:center}
-.rc-ico{font-size:1.2rem;margin-bottom:.5rem}
-.rc-val{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--gold);letter-spacing:.03em;line-height:1}
-.rc-unit{font-size:.7rem;color:var(--text3);margin:.1rem 0 .25rem}
-.rc-div{width:28px;height:2px;background:rgba(245,166,35,.25);margin:.35rem auto}
-.rc-lbl{font-size:.78rem;color:var(--text2);font-weight:500}
-.rc.hl{background:linear-gradient(135deg,var(--navy3),rgba(245,166,35,.07));border-color:rgba(245,166,35,.25)}
-.chart-box{background:var(--navy3);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:1.5rem;margin-bottom:1.5rem}
-.chart-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem}
-.chart-ttl{font-weight:600;font-size:.95rem}
+.res-header{text-align:center;margin-bottom:1.75rem;padding-bottom:1.4rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.src-badge{display:inline-flex;align-items:center;gap:.35rem;background:rgba(26,188,156,.08);border:1px solid rgba(26,188,156,.2);color:var(--teal);font-size:.68rem;font-weight:600;padding:.25rem .7rem;border-radius:10px;text-transform:uppercase;margin-bottom:.65rem}
+.rcard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:.9rem;margin-bottom:1.4rem}
+.rcard{background:var(--navy3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.2rem;text-align:center}
+.rcard-ico{font-size:1.15rem;margin-bottom:.45rem}
+.rcard-val{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gold);letter-spacing:.03em;line-height:1}
+.rcard-unit{font-size:.68rem;color:var(--text3);margin:.1rem 0 .22rem}
+.rcard-div{width:26px;height:2px;background:rgba(245,166,35,.2);margin:.3rem auto}
+.rcard-lbl{font-size:.76rem;color:var(--text2);font-weight:500}.rcard.hl{background:linear-gradient(135deg,var(--navy3),rgba(245,166,35,.06));border-color:rgba(245,166,35,.18)}
+.chart-section{background:var(--navy3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.4rem;margin-bottom:1.4rem}
+.chart-header2{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.1rem;flex-wrap:wrap;gap:.6rem}
+.chart-ttl{font-weight:600;font-size:.92rem}
 .cleg{display:flex;gap:1rem}
-.cl{display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--text2)}
-.cl-dot{width:9px;height:9px;border-radius:2px}
-.chart-tabs{display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap}
-.ctab{padding:.35rem .9rem;border-radius:4px;font-size:.78rem;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--text2);font-family:inherit;transition:all .2s}
-.ctab.active{background:rgba(245,166,35,.1);border-color:var(--gold);color:var(--gold)}
-.chart-wrap{position:relative;height:260px}
-.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
-.det-card{background:var(--navy3);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:1.3rem}
-.det-card h4{font-size:.8rem;font-weight:600;color:var(--text2);margin-bottom:.9rem;text-transform:uppercase;letter-spacing:.06em}
-.det-row{display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.83rem}
-.det-row:last-child{border:none}
-.det-row span:last-child{font-weight:600;color:var(--text)}
-.loss-bar{height:4px;border-radius:2px;background:var(--navy4);margin-top:.6rem;overflow:hidden}
+.cleg-i{display:flex;align-items:center;gap:.38rem;font-size:.73rem;color:var(--text2)}
+.cleg-d{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.ctabs{display:flex;gap:.35rem;margin-bottom:.9rem;flex-wrap:wrap}
+.ctab{padding:.32rem .85rem;border-radius:4px;font-size:.76rem;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--text2);font-family:inherit;transition:all .2s}
+.ctab.on{background:rgba(245,166,35,.1);border-color:var(--gold);color:var(--gold)}
+.chart-wrap2{height:250px;position:relative}
+.pvgis-detail{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.4rem}
+.detail-card{background:var(--navy3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.2rem}
+.detail-card h4{font-size:.76rem;font-weight:700;color:var(--text2);margin-bottom:.8rem;text-transform:uppercase;letter-spacing:.06em}
+.detail-row{display:flex;justify-content:space-between;padding:.38rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.81rem}
+.detail-row:last-child{border:none}.detail-row span:last-child{font-weight:600;color:var(--text)}
+.loss-bar{height:4px;border-radius:2px;background:var(--navy4);margin-top:.55rem;overflow:hidden}
 .loss-fill{height:100%;border-radius:2px;background:var(--red);transition:width .8s}
-.cost-card{background:linear-gradient(135deg,var(--navy3),rgba(245,166,35,.06));border:1px solid rgba(245,166,35,.22);border-radius:var(--r2);padding:1.5rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
-.cost-range{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold)}
-.batt-card{background:rgba(26,188,156,.06);border:1px solid rgba(26,188,156,.2);border-radius:var(--r2);padding:1.4rem;margin-bottom:1.5rem}
-.batt-ttl{font-weight:600;color:var(--teal);margin-bottom:.9rem;font-size:.9rem}
-.batt-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
-.bstat span{font-size:1.15rem;font-weight:700;color:var(--teal);display:block}
-.bstat small{font-size:.73rem;color:var(--text2)}
-.iav{background:rgba(245,166,35,.04);border:1px solid rgba(245,166,35,.15);border-radius:var(--r2);padding:1.1rem 1.4rem;margin-bottom:1.5rem;font-size:.84rem;color:var(--text2);line-height:1.65}
-.iav strong{color:var(--gold)}
-.disc{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.1rem 1.4rem;font-size:.79rem;color:var(--text2);line-height:1.7;margin-bottom:1.5rem}
-.disc strong{color:var(--gold)}
-.cta-pro{background:linear-gradient(135deg,rgba(245,166,35,.1),rgba(245,166,35,.03));border:1px solid rgba(245,166,35,.28);border-radius:var(--r2);padding:2rem;text-align:center;margin-bottom:1rem}
-.cta-pro h3{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;margin-bottom:.4rem}
-.cta-pro p{font-size:.87rem;color:var(--text2);margin-bottom:1.25rem}
-.cta-row{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
-.bsm{padding:.55rem 1.1rem;font-size:.84rem;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--text2);cursor:pointer;font-family:inherit;font-weight:500;transition:all .2s}
-.bsm:hover{color:var(--text)}
-.bsm.g{border-color:rgba(245,166,35,.4);color:var(--gold)}
-.bsm.g:hover{background:rgba(245,166,35,.1)}
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;position:relative}
-.how-step{text-align:center}
-.hnum{width:52px;height:52px;border-radius:50%;background:var(--navy2);border:2px solid rgba(245,166,35,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gold)}
-.how-step h4{font-weight:600;margin-bottom:.4rem}
-.how-step p{font-size:.84rem;color:var(--text2);line-height:1.6}
-.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:660px;margin:0 auto}
-.pc{background:var(--navy2);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:1.75rem;position:relative}
-.pc.feat{border-color:rgba(245,166,35,.35)}
-.pc-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy);font-size:.67rem;font-weight:700;padding:.2rem .8rem;border-radius:10px;white-space:nowrap;text-transform:uppercase}
-.pc-name{font-weight:600;font-size:1rem;margin-bottom:.4rem}
-.pc-price{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--gold);line-height:1;margin:.75rem 0}
-.pc-price span{font-size:1rem;font-family:'DM Sans',sans-serif;color:var(--text2)}
-.pc-sub{font-size:.76rem;color:var(--text3);margin-bottom:1.25rem}
-.pc-feat{list-style:none;font-size:.84rem;color:var(--text2);display:flex;flex-direction:column;gap:.5rem}
-.pc-feat li{display:flex;gap:.45rem}
-.pc-feat li::before{content:'v';color:var(--green);font-weight:700;flex-shrink:0}
-.pc-feat li.x::before{content:'-';color:var(--text3)}
-footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.06);padding:2.5rem 2rem 1.5rem}
-.foot-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem}
-.foot-brand p{font-size:.84rem;color:var(--text2);line-height:1.7;margin-top:.65rem;max-width:250px}
-.foot-col h5{font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.85rem}
-.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:.4rem}
-.foot-col a{font-size:.83rem;color:var(--text2);text-decoration:none;transition:color .2s}
-.foot-col a:hover{color:var(--gold)}
-.foot-bot{max-width:1200px;margin:1.5rem auto 0;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
-.foot-bot p{font-size:.74rem;color:var(--text3)}
-.sbadge{font-size:.7rem;color:var(--teal);background:rgba(26,188,156,.08);border:1px solid rgba(26,188,156,.2);padding:.25rem .65rem;border-radius:4px}
-#manualCoords{display:none;margin-top:1.25rem;background:rgba(245,166,35,.05);border:1px solid rgba(245,166,35,.2);border-radius:var(--r2);padding:1.25rem}
-@media print{nav,footer,.cta-row,.bsm,.fnav,#loading,.cta-pro,#manualCoords,.chart-tabs{display:none!important}body{background:#fff;color:#111}#results{display:block!important}.rc,.chart-box,.det-card,.cost-card{border-color:#ddd;background:#f9f9f9}.rc-val,.cost-range{color:#c47d10}}
-@media(max-width:768px){.hero-content{grid-template-columns:1fr}.hero-visual{display:none}.price-grid,.how-grid{grid-template-columns:1fr}.foot-in{grid-template-columns:1fr 1fr}.fgrid,.det-grid{grid-template-columns:1fr}.batt-stats{grid-template-columns:1fr 1fr}nav ul{display:none}}
-</style>
-</head>
-<body>
+.cost-card{background:linear-gradient(135deg,var(--navy3),rgba(245,166,35,.05));border:1px solid rgba(245,166,35,.18);border-radius:var(--r2);padding:1.4rem;display:flex;justify-content:space-between;align-items:center;gap:1.25rem;margin-bottom:1.4rem;flex-wrap:wrap}
+.cost-range{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--gold)}
+.batt-card{background:rgba(26,188,156,.05);border:1px solid rgba(26,188,156,.17);border-radius:var(--r2);padding:1.3rem;margin-bottom:1.3rem}
+.batt-title{font-weight:600;color:var(--teal);margin-bottom:.8rem;font-size:.88rem}
+.batt-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
+.bstat span{font-size:1.05rem;font-weight:700;color:var(--teal);display:block}.bstat small{font-size:.7rem;color:var(--text2)}
+.iav-card{background:rgba(245,166,35,.03);border:1px solid rgba(245,166,35,.11);border-radius:var(--r2);padding:1rem 1.3rem;margin-bottom:1.3rem;font-size:.81rem;color:var(--text2);line-height:1.65}
+.iav-card strong{color:var(--gold)}
+.disc{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1rem 1.3rem;font-size:.77rem;color:var(--text2);line-height:1.7;margin-bottom:1.3rem}
+.disc strong{color:var(--text)}
+.cta-pro{background:linear-gradient(135deg,rgba(245,166,35,.09),rgba(245,166,35,.02));border:1px solid rgba(245,166,35,.2);border-radius:var(--r2);padding:1.85rem;text-align:center;margin-bottom:.9rem}
+.cta-pro h3{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;margin-bottom:.3rem}
+.cta-pro p{font-size:.84rem;color:var(--text2);margin-bottom:1.1rem}
+.cta-btns{display:flex;gap:.65rem;justify-content:center;flex-wrap:wrap}
+.btn-sm{padding:.5rem 1rem;font-size:.82rem;border-radius:6px;border:1px solid rgba(255,255,255,.13);background:transparent;color:var(--text2);cursor:pointer;font-family:inherit;font-weight:500;transition:all .2s}
+.btn-sm:hover{color:var(--text)}.btn-sm.gold{border-color:rgba(245,166,35,.3);color:var(--gold)}.btn-sm.gold:hover{background:rgba(245,166,35,.09)}
+
+/* ── FOOTER ── */
+footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.05);padding:2.5rem 2rem 1.5rem}
+.foot-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem}
+.foot-brand p{font-size:.82rem;color:var(--text2);line-height:1.7;margin-top:.6rem;max-width:240px}
+.foot-col h5{font-size:.73rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.85rem}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:.38rem}
+.foot-col a{font-size:.81rem;color:var(--text2);text-decoration:none;transition:color .2s}.foot-col a:hover{color:var(--gold)}
+.foot-bot{max-width:1200px;margin:1.25rem auto 0;padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem}
+.foot-bot p{font-size:.7rem;color:var(--text3)}
+.foot-pvgis{font-size:.68rem;color:var(--text3);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:.22rem .6rem;border-radius:4px}
+@media(max-width:768px){
+  .hero-inner,.g2,.g3,.g4,.kpi-row,.perf-grid,.perf-res{grid-template-columns:1fr}
+  .hero-visual,.foot-inner{grid-template-columns:1fr 1fr}
+  .fg,.pvgis-detail,.batt-stats{grid-template-columns:1fr}
+  .nav-tabs .nav-tab span:not(.tab-ico){display:none}
+  .nav-tabs .nav-tab{padding:.45rem .7rem}
+}
+</style></head><body>
+<!-- ═══ NAV ═══════════════════════════════════════════════════ -->
 <nav>
-  <a href="#" class="logo">STELIO<span>SUN</span></a>
-  <ul>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#sim">Simulateur</a></li>
-    <li><a href="#comment">Fonctionnement</a></li>
-    <li><a href="#tarifs">Tarifs</a></li>
-    <li><a href="#sim" class="nav-cta">Demarrer</a></li>
-  </ul>
+  <a href="#" class="logo" onclick="showPage('exploitation');return false"><span class="logo-s">STELIO</span><span class="logo-g">SUN</span></a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('exploitation')" id="tab-exploitation"><span class="tab-ico">⚡</span> <span>Exploitation</span></button>
+    <button class="nav-tab" onclick="showPage('maintenance')" id="tab-maintenance"><span class="tab-ico">🔧</span> <span>Maintenance</span></button>
+    <button class="nav-tab" onclick="showPage('expertise')" id="tab-expertise"><span class="tab-ico">📊</span> <span>Expertise</span></button>
+    <button class="nav-tab" onclick="showPage('simulateur')" id="tab-simulateur"><span class="tab-ico">🔆</span> <span>Simulateur</span></button>
+  </div>
+  <a href="/cdn-cgi/l/email-protection#7714181903161403370403121b1e18040219591105" class="nav-contact">Nous contacter</a>
 </nav>
 
-<section class="hero">
-  <div class="hero-bg"></div><div class="hero-grid"></div>
-  <div class="hero-content">
-    <div>
-      <div class="hero-tag">Donnees PVGIS - Commission Europeenne</div>
-      <h1>Votre projet <em>solaire</em> commence ici</h1>
-      <p class="hero-sub">STELIOSUN predimensionne votre centrale photovoltaique &mdash; toiture, sol, ombriere &mdash; et genere un previsionnel mensuel base sur les donnees reelles PVGIS.</p>
-      <div class="hero-btns">
-        <a href="#sim" class="btn btn-primary">Lancer le simulateur &rarr;</a>
-        <a href="#comment" class="btn btn-outline">Comment ca marche</a>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PAGE 1 — EXPLOITATION                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="page active" id="page-exploitation">
+  <section class="hero">
+    <div class="hero-bg"></div><div class="hero-grid"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="page-kicker"><div class="kicker-dot"></div>Service Exploitation & O&M</div>
+        <h1>Gestion &amp; suivi<em>de vos champs solaires</em></h1>
+        <p class="hero-desc">STELIOSUN assure l'exploitation complète de vos installations photovoltaïques — du monitoring temps réel à la gestion contractuelle des performances — pour garantir un retour sur investissement optimal.</p>
+        <div class="hero-actions">
+          <a href="/cdn-cgi/l/email-protection#dfbcb0b1abbebcab9facabbab3b6b0acaab1f1b9ad" class="btn btn-p">Demander un contrat O&M →</a>
+          <button class="btn btn-o" onclick="showPage('simulateur')">Simuler ma production</button>
+        </div>
       </div>
-      <div class="hero-stats">
-        <div><span class="stat-val">PVGIS</span><span class="stat-lbl">Donnees UE reelles</span></div>
-        <div><span class="stat-val">12</span><span class="stat-lbl">Mois de prevision</span></div>
-        <div><span class="stat-val">100%</span><span class="stat-lbl">Gratuit</span></div>
+      <div class="hero-visual">
+        <svg viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px">
+          <rect width="420" height="320" fill="none"/>
+          <!-- Monitoring dashboard illustration -->
+          <rect x="20" y="20" width="380" height="280" rx="12" fill="#131f35" stroke="rgba(245,166,35,.2)" stroke-width="1.5"/>
+          <rect x="20" y="20" width="380" height="36" rx="12" fill="#1a2843"/>
+          <rect x="20" y="44" width="380" height="12" fill="#1a2843"/>
+          <circle cx="42" cy="38" r="5" fill="#e74c3c" opacity=".7"/>
+          <circle cx="58" cy="38" r="5" fill="#e67e22" opacity=".7"/>
+          <circle cx="74" cy="38" r="5" fill="#27ae60" opacity=".7"/>
+          <text x="200" y="42" font-family="DM Sans" font-size="9" fill="#8a9dc0" text-anchor="middle">STELIOSUN — Monitoring Temps Réel</text>
+          <!-- Production bars -->
+          <text x="40" y="82" font-family="DM Sans" font-size="8" fill="#4d6080">PRODUCTION MENSUELLE (MWh)</text>
+          <g transform="translate(35,90)">
+            <rect x="0"  y="60" width="20" height="40" rx="2" fill="rgba(245,166,35,.6)"/>
+            <rect x="26" y="45" width="20" height="55" rx="2" fill="rgba(245,166,35,.7)"/>
+            <rect x="52" y="20" width="20" height="80" rx="2" fill="rgba(245,166,35,.85)"/>
+            <rect x="78" y="10" width="20" height="90" rx="2" fill="rgba(245,166,35,.95)"/>
+            <rect x="104" y="5"  width="20" height="95" rx="2" fill="#f5a623"/>
+            <rect x="130" y="8"  width="20" height="92" rx="2" fill="#f5a623"/>
+            <rect x="156" y="12" width="20" height="88" rx="2" fill="rgba(245,166,35,.9)"/>
+            <rect x="182" y="25" width="20" height="75" rx="2" fill="rgba(245,166,35,.8)"/>
+            <rect x="208" y="40" width="20" height="60" rx="2" fill="rgba(245,166,35,.7)"/>
+            <rect x="234" y="55" width="20" height="45" rx="2" fill="rgba(245,166,35,.6)"/>
+            <rect x="260" y="65" width="20" height="35" rx="2" fill="rgba(245,166,35,.5)"/>
+            <rect x="286" y="50" width="20" height="50" rx="2" fill="rgba(245,166,35,.65)"/>
+            <line x1="0" y1="100" x2="310" y2="100" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+            <line x1="0" y1="70"  x2="310" y2="70"  stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+            <line x1="0" y1="40"  x2="310" y2="40"  stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+          </g>
+          <!-- KPI boxes -->
+          <rect x="35" y="218" width="85" height="62" rx="6" fill="#1a2843" stroke="rgba(245,166,35,.15)" stroke-width="1"/>
+          <text x="77" y="240" font-family="Bebas Neue" font-size="18" fill="#f5a623" text-anchor="middle">98.7%</text>
+          <text x="77" y="252" font-family="DM Sans" font-size="7" fill="#8a9dc0" text-anchor="middle">DISPONIBILITÉ</text>
+          <rect x="132" y="218" width="85" height="62" rx="6" fill="#1a2843" stroke="rgba(26,188,156,.15)" stroke-width="1"/>
+          <text x="174" y="240" font-family="Bebas Neue" font-size="18" fill="#1abc9c" text-anchor="middle">0.812</text>
+          <text x="174" y="252" font-family="DM Sans" font-size="7" fill="#8a9dc0" text-anchor="middle">PERF. RATIO (PR)</text>
+          <rect x="228" y="218" width="85" height="62" rx="6" fill="#1a2843" stroke="rgba(39,174,96,.15)" stroke-width="1"/>
+          <text x="270" y="240" font-family="Bebas Neue" font-size="18" fill="#27ae60" text-anchor="middle">+2.4%</text>
+          <text x="270" y="252" font-family="DM Sans" font-size="7" fill="#8a9dc0" text-anchor="middle">vs PRODUCTIBLE</text>
+          <rect x="325" y="218" width="75" height="62" rx="6" fill="#1a2843" stroke="rgba(245,166,35,.15)" stroke-width="1"/>
+          <text x="362" y="240" font-family="Bebas Neue" font-size="15" fill="#f5a623" text-anchor="middle">24/7</text>
+          <text x="362" y="252" font-family="DM Sans" font-size="7" fill="#8a9dc0" text-anchor="middle">MONITORING</text>
+          <!-- Status dot -->
+          <circle cx="380" cy="38" r="4" fill="#27ae60"/>
+          <circle cx="380" cy="38" r="7" fill="rgba(39,174,96,.2)"/>
+        </svg>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="sun-wrap">
-        <div class="sun-ring"></div><div class="sun-ring"></div><div class="sun-ring"></div>
-        <div class="sun-core"><div class="sun-kw">PVGIS<br>READY</div></div>
-        <div class="panels-wrap"><div class="spanel"></div><div class="spanel"></div><div class="spanel"></div><div class="spanel"></div></div>
+  </section>
+
+  <!-- KPIs -->
+  <section class="sec sec-alt">
+    <div class="ctr">
+      <div class="kpi-row">
+        <div class="kpi"><span class="kpi-val">98.7%</span><div class="kpi-lbl">Disponibilité garantie</div></div>
+        <div class="kpi"><span class="kpi-val">24/7</span><div class="kpi-lbl">Supervision continue</div></div>
+        <div class="kpi"><span class="kpi-val">&lt; 4h</span><div class="kpi-lbl">Délai intervention critique</div></div>
+        <div class="kpi"><span class="kpi-val">INTL</span><div class="kpi-lbl">Couverture internationale</div></div>
+      </div>
+      <div class="g2" style="gap:2rem;align-items:start">
+        <div>
+          <div class="sk">Services d'exploitation</div>
+          <h2 class="st">Un suivi complet,<br>de la donnée à la décision</h2>
+          <div class="steps">
+            <div class="step"><div class="step-num">01</div><div class="step-body"><h4>Monitoring temps réel</h4><p>Supervision continue des onduleurs, compteurs et capteurs. Détection automatique des dérives et alertes instantanées sur tout incident de production.</p></div></div>
+            <div class="step"><div class="step-num">02</div><div class="step-body"><h4>Rapports de performance</h4><p>Rapports journaliers, mensuels et annuels. Calcul du Performance Ratio (PR), analyse des écarts au productible contractuel, tableaux de bord personnalisés.</p></div></div>
+            <div class="step"><div class="step-num">03</div><div class="step-body"><h4>Gestion contractuelle</h4><p>Suivi des garanties constructeurs, gestion des contrats d'assurance, interface avec les gestionnaires de réseau (GTR, injection, revente).</p></div></div>
+            <div class="step"><div class="step-num">04</div><div class="step-body"><h4>Optimisation du rendement</h4><p>Analyse prédictive, recommandations d'améliorations, pilotage des opérations de nettoyage et maintenance selon impact sur production.</p></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="chart-box">
+            <div class="chart-title">📈 Disponibilité &amp; Performance Ratio — 12 mois</div>
+            <div class="chart-h"><canvas id="chartExpl"></canvas></div>
+          </div>
+          <div class="g2" style="gap:1rem;margin-top:1rem">
+            <div class="card-sm"><h4>🛰 Télésurveillance</h4><p>Connexion directe aux onduleurs SMA, Huawei, ABB, SolarEdge, Fronius et systèmes SCADA propriétaires.</p></div>
+            <div class="card-sm"><h4>📱 Application mobile</h4><p>Accès client en temps réel : production instantanée, historique, alertes et rapports téléchargeables.</p></div>
+            <div class="card-sm"><h4>🌐 Multi-sites</h4><p>Gestion de portefeuilles multi-sites depuis un portail unique. Reporting consolidé et comparaisons inter-sites.</p></div>
+            <div class="card-sm"><h4>⚖️ Contractuel</h4><p>Suivi des garanties de performance contractuelles et calcul des pénalités en cas de sous-production.</p></div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section" id="services">
-  <div class="container">
-    <div class="stag">Nos services</div>
-    <h2 class="stitle">Toutes les typologies de projets</h2>
-    <p class="ssub">Predimensionnement base sur les donnees PVGIS pour chaque site, sans inscription.</p>
-    <div class="srv-grid">
-      <div class="srv-card"><div class="srv-ico">&#127968;</div><h3>Solaire en toiture</h3><p>Toiture inclinees ou terrasse. Orientation et pertes thermiques prises en compte via PVGIS.</p><span class="badge badge-free">Gratuit</span></div>
-      <div class="srv-card"><div class="srv-ico">&#127807;</div><h3>Centrale au sol</h3><p>Parc photovoltaique sur structures fixes. Modele thermique open-rack pour production optimisee.</p><span class="badge badge-free">Gratuit</span></div>
-      <div class="srv-card"><div class="srv-ico">&#127359;</div><h3>Ombriere solaire</h3><p>Ombrieres de parking avec double usage du foncier et calcul adapte aux structures surelevees.</p><span class="badge badge-free">Gratuit</span></div>
-      <div class="srv-card"><div class="srv-ico">&#128267;</div><h3>Stockage batterie</h3><p>Dimensionnement batterie selon consommation et autonomie souhaitee. Li-ion, LFP ou Pb.</p><span class="badge badge-free">Gratuit</span></div>
-      <div class="srv-card" style="border-color:rgba(245,166,35,.2)"><div class="srv-ico">&#128203;</div><h3>Cahier des charges</h3><p>Redaction d'un CdC complet : specifications techniques, criteres de performance et garantie.</p><span class="badge badge-pro">Payant</span></div>
-      <div class="srv-card" style="border-color:rgba(245,166,35,.2)"><div class="srv-ico">&#128202;</div><h3>Etude de rentabilite</h3><p>Simulation horaire, TRI, VAN, temps de retour et analyse de sensibilite tarifaire.</p><span class="badge badge-pro">Payant</span></div>
+  <!-- Contrats -->
+  <section class="sec">
+    <div class="ctr">
+      <div class="sk">Contrats O&M</div>
+      <h2 class="st">Formules adaptées à chaque installation</h2>
+      <div class="g3">
+        <div class="card"><span class="card-ico">🔍</span><h3>Monitoring seul</h3><p>Supervision à distance, rapports automatiques, alertes et accès au portail client. Pour les exploitants souhaitant gérer eux-mêmes leurs interventions.</p><span class="badge bg">Dès 50 kWc</span></div>
+        <div class="card"><span class="card-ico">🔧</span><h3>O&M complet</h3><p>Monitoring + maintenance préventive annuelle + interventions correctives. Contrat clé en main avec garantie de disponibilité 98%.</p><span class="badge bo">Recommandé</span></div>
+        <div class="card"><span class="card-ico">🏆</span><h3>Performance garantie</h3><p>O&M complet + garantie de productible annuel contractuel. Idéal pour les investisseurs souhaitant sécuriser leur retour financier.</p><span class="badge bt2">Premium</span></div>
+      </div>
+      <div class="chart-box" style="margin-top:1.5rem">
+        <div class="chart-title">🌍 Zones d'intervention internationales</div>
+        <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:160px">
+          <rect width="700" height="200" fill="transparent"/>
+          <!-- Timeline zones -->
+          <text x="350" y="20" font-family="DM Sans" font-size="9" fill="#4d6080" text-anchor="middle">PRÉSENCE OPÉRATIONNELLE PAR ZONE GÉOGRAPHIQUE</text>
+          <g transform="translate(20,35)">
+            <!-- France -->
+            <rect x="0" y="0" width="130" height="32" rx="4" fill="rgba(245,166,35,.15)" stroke="rgba(245,166,35,.3)" stroke-width="1"/>
+            <text x="12" y="12" font-family="DM Sans" font-size="8" fill="#f5a623" font-weight="600">🇫🇷 France</text>
+            <text x="12" y="24" font-family="DM Sans" font-size="7" fill="#8a9dc0">Siège + équipes terrain</text>
+            <!-- Europe Sud -->
+            <rect x="145" y="0" width="130" height="32" rx="4" fill="rgba(245,166,35,.12)" stroke="rgba(245,166,35,.25)" stroke-width="1"/>
+            <text x="157" y="12" font-family="DM Sans" font-size="8" fill="#f5a623" font-weight="600">🌍 Europe du Sud</text>
+            <text x="157" y="24" font-family="DM Sans" font-size="7" fill="#8a9dc0">Espagne, Italie, Portugal</text>
+            <!-- Afrique -->
+            <rect x="290" y="0" width="130" height="32" rx="4" fill="rgba(26,188,156,.1)" stroke="rgba(26,188,156,.25)" stroke-width="1"/>
+            <text x="302" y="12" font-family="DM Sans" font-size="8" fill="#1abc9c" font-weight="600">🌍 Afrique</text>
+            <text x="302" y="24" font-family="DM Sans" font-size="7" fill="#8a9dc0">Maghreb, Afrique Sub-Sah.</text>
+            <!-- Moyen-Orient -->
+            <rect x="435" y="0" width="130" height="32" rx="4" fill="rgba(26,188,156,.08)" stroke="rgba(26,188,156,.2)" stroke-width="1"/>
+            <text x="447" y="12" font-family="DM Sans" font-size="8" fill="#1abc9c" font-weight="600">🌏 Moyen-Orient</text>
+            <text x="447" y="24" font-family="DM Sans" font-size="7" fill="#8a9dc0">EAU, Arabie Saoudite</text>
+            <!-- Amériques -->
+            <rect x="72" y="48" width="130" height="32" rx="4" fill="rgba(245,166,35,.08)" stroke="rgba(245,166,35,.18)" stroke-width="1"/>
+            <text x="84" y="60" font-family="DM Sans" font-size="8" fill="#f5a623" font-weight="600">🌎 Amériques</text>
+            <text x="84" y="72" font-family="DM Sans" font-size="7" fill="#8a9dc0">Brésil, Chili, Mexique</text>
+            <!-- Asie Pacifique -->
+            <rect x="218" y="48" width="140" height="32" rx="4" fill="rgba(245,166,35,.06)" stroke="rgba(245,166,35,.15)" stroke-width="1"/>
+            <text x="230" y="60" font-family="DM Sans" font-size="8" fill="#f5a623" font-weight="600">🌏 Asie-Pacifique</text>
+            <text x="230" y="72" font-family="DM Sans" font-size="7" fill="#8a9dc0">Inde, Australie, Vietnam</text>
+            <!-- DOM-TOM -->
+            <rect x="374" y="48" width="130" height="32" rx="4" fill="rgba(39,174,96,.08)" stroke="rgba(39,174,96,.2)" stroke-width="1"/>
+            <text x="386" y="60" font-family="DM Sans" font-size="8" fill="#27ae60" font-weight="600">🏝 DOM-TOM</text>
+            <text x="386" y="72" font-family="DM Sans" font-size="7" fill="#8a9dc0">Réunion, Martinique, Guyane</text>
+          </g>
+        </svg>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
-<section class="section calc-section" id="sim">
-  <div class="container">
-    <div class="stag">Simulateur PVGIS gratuit</div>
-    <h2 class="stitle" style="margin-bottom:.5rem">Predimensionnez &amp; Previsionnez</h2>
-    <p style="color:var(--text2);margin-bottom:2.5rem;max-width:560px;font-size:.92rem">5 etapes. STELIOSUN interroge l'API PVGIS pour calculer votre production mensuelle et annuelle reelle.</p>
-    <div class="calc-wrap">
-      <div class="prog-bar" id="progBar"></div>
-      <div class="plabels" id="progLbls"></div>
-
-      <!-- STEP 1 -->
-      <div class="fstep active" id="s1">
-        <h2>Type d'installation</h2>
-        <p>Quel type de centrale souhaitez-vous predimensionner ?</p>
-        <div class="opts" style="grid-template-columns:repeat(3,1fr)">
-          <div class="opt" data-v="toiture" onclick="selOpt(this,'type')"><span class="opt-ico">&#127968;</span><div class="opt-name">Toiture</div><div class="opt-sub">Inclinees ou terrasse</div></div>
-          <div class="opt" data-v="sol" onclick="selOpt(this,'type')"><span class="opt-ico">&#127807;</span><div class="opt-name">Au sol</div><div class="opt-sub">Parc photovoltaique</div></div>
-          <div class="opt" data-v="ombriere" onclick="selOpt(this,'type')"><span class="opt-ico">&#127359;</span><div class="opt-name">Ombriere</div><div class="opt-sub">Parking couvert</div></div>
-        </div>
-        <div class="fnav"><span></span><button class="bnav bnext" id="n1" onclick="goNext(1)" disabled>Suivant &rarr;</button></div>
-      </div>
-
-      <!-- STEP 2 -->
-      <div class="fstep" id="s2">
-        <h2>Localisation du site</h2>
-        <p>Recherchez l'adresse ou la commune d'implantation.</p>
-        <div class="addr-wrap">
-          <input type="text" id="addrInput" placeholder="Ex : ZI les Milles, Aix-en-Provence" oninput="onAddrInput()" autocomplete="off">
-          <button class="addr-btn" onclick="searchAddr()" title="Rechercher">&#128269;</button>
-          <div class="addr-results" id="addrResults"></div>
-        </div>
-        <div id="locInfo" style="display:none" class="loc-info">
-          &#128205; <span id="locLabel" style="color:var(--teal);font-weight:600">-</span>
-          &nbsp;|&nbsp;Lat:<span id="locLat">-</span> Lon:<span id="locLon">-</span>
-          &nbsp;<strong style="color:var(--green)">Pret PVGIS &#10003;</strong>
-        </div>
-        <div id="mapCont">
-          <div class="map-ph" id="mapPh">&#128506; La carte s'affichera apres selection</div>
-          <div id="map" style="display:none"></div>
-        </div>
-        <div id="manualCoords">
-          <div style="font-size:.82rem;font-weight:600;color:var(--gold);margin-bottom:1rem">&#128205; Saisie manuelle des coordonnees GPS</div>
-          <div class="fgrid" style="margin-bottom:.75rem">
-            <div class="field"><label>Latitude (ex: 43.2965)</label><input type="number" id="manLat" step="0.0001" min="-90" max="90" placeholder="43.2965"></div>
-            <div class="field"><label>Longitude (ex: 5.3698)</label><input type="number" id="manLon" step="0.0001" min="-180" max="180" placeholder="5.3698"></div>
-            <div class="field full"><label>Nom du site</label><input type="text" id="manNom" placeholder="ex: ZI Les Milles, Aix-en-Provence"></div>
-          </div>
-          <button class="bnav bnext" style="padding:.55rem 1.3rem;font-size:.87rem" onclick="applyManual()">Valider &rarr;</button>
-          <p style="font-size:.73rem;color:var(--text3);margin-top:.6rem">Coordonnees sur <a href="https://www.openstreetmap.org" target="_blank" style="color:var(--gold)">openstreetmap.org</a> (clic droit) ou Google Maps.</p>
-        </div>
-        <div class="note" style="margin-top:1rem">&#128161; Geocodage via BAN (gouv.fr), Nominatim (OSM) et Open-Meteo, lances en parallele. En cas d'echec, saisie manuelle disponible ci-dessus.</div>
-        <div class="fnav">
-          <button class="bnav bprev" onclick="goPrev(2)">&larr; Retour</button>
-          <button class="bnav bnext" id="n2" onclick="goNext(2)" disabled>Suivant &rarr;</button>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PAGE 2 — MAINTENANCE                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-maintenance">
+  <section class="hero">
+    <div class="hero-bg"></div><div class="hero-grid"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="page-kicker"><div class="kicker-dot"></div>Service Maintenance PV</div>
+        <h1>Maintenance<em>préventive &amp; corrective</em></h1>
+        <p class="hero-desc">STELIOSUN déploie des équipes techniques spécialisées pour l'entretien, le diagnostic et la remise en performance de vos installations photovoltaïques, de 3 kWc à 100 MWc.</p>
+        <div class="hero-actions">
+          <a href="/cdn-cgi/l/email-protection#51323e3f25303225112225343d383e22243f7f3723" class="btn btn-p">Demander un diagnostic →</a>
+          <button class="btn btn-o" onclick="showPage('expertise')">Voir notre expertise</button>
         </div>
       </div>
+      <div class="hero-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px">
+          <!-- Maintenance checklist illustration -->
+          <rect x="20" y="20" width="360" height="260" rx="12" fill="#131f35" stroke="rgba(245,166,35,.15)" stroke-width="1.5"/>
+          <rect x="20" y="20" width="360" height="34" rx="12" fill="#1a2843"/>
+          <rect x="20" y="42" width="360" height="12" fill="#1a2843"/>
+          <text x="200" y="40" font-family="DM Sans" font-size="9" fill="#8a9dc0" text-anchor="middle">RAPPORT DE MAINTENANCE — STELIOSUN</text>
+          <!-- Checklist items -->
+          <g transform="translate(40,70)">
+            <circle cx="8" cy="8" r="7" fill="rgba(39,174,96,.2)" stroke="#27ae60" stroke-width="1.2"/><text x="8" y="11.5" font-family="DM Sans" font-size="8" fill="#27ae60" text-anchor="middle">✓</text>
+            <text x="24" y="12" font-family="DM Sans" font-size="9" fill="#e8eef8">Inspection visuelle des panneaux</text>
+            <text x="280" y="12" font-family="DM Sans" font-size="8" fill="#27ae60">Conforme</text>
 
-      <!-- STEP 3 -->
-      <div class="fstep" id="s3">
-        <h2>Surface &amp; Modules</h2>
-        <p>Definissez la surface disponible et les parametres des panneaux.</p>
-        <div class="fgrid">
-          <div class="field"><label>Surface disponible (m2)</label><input type="number" id="surface" min="10" max="500000" placeholder="ex: 500" oninput="D.surface=parseFloat(this.value)||0;updatePw()"></div>
-          <div class="field"><label>Type de modules</label>
-            <select id="modType" onchange="D.moduleType=this.value;updatePw()">
-              <option value="mono">Monocristallin (20.5%)</option>
-              <option value="bifacial">Bifacial (22.5%)</option>
-              <option value="poly">Polycristallin (17.5%)</option>
-              <option value="cis">CIS/CIGS (15.5%)</option>
-            </select>
-          </div>
-          <div class="field"><label>Orientation</label>
-            <select id="orient" onchange="D.orientation=this.value">
-              <option value="0">Sud 0deg (optimal)</option>
-              <option value="-45">Sud-Est -45deg</option>
-              <option value="45">Sud-Ouest +45deg</option>
-              <option value="-90">Est -90deg</option>
-              <option value="90">Ouest +90deg</option>
-              <option value="180">Nord 180deg</option>
-            </select>
-          </div>
-          <div class="field"><label>Inclinaison: <span class="rval" id="tiltV">30deg</span></label>
-            <input type="range" min="0" max="75" step="5" value="30" id="tilt" oninput="D.tilt=+this.value;document.getElementById('tiltV').textContent=this.value+'deg'">
-            <div class="rlbls"><span>0 plat</span><span>35 optimal</span><span>75</span></div>
-          </div>
-          <div class="field full" style="background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.15);border-radius:var(--r);padding:.8rem 1rem">
-            <label>Puissance crete estimee</label>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--gold)" id="pwD">- kWc</div>
-            <div style="font-size:.77rem;color:var(--text2)" id="pwS">Renseignez la surface pour calculer</div>
-          </div>
-        </div>
-        <div class="fnav">
-          <button class="bnav bprev" onclick="goPrev(3)">&larr; Retour</button>
-          <button class="bnav bnext" id="n3" onclick="goNext(3)" disabled>Suivant &rarr;</button>
-        </div>
+            <circle cx="8" cy="30" r="7" fill="rgba(39,174,96,.2)" stroke="#27ae60" stroke-width="1.2"/><text x="8" y="33.5" font-family="DM Sans" font-size="8" fill="#27ae60" text-anchor="middle">✓</text>
+            <text x="24" y="34" font-family="DM Sans" font-size="9" fill="#e8eef8">Contrôle câblage et connecteurs</text>
+            <text x="280" y="34" font-family="DM Sans" font-size="8" fill="#27ae60">Conforme</text>
+
+            <circle cx="8" cy="52" r="7" fill="rgba(231,76,60,.2)" stroke="#e74c3c" stroke-width="1.2"/><text x="8" y="55.5" font-family="DM Sans" font-size="9" fill="#e74c3c" text-anchor="middle">!</text>
+            <text x="24" y="56" font-family="DM Sans" font-size="9" fill="#e8eef8">Thermographie infrarouge</text>
+            <text x="280" y="56" font-family="DM Sans" font-size="8" fill="#e74c3c">3 points chauds</text>
+
+            <circle cx="8" cy="74" r="7" fill="rgba(39,174,96,.2)" stroke="#27ae60" stroke-width="1.2"/><text x="8" y="77.5" font-family="DM Sans" font-size="8" fill="#27ae60" text-anchor="middle">✓</text>
+            <text x="24" y="78" font-family="DM Sans" font-size="9" fill="#e8eef8">Test onduleurs / MPPT</text>
+            <text x="280" y="78" font-family="DM Sans" font-size="8" fill="#27ae60">PR = 0.81</text>
+
+            <circle cx="8" cy="96" r="7" fill="rgba(245,166,35,.2)" stroke="#f5a623" stroke-width="1.2"/><text x="8" y="99.5" font-family="DM Sans" font-size="8" fill="#f5a623" text-anchor="middle">→</text>
+            <text x="24" y="100" font-family="DM Sans" font-size="9" fill="#e8eef8">Nettoyage haute pression</text>
+            <text x="280" y="100" font-family="DM Sans" font-size="8" fill="#f5a623">Planifié J+7</text>
+
+            <circle cx="8" cy="118" r="7" fill="rgba(39,174,96,.2)" stroke="#27ae60" stroke-width="1.2"/><text x="8" y="121.5" font-family="DM Sans" font-size="8" fill="#27ae60" text-anchor="middle">✓</text>
+            <text x="24" y="122" font-family="DM Sans" font-size="9" fill="#e8eef8">Contrôle structure &amp; fixations</text>
+            <text x="280" y="122" font-family="DM Sans" font-size="8" fill="#27ae60">Conforme</text>
+
+            <circle cx="8" cy="140" r="7" fill="rgba(39,174,96,.2)" stroke="#27ae60" stroke-width="1.2"/><text x="8" y="143.5" font-family="DM Sans" font-size="8" fill="#27ae60" text-anchor="middle">✓</text>
+            <text x="24" y="144" font-family="DM Sans" font-size="9" fill="#e8eef8">Vérification protections électriques</text>
+            <text x="280" y="144" font-family="DM Sans" font-size="8" fill="#27ae60">Conforme</text>
+          </g>
+          <!-- Score -->
+          <rect x="40" y="235" width="320" height="28" rx="5" fill="rgba(39,174,96,.08)" stroke="rgba(39,174,96,.2)" stroke-width="1"/>
+          <text x="55" y="253" font-family="DM Sans" font-size="8" fill="#27ae60" font-weight="600">Score maintenance : 92/100 — Bon état général — 1 action corrective requise</text>
+        </svg>
       </div>
+    </div>
+  </section>
 
-      <!-- STEP 4 -->
-      <div class="fstep" id="s4">
-        <h2>Consommation electrique</h2>
-        <p>Renseignez votre consommation pour estimer le taux de couverture.</p>
-        <div class="fgrid">
-          <div class="field full"><label>Consommation annuelle (kWh/an) - optionnel</label><input type="number" id="conso" min="0" placeholder="ex: 150 000" oninput="D.consumption=parseFloat(this.value)||0"></div>
-          <div class="field full"><label>Profil de consommation</label>
-            <select id="profile" onchange="D.profile=this.value">
-              <option value="industriel">Industriel / Tertiaire</option>
-              <option value="commercial">Commerce (journee etendue)</option>
-              <option value="agricole">Agricole</option>
-              <option value="residentiel">Residentiel (soir/week-end)</option>
-              <option value="continu">Continu 24h/24</option>
-            </select>
+  <section class="sec sec-alt">
+    <div class="ctr">
+      <div class="kpi-row">
+        <div class="kpi"><span class="kpi-val">+8%</span><div class="kpi-lbl">Gain production moyen post-nettoyage</div></div>
+        <div class="kpi"><span class="kpi-val">2×/an</span><div class="kpi-lbl">Maintenance préventive standard</div></div>
+        <div class="kpi"><span class="kpi-val">100%</span><div class="kpi-lbl">Traçabilité des interventions</div></div>
+        <div class="kpi"><span class="kpi-val">IR</span><div class="kpi-lbl">Thermographie par drone</div></div>
+      </div>
+      <div class="g2" style="gap:2rem">
+        <div>
+          <div class="sk">Maintenance préventive</div>
+          <h2 class="st">Anticiper pour<br>ne pas subir</h2>
+          <div class="g2" style="gap:1rem;margin-bottom:1.5rem">
+            <div class="card-sm"><span style="font-size:1.4rem">🌡️</span><h4>Thermographie IR</h4><p>Détection des points chauds, cellules défaillantes et connexions oxydées par caméra thermique et drone.</p></div>
+            <div class="card-sm"><span style="font-size:1.4rem">🔬</span><h4>Electroluminescence</h4><p>Test EL en conditions nocturnes pour détecter les microfissures et défauts internes invisibles à l'œil nu.</p></div>
+            <div class="card-sm"><span style="font-size:1.4rem">🚿</span><h4>Nettoyage PV</h4><p>Nettoyage haute pression déminéralisée ou brosse rotative. Gain moyen de +6 à +12% de production.</p></div>
+            <div class="card-sm"><span style="font-size:1.4rem">⚡</span><h4>Test I-V courbes</h4><p>Tracé des courbes courant-tension pour identifier les modules sous-performants et valider les garanties.</p></div>
+            <div class="card-sm"><span style="font-size:1.4rem">🏗️</span><h4>Structure &amp; fixations</h4><p>Contrôle de corrosion, couple de serrage, déformation des châssis et conformité aux charges de vent.</p></div>
+            <div class="card-sm"><span style="font-size:1.4rem">⚙️</span><h4>Onduleurs &amp; MPPT</h4><p>Vérification firmware, ventilation, filtre, paramétrage MPPT et analyse des courbes de rendement.</p></div>
           </div>
         </div>
-        <div class="note">&#128161; Les profils industriel et commercial offrent le meilleur taux d'autoconsommation car la consommation est concentree en journee.</div>
-        <div class="fnav">
-          <button class="bnav bprev" onclick="goPrev(4)">&larr; Retour</button>
-          <button class="bnav bnext" onclick="goNext(4)">Suivant &rarr;</button>
-        </div>
-      </div>
-
-      <!-- STEP 5 -->
-      <div class="fstep" id="s5">
-        <h2>Stockage batterie</h2>
-        <p>Souhaitez-vous inclure une estimation de stockage ?</p>
-        <div class="opts" style="grid-template-columns:1fr 1fr;max-width:360px">
-          <div class="opt" data-v="non" onclick="selOpt(this,'storage');showBatt(false)"><span class="opt-ico">&#9889;</span><div class="opt-name">Sans stockage</div></div>
-          <div class="opt" data-v="oui" onclick="selOpt(this,'storage');showBatt(true)"><span class="opt-ico">&#128267;</span><div class="opt-name">Avec batterie</div></div>
-        </div>
-        <div id="battP" style="display:none;margin-top:1.5rem">
-          <div class="fgrid">
-            <div class="field"><label>Autonomie: <span class="rval" id="autoV">1 jour</span></label>
-              <input type="range" min="0.5" max="7" step="0.5" value="1" id="autoR" oninput="D.autonomy=+this.value;document.getElementById('autoV').textContent=this.value+(+this.value>1?' jours':' jour')">
-              <div class="rlbls"><span>0.5j</span><span>2j</span><span>7j</span></div>
+        <div>
+          <div class="chart-box">
+            <div class="chart-title">📅 Planning annuel de maintenance type</div>
+            <div style="overflow-x:auto">
+              <table class="tbl" style="min-width:500px">
+                <thead>
+                  <tr><th>Opération</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>Fréquence</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Inspection visuelle</td><td><span class="dot-green"></span>Fait</td><td><span class="dot-green"></span>Fait</td><td><span class="dot-green"></span>Fait</td><td><span class="dot-green"></span>Fait</td><td>Trimestrielle</td></tr>
+                  <tr><td>Nettoyage panneaux</td><td><span class="dot-gold"></span>Opt.</td><td><span class="dot-green"></span>Fait</td><td><span class="dot-gold"></span>Opt.</td><td><span class="dot-green"></span>Fait</td><td>2× / an</td></tr>
+                  <tr><td>Thermographie IR</td><td>—</td><td><span class="dot-green"></span>Fait</td><td>—</td><td><span class="dot-green"></span>Fait</td><td>Semestrielle</td></tr>
+                  <tr><td>Test onduleurs</td><td>—</td><td><span class="dot-green"></span>Fait</td><td>—</td><td><span class="dot-green"></span>Fait</td><td>Semestrielle</td></tr>
+                  <tr><td>Test I-V courbes</td><td>—</td><td>—</td><td>—</td><td><span class="dot-green"></span>Fait</td><td>Annuelle</td></tr>
+                  <tr><td>Structure &amp; fixations</td><td>—</td><td>—</td><td>—</td><td><span class="dot-green"></span>Fait</td><td>Annuelle</td></tr>
+                  <tr><td>Rapport de performance</td><td><span class="dot-green"></span>Mensuel</td><td><span class="dot-green"></span>Mensuel</td><td><span class="dot-green"></span>Mensuel</td><td><span class="dot-green"></span>Mensuel+Annuel</td><td>Mensuelle+Ann.</td></tr>
+                </tbody>
+              </table>
             </div>
-            <div class="field"><label>Technologie batterie</label>
-              <select id="battT" onchange="D.battType=this.value">
-                <option value="lithium">Li-ion NMC (DoD 80%)</option>
-                <option value="lifepo4">LiFePO4 (DoD 90%)</option>
-                <option value="plomb">Plomb-acide (DoD 50%)</option>
-              </select>
+          </div>
+          <div class="chart-box">
+            <div class="chart-title">📊 Impact maintenance sur la production</div>
+            <div class="chart-h2"><canvas id="chartMaint"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="ctr">
+      <div class="sk">Maintenance corrective</div>
+      <h2 class="st">Réactivité maximale en cas d'incident</h2>
+      <div class="g3">
+        <div class="card"><span class="card-ico">🚨</span><h3>Astreinte 24/7</h3><p>Équipe d'astreinte disponible 24h/24, 7j/7. Diagnostic à distance dans l'heure, intervention terrain sous 4 à 24h selon criticité.</p><span class="badge bg">GTR inclus</span></div>
+        <div class="card"><span class="card-ico">🔄</span><h3>Remplacement équipements</h3><p>Stock de pièces de rechange (modules, onduleurs, connecteurs). Remplacement et remise en service dans les meilleurs délais.</p><span class="badge bo">Stock France</span></div>
+        <div class="card"><span class="card-ico">📋</span><h3>Rapport &amp; traçabilité</h3><p>Chaque intervention est documentée : cause, actions réalisées, pièces remplacées, tests de validation et impact financier estimé.</p><span class="badge bt2">Certifié</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PAGE 3 — EXPERTISE                                          -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-expertise">
+  <section class="hero">
+    <div class="hero-bg"></div><div class="hero-grid"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="page-kicker"><div class="kicker-dot"></div>Bureau d'Études Indépendant</div>
+        <h1>Expertise<em>performance &amp; productibles</em></h1>
+        <p class="hero-desc">STELIOSUN mesure, analyse et certifie la performance réelle de vos installations. Notre méthode in-situ repose sur des instruments de classe A pour fournir des données irréfutables aux exploitants, investisseurs et assureurs.</p>
+        <div class="hero-actions">
+          <a href="/cdn-cgi/l/email-protection#bbd8d4d5cfdad8cffbc8cfded7d2d4c8ced595ddc9" class="btn btn-p">Demander une expertise →</a>
+          <button class="btn btn-o" onclick="showPage('simulateur')">Simulateur gratuit</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <!-- Irradiation satellite map SVG -->
+        <div class="irr-map-wrap">
+          <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
+            <defs>
+              <radialGradient id="sun1" cx="75%" cy="55%" r="50%">
+                <stop offset="0%" stop-color="#f5a623" stop-opacity=".9"/>
+                <stop offset="40%" stop-color="#e67e22" stop-opacity=".7"/>
+                <stop offset="80%" stop-color="#8b4513" stop-opacity=".4"/>
+                <stop offset="100%" stop-color="#1a2843" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="sun2" cx="55%" cy="45%" r="60%">
+                <stop offset="0%" stop-color="#f5a623" stop-opacity=".6"/>
+                <stop offset="50%" stop-color="#d4870a" stop-opacity=".4"/>
+                <stop offset="100%" stop-color="#1a2843" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect width="380" height="240" fill="#0d1e38"/>
+            <!-- Ocean -->
+            <rect width="380" height="240" fill="#0a1628" opacity=".6"/>
+            <!-- France silhouette approximate -->
+            <polygon points="140,40 195,35 230,55 240,85 225,120 200,145 175,150 148,135 130,100 120,75 130,55" fill="#1a3a5c" stroke="#2a4a7c" stroke-width="1" opacity=".9"/>
+            <!-- Spain -->
+            <polygon points="95,145 185,150 210,165 200,195 160,205 110,200 80,185 75,165" fill="#1a3560" stroke="#2a4570" stroke-width="1" opacity=".8"/>
+            <!-- Italy -->
+            <polygon points="225,90 265,80 280,100 275,135 255,160 240,170 230,155 235,130 228,110" fill="#1a3560" stroke="#2a4570" stroke-width="1" opacity=".8"/>
+            <!-- North Africa -->
+            <polygon points="70,215 180,215 310,215 320,240 50,240" fill="#1a3060" stroke="#2a4070" stroke-width="1" opacity=".8"/>
+            <!-- Irradiation heat map overlay -->
+            <rect width="380" height="240" fill="url(#sun1)" opacity="1"/>
+            <rect width="380" height="240" fill="url(#sun2)" opacity=".5"/>
+            <!-- Isoline contours -->
+            <ellipse cx="285" cy="130" rx="70" ry="50" fill="none" stroke="rgba(245,166,35,.25)" stroke-width="1" stroke-dasharray="4,3"/>
+            <ellipse cx="265" cy="130" rx="55" ry="38" fill="none" stroke="rgba(245,166,35,.35)" stroke-width="1" stroke-dasharray="4,3"/>
+            <ellipse cx="255" cy="128" rx="38" ry="28" fill="none" stroke="rgba(245,166,35,.5)" stroke-width="1.5"/>
+            <!-- Measurement points -->
+            <circle cx="175" cy="90" r="5" fill="#f5a623" opacity=".9"/>
+            <circle cx="175" cy="90" r="9" fill="rgba(245,166,35,.2)"/>
+            <text x="185" y="88" font-family="DM Sans" font-size="7" fill="#f5a623">1 250 kWh/m²</text>
+            <circle cx="255" cy="165" r="5" fill="#ff6600" opacity=".9"/>
+            <circle cx="255" cy="165" r="9" fill="rgba(255,102,0,.2)"/>
+            <text x="265" y="163" font-family="DM Sans" font-size="7" fill="#ff6600">1 820 kWh/m²</text>
+            <circle cx="310" cy="108" r="5" fill="#ff4400" opacity=".9"/>
+            <circle cx="310" cy="108" r="9" fill="rgba(255,68,0,.2)"/>
+            <text x="295" y="100" font-family="DM Sans" font-size="7" fill="#ff4400">2 100 kWh/m²</text>
+            <!-- Pyranometer icon -->
+            <g transform="translate(30,30)">
+              <circle cx="18" cy="18" r="16" fill="#131f35" stroke="rgba(245,166,35,.4)" stroke-width="1.5"/>
+              <circle cx="18" cy="18" r="8" fill="rgba(245,166,35,.15)" stroke="rgba(245,166,35,.6)" stroke-width="1"/>
+              <circle cx="18" cy="18" r="3" fill="#f5a623"/>
+              <line x1="18" y1="2"  x2="18" y2="8"  stroke="rgba(245,166,35,.4)" stroke-width="1.5"/>
+              <line x1="30" y1="6"  x2="26" y2="11" stroke="rgba(245,166,35,.4)" stroke-width="1.5"/>
+              <line x1="34" y1="18" x2="28" y2="18" stroke="rgba(245,166,35,.4)" stroke-width="1.5"/>
+              <text x="18" y="52" font-family="DM Sans" font-size="7" fill="#8a9dc0" text-anchor="middle">Pyranomètre A</text>
+            </g>
+            <!-- Label -->
+            <rect x="5" y="205" width="370" height="30" fill="rgba(11,22,40,.85)"/>
+            <text x="190" y="218" font-family="DM Sans" font-size="8" fill="#8a9dc0" text-anchor="middle">Irradiation globale horizontale — Europe &amp; bassin méditerranéen (kWh/m²/an)</text>
+            <text x="190" y="230" font-family="DM Sans" font-size="7" fill="#4d6080" text-anchor="middle">Source : données satellitaires recalées pyranomètres classe A</text>
+          </svg>
+          <div class="irr-legend">
+            <div class="irr-leg-item"><div class="irr-leg-swatch" style="background:#1a3a5c"></div>&lt; 900 kWh/m²</div>
+            <div class="irr-leg-item"><div class="irr-leg-swatch" style="background:#8b4513"></div>900-1200</div>
+            <div class="irr-leg-item"><div class="irr-leg-swatch" style="background:#e67e22"></div>1200-1600</div>
+            <div class="irr-leg-item"><div class="irr-leg-swatch" style="background:#f5a623"></div>1600-2000</div>
+            <div class="irr-leg-item"><div class="irr-leg-swatch" style="background:#ff4400"></div>&gt; 2000 kWh/m²</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-alt">
+    <div class="ctr">
+      <div class="kpi-row">
+        <div class="kpi"><span class="kpi-val">ISO</span><div class="kpi-lbl">Classe A — ISO 9060:2018</div></div>
+        <div class="kpi"><span class="kpi-val">±2%</span><div class="kpi-lbl">Incertitude mesure étalonnée</div></div>
+        <div class="kpi"><span class="kpi-val">8760</span><div class="kpi-lbl">Points de mesure / an / site</div></div>
+        <div class="kpi"><span class="kpi-val">R&D</span><div class="kpi-lbl">Modèles propriétaires</div></div>
+      </div>
+      <div class="g2" style="gap:2.5rem">
+        <div>
+          <div class="sk">Méthode in-situ</div>
+          <h2 class="st">Mesure directe,<br>résultats certifiés</h2>
+          <p style="color:var(--text2);font-size:.9rem;line-height:1.75;margin-bottom:1.5rem">Notre approche repose sur le déploiement d'une station de mesure complète directement sur votre site, couplée aux données satellitaires recalées, pour produire une analyse de performance rigoureuse et opposable.</p>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">🌡️</div>
+              <div class="step-body"><h4>Pyranomètre classe A (ISO 9060:2018)</h4><p>Mesure de l'irradiation globale sur plan horizontal et incliné avec une incertitude &lt; ±2%. Étalonnage traçable BIPM. Modèles : Kipp &amp; Zonen CMP11, EKO MS-80, Hukseflux SR30.</p></div>
+            </div>
+            <div class="step">
+              <div class="step-num">🌡</div>
+              <div class="step-body"><h4>Sondes de température (PT100 / PT1000)</h4><p>Mesure de la température des modules en face arrière et de l'air ambiant. Correction thermique selon le coefficient de température des modules (c-Si, CdTe, CIGS).</p></div>
+            </div>
+            <div class="step">
+              <div class="step-num">⚡</div>
+              <div class="step-body"><h4>Compteurs d'énergie MID</h4><p>Compteurs AC certifiés MID (classe 0.5S) pour la mesure de l'énergie injectée, autoconsommée et soutirée. Intégration aux systèmes de supervision SCADA et EMS.</p></div>
+            </div>
+            <div class="step">
+              <div class="step-num">💨</div>
+              <div class="step-body"><h4>Station météo complète</h4><p>Anémomètre, girouette, hygromètre, pluviomètre et capteur UV. Corrélation météo-production pour isoler les causes de sous-performance.</p></div>
             </div>
           </div>
         </div>
-        <div class="fnav">
-          <button class="bnav bprev" onclick="goPrev(5)">&larr; Retour</button>
-          <button class="bnav bnext" id="n5" onclick="runCalc()" disabled>Calculer avec PVGIS &rarr;</button>
+        <div>
+          <div class="chart-box">
+            <div class="chart-title">📊 Performance Ratio mensuel — Site type 500 kWc</div>
+            <div class="chart-h"><canvas id="chartExpert"></canvas></div>
+          </div>
+          <div class="g2" style="gap:1rem;margin-top:1rem">
+            <div class="card-sm" style="border-left:3px solid var(--gold)">
+              <h4>📐 Calcul du productible</h4>
+              <p>Modélisation horaire de la production à partir des données météo historiques (TMY) et des paramètres du champ : orientation, ombrage, dégradation.</p>
+            </div>
+            <div class="card-sm" style="border-left:3px solid var(--teal)">
+              <h4>📉 Analyse des pertes</h4>
+              <p>Décomposition des pertes : ombrage, réflexion, spectral, thermique, câblage, onduleur, disponibilité — selon la méthode de bilan énergétique IEC 61724.</p>
+            </div>
+            <div class="card-sm" style="border-left:3px solid var(--green)">
+              <h4>🔬 R&D — Modèles propriétaires</h4>
+              <p>Développement de modèles de correction d'irradiation et de prédiction de performance intégrant l'intelligence artificielle et le machine learning.</p>
+            </div>
+            <div class="card-sm" style="border-left:3px solid var(--orange)">
+              <h4>📄 Rapport certifié</h4>
+              <p>Rapport d'expertise signé, opposable contractuellement. Utilisable pour assurances, litiges, rachat de centrale ou refinancement bancaire.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="ctr">
+      <div class="sk">Indicateurs de performance</div>
+      <h2 class="st">Les métriques qui comptent</h2>
+      <div class="g3" style="margin-bottom:2rem">
+        <div class="card">
+          <span class="card-ico">📈</span>
+          <h3>Performance Ratio (PR)</h3>
+          <p>Rapport entre énergie produite et énergie théorique sans pertes. Un PR &gt; 0.80 indique une installation en bon état. Calculé selon IEC 61724-1.</p>
+          <div style="margin-top:1rem;background:var(--navy3);border-radius:var(--r);padding:.75rem">
+            <div style="font-size:.75rem;color:var(--text3);margin-bottom:.4rem">PR = E_ac / (G_poa × P_stc / 1000)</div>
+            <div style="display:flex;gap:.5rem;font-size:.72rem;flex-wrap:wrap">
+              <span style="color:var(--green)">■ Excellent : &gt; 82%</span>
+              <span style="color:var(--gold)">■ Bon : 75-82%</span>
+              <span style="color:var(--red)">■ À surveiller : &lt; 75%</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <span class="card-ico">☀️</span>
+          <h3>Rendement spécifique</h3>
+          <p>Production annuelle ramenée à la puissance installée (kWh/kWc/an). Permet de comparer des sites de tailles différentes et de détecter les sous-performances.</p>
+          <div style="margin-top:1rem;background:var(--navy3);border-radius:var(--r);padding:.75rem">
+            <div style="font-size:.75rem;color:var(--text3);margin-bottom:.4rem">Rs = E_ac (kWh) / P_stc (kWc)</div>
+            <div style="font-size:.72rem;color:var(--text2)">Exemple France : 950-1400 kWh/kWc/an selon localisation</div>
+          </div>
+        </div>
+        <div class="card">
+          <span class="card-ico">📉</span>
+          <h3>Taux de dégradation</h3>
+          <p>Perte annuelle de performance des modules photovoltaïques. Suivi pluriannuel permettant d'anticiper la fin de garantie et optimiser le plan d'investissement.</p>
+          <div style="margin-top:1rem;background:var(--navy3);border-radius:var(--r);padding:.75rem">
+            <div style="font-size:.75rem;color:var(--text3);margin-bottom:.4rem">Standard : -0.5%/an (c-Si) à -0.3%/an (CdTe)</div>
+            <div style="font-size:.72rem;color:var(--text2)">Mesure par campagne I-V et tracé normalisé STC</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PAGE 4 — SIMULATEUR                                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-simulateur">
+  <section class="sec" style="padding-top:2rem">
+    <div class="ctr">
+      <div class="sk">Outil gratuit — STELIOSUN</div>
+      <h2 class="st" style="margin-bottom:.5rem">Simulateur de performance PV</h2>
+      <p class="sb">Prédimensionnez votre installation en 5 étapes, <strong>et calculez la performance réelle</strong> d'un champ existant à partir de votre productible mesuré.</p>
+
+      <!-- ── MODULE CALCUL DE PERFORMANCE ─────────────────── -->
+      <div class="perf-calc">
+        <div class="perf-title">Module de calcul de performance</div>
+        <div class="perf-sub">Entrez les données réelles de votre installation pour obtenir votre Performance Ratio, rendement spécifique et écart au productible attendu.</div>
+        <div class="perf-grid">
+          <div class="perf-field">
+            <label>Puissance installée (kWc)</label>
+            <input type="number" id="pc-power" min="1" max="500000" placeholder="ex : 500" oninput="calcPerf()">
+          </div>
+          <div class="perf-field">
+            <label>Production réelle mesurée (kWh/an)</label>
+            <input type="number" id="pc-prod" min="1" placeholder="ex : 620 000" oninput="calcPerf()">
+          </div>
+          <div class="perf-field">
+            <label>Irradiation sur plan incliné (kWh/m²/an)</label>
+            <input type="number" id="pc-irr" min="100" max="3000" placeholder="ex : 1 450" oninput="calcPerf()">
+          </div>
+          <div class="perf-field">
+            <label>Productible attendu contractuel (kWh/an) — optionnel</label>
+            <input type="number" id="pc-expected" min="0" placeholder="ex : 615 000" oninput="calcPerf()">
+          </div>
+          <div class="perf-field">
+            <label>Durée de mesure (mois)</label>
+            <input type="number" id="pc-months" min="1" max="12" value="12" placeholder="12" oninput="calcPerf()">
+          </div>
+          <div class="perf-field" style="display:flex;flex-direction:column;justify-content:flex-end">
+            <button class="bnext bnav" onclick="calcPerf()" style="padding:.68rem 1.2rem;font-size:.88rem">Calculer la performance →</button>
+          </div>
+        </div>
+        <div class="perf-res" id="perfResults">
+          <div class="pr-card" id="prCard">
+            <div class="pr-val" id="prVal">—</div>
+            <div class="pr-unit">Performance Ratio</div>
+            <div class="pr-div"></div>
+            <div class="pr-lbl">PR = E_ac / (G × P)</div>
+            <div class="pr-gauge"><div class="pr-gauge-fill" id="prGauge" style="width:0%;background:var(--gold)"></div></div>
+          </div>
+          <div class="pr-card">
+            <div class="pr-val" id="rsVal">—</div>
+            <div class="pr-unit">kWh/kWc/an</div>
+            <div class="pr-div"></div>
+            <div class="pr-lbl">Rendement spécifique</div>
+          </div>
+          <div class="pr-card" id="ecartCard" style="display:none">
+            <div class="pr-val" id="ecartVal">—</div>
+            <div class="pr-unit">vs productible attendu</div>
+            <div class="pr-div"></div>
+            <div class="pr-lbl">Écart contractuel</div>
+          </div>
+          <div class="pr-card" id="diagCard">
+            <div class="pr-val" id="diagIco" style="font-size:1.5rem">—</div>
+            <div class="pr-unit" id="diagLbl">Diagnostic</div>
+            <div class="pr-div"></div>
+            <div class="pr-lbl" id="diagTxt">—</div>
+          </div>
+        </div>
+        <div id="perfChartWrap" style="display:none;margin-top:1.5rem">
+          <div class="chart-box">
+            <div class="chart-title">📊 Analyse de performance — récapitulatif visuel</div>
+            <div class="chart-h2"><canvas id="perfChart"></canvas></div>
+          </div>
         </div>
       </div>
 
-      <!-- LOADING -->
-      <div id="loading">
-        <div class="spin"></div>
-        <h3>Calcul en cours...</h3>
-        <p>Interrogation de l'API PVGIS et generation du previsionnel</p>
-        <div class="lsteps">
-          <div class="ls" id="ls1"><div class="ls-dot"></div>Localisation GPS confirmee</div>
-          <div class="ls" id="ls2"><div class="ls-dot"></div>Envoi des parametres PVGIS</div>
-          <div class="ls" id="ls3"><div class="ls-dot"></div>Reception des donnees d'irradiation</div>
-          <div class="ls" id="ls4"><div class="ls-dot"></div>Calcul du previsionnel 12 mois</div>
-          <div class="ls" id="ls5"><div class="ls-dot"></div>Generation du rapport</div>
-        </div>
-      </div>
-
-      <!-- RESULTS -->
-      <div id="results">
-        <div class="res-hdr">
-          <div class="pvgis-badge">PVGIS - JRC Commission Europeenne</div>
-          <h2 class="stitle" style="text-align:center;margin-bottom:.25rem" id="resT">-</h2>
-          <p style="color:var(--text2);text-align:center;font-size:.84rem" id="resS">-</p>
-        </div>
-        <div class="rcards" id="rCards"></div>
-        <div class="chart-box">
-          <div class="chart-hdr">
-            <div><div class="chart-ttl">Previsionnel de production - 12 mois</div><div style="font-size:.75rem;color:var(--text2);margin-top:.2rem">Moyennes PVGIS 2005-2023</div></div>
-            <div class="cleg"><div class="cl"><div class="cl-dot" style="background:rgba(245,166,35,.85)"></div>Production kWh</div><div class="cl"><div class="cl-dot" style="background:var(--teal);border-radius:50%"></div>Irradiation kWh/m2</div></div>
-          </div>
-          <div class="chart-tabs">
-            <button class="ctab active" onclick="swChart(this,'prod')">Production mensuelle</button>
-            <button class="ctab" onclick="swChart(this,'daily')">Journaliere moy.</button>
-            <button class="ctab" onclick="swChart(this,'irr')">Irradiation</button>
-          </div>
-          <div class="chart-wrap"><canvas id="myChart"></canvas></div>
-        </div>
-        <div class="det-grid" id="detGrid"></div>
-        <div class="cost-card">
+      <!-- ── SIMULATEUR DE PRÉDIMENSIONNEMENT ─────────────── -->
+      <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:2rem;margin-top:.5rem">
+        <div class="sk">Simulateur de prédimensionnement</div>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.04em;margin-bottom:.3rem">Estimez votre future installation</h3>
+        <p style="color:var(--text2);font-size:.88rem;margin-bottom:1.5rem">5 étapes pour dimensionner puissance, production et batterie. Calculs certifiés par STELIOSUN.</p>
+        <div style="background:linear-gradient(135deg,var(--navy2),rgba(245,166,35,.03));border:1px solid rgba(245,166,35,.15);border-radius:var(--r2);padding:1.25rem 1.75rem;margin-bottom:2rem;display:flex;align-items:center;gap:1rem">
+          <span style="font-size:1.6rem">🏅</span>
           <div>
-            <div style="font-size:.76rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">Estimation investissement (pose comprise)</div>
-            <div class="cost-range" id="rCost">-</div>
-            <div style="font-size:.74rem;color:var(--text2);margin-top:.15rem">Hors aides - TVA 10% - Indicatif</div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:.73rem;color:var(--text3)">Cout/kWc</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--text2)" id="rCpw">-</div>
-            <div style="font-size:.71rem;color:var(--text3);margin-top:.4rem">Retour brut estime</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gold)" id="rPb">-</div>
+            <div style="font-weight:700;margin-bottom:.15rem">Calculs vérifiés et certifiés par STELIOSUN</div>
+            <div style="font-size:.83rem;color:var(--text2)">Méthodes conformes IEC 61724. Données d'irradiation issues de sources météorologiques de référence.</div>
           </div>
         </div>
-        <div class="batt-card" id="battR" style="display:none">
-          <div class="batt-ttl">&#128267; Dimensionnement stockage</div>
-          <div class="batt-stats">
-            <div class="bstat"><span id="bCap">-</span><small>kWh capacite</small></div>
-            <div class="bstat"><span id="bAuto">-</span><small>jours autonomie</small></div>
-            <div class="bstat"><span id="bCost">-</span><small>EUR batterie</small></div>
-            <div class="bstat"><span id="bCyc">-</span><small>cycles vie</small></div>
-          </div>
-        </div>
-        <div class="iav" id="iavD" style="display:none" id="iavD"></div>
-        <div class="disc"><strong>Predimensionnement indicatif :</strong> Resultats issus des donnees PVGIS (JRC, moyennes 2005-2023). La production reelle peut varier de +/-15 a 20% selon les conditions du site. <strong>Une etude technique complete est requise avant investissement.</strong></div>
-        <div class="cta-pro">
-          <h3>Aller plus loin avec STELIOSUN Pro</h3>
-          <p>Cahier des charges, simulation horaire, analyse TRI/VAN et rapport PDF exportable.</p>
-          <div class="cta-row">
-            <a href="#contact" class="btn btn-primary">Demander une etude &rarr;</a>
-            <button class="bsm g" onclick="doPrint()">Telecharger rapport</button>
-            <button class="bsm" onclick="doReset()">Nouvelle simulation</button>
-          </div>
-        </div>
-      </div><!-- /results -->
-    </div><!-- /calc-wrap -->
-  </div>
-</section>
 
-<section class="section" id="comment">
-  <div class="container">
-    <div class="stag">Fonctionnement</div>
-    <h2 class="stitle">Donnees reelles, resultats fiables</h2>
-    <p class="ssub">STELIOSUN connecte vos parametres aux donnees d'irradiation officielles de la Commission Europeenne.</p>
-    <div class="how-grid">
-      <div class="how-step"><div class="hnum">01</div><h4>Parametrez votre projet</h4><p>Type, localisation GPS, surface, orientation et consommation electrique.</p></div>
-      <div class="how-step"><div class="hnum">02</div><h4>PVGIS calcule pour vous</h4><p>L'API PVGIS renvoie l'irradiation reelle, la production mensuelle et les pertes systeme.</p></div>
-      <div class="how-step"><div class="hnum">03</div><h4>Rapport complet</h4><p>Puissance crete, previsionnel 12 mois, CO2 evite, cout estime et stockage batterie.</p></div>
-    </div>
-  </div>
-</section>
+        <div class="calc-wrap">
+          <div class="prog-bar" id="progBar"></div>
+          <div class="plabels" id="progLbls"></div>
 
-<section class="section" id="tarifs" style="background:var(--navy2)">
-  <div class="container">
-    <div class="stag" style="text-align:center">Tarifs</div>
-    <h2 class="stitle" style="text-align:center;margin-bottom:.5rem">Gratuit pour demarrer</h2>
-    <p style="color:var(--text2);text-align:center;max-width:440px;margin:0 auto 2.5rem;line-height:1.7;font-size:.9rem">Le predimensionnement PVGIS est toujours gratuit. Pour un dossier d'investissement, nos experts vous accompagnent.</p>
-    <div class="price-grid">
-      <div class="pc"><div class="pc-name">Predimensionnement</div><div class="pc-price">0 <span>EUR</span></div><div class="pc-sub">Sans inscription</div>
-        <ul class="pc-feat"><li>Puissance crete (kWc)</li><li>Production PVGIS 12 mois</li><li>Irradiation plan incline</li><li>CO2 evite</li><li>Fourchette investissement</li><li>Dimensionnement batterie</li><li>Couverture des besoins</li><li class="x">Cahier des charges</li><li class="x">Simulation horaire</li><li class="x">Analyse rentabilite</li></ul>
+          <div class="fstep active" id="s1">
+            <h2>Type d'installation</h2>
+            <p>Quel type de centrale souhaitez-vous prédimensionner ?</p>
+            <div class="opts" style="grid-template-columns:repeat(3,1fr)">
+              <div class="opt" data-v="toiture" onclick="selOpt(this,'type')"><span class="opt-ico">🏠</span><div class="opt-name">Toiture</div><div class="opt-sub">Inclinée ou terrasse</div></div>
+              <div class="opt" data-v="sol" onclick="selOpt(this,'type')"><span class="opt-ico">🌾</span><div class="opt-name">Au sol</div><div class="opt-sub">Parc photovoltaïque</div></div>
+              <div class="opt" data-v="ombriere" onclick="selOpt(this,'type')"><span class="opt-ico">🅿️</span><div class="opt-name">Ombrière</div><div class="opt-sub">Parking couvert</div></div>
+            </div>
+            <div class="fnav"><span></span><button class="bnav bnext" id="n1" onclick="goNext(1)" disabled>Suivant →</button></div>
+          </div>
+
+          <div class="fstep" id="s2">
+            <h2>Localisation du site</h2>
+            <p>Cliquez sur la carte pour placer votre site.</p>
+            <div class="addr-wrap">
+              <input type="text" id="addrInput" placeholder="Rechercher une adresse (optionnel, HTTPS requis)…" oninput="onAddrInput()" autocomplete="off">
+              <button class="addr-btn" onclick="searchAddr()" title="Rechercher">🔍</button>
+              <div class="addr-results" id="addrResults"></div>
+            </div>
+            <div id="sim-map"></div>
+            <div class="note" style="margin-top:.75rem">💡 <strong>Cliquez sur la carte</strong> pour placer votre site avec précision.</div>
+            <div id="locInfo" style="display:none" class="loc-info">
+              📍 <span id="locLabel" style="color:var(--teal);font-weight:600">—</span>
+              — Lat <span id="locLat">—</span> · Lon <span id="locLon">—</span>
+              <strong style="color:var(--green)">Prêt ✓</strong>
+            </div>
+            <details style="margin-top:.8rem">
+              <summary style="font-size:.8rem;font-weight:600;color:var(--gold);cursor:pointer;padding:.35rem 0;user-select:none">▶ Saisie manuelle des coordonnées GPS</summary>
+              <div style="margin-top:.65rem;background:rgba(245,166,35,.04);border:1px solid rgba(245,166,35,.16);border-radius:var(--r2);padding:1rem">
+                <div class="fg" style="margin-bottom:.65rem">
+                  <div class="fi"><label>Latitude</label><input type="number" id="manLat" step="0.0001" min="-90" max="90" placeholder="43.2965"></div>
+                  <div class="fi"><label>Longitude</label><input type="number" id="manLon" step="0.0001" min="-180" max="180" placeholder="5.3698"></div>
+                  <div class="fi full"><label>Nom du site</label><input type="text" id="manNom" placeholder="ZI Les Milles, Aix-en-Provence"></div>
+                </div>
+                <button class="bnav bnext" style="padding:.5rem 1.2rem;font-size:.85rem" onclick="applyManualCoords()">Positionner →</button>
+              </div>
+            </details>
+            <div class="fnav" style="margin-top:1.1rem">
+              <button class="bnav bprev" onclick="goPrev(2)">← Retour</button>
+              <button class="bnav bnext" id="n2" onclick="goNext(2)" disabled>Suivant →</button>
+            </div>
+          </div>
+
+          <div class="fstep" id="s3">
+            <h2>Surface &amp; Modules</h2>
+            <p>Définissez la surface et les paramètres des panneaux.</p>
+            <div class="fg">
+              <div class="fi"><label>Surface disponible (m²)</label><input type="number" id="surface" min="10" max="500000" placeholder="ex : 500" oninput="D.surface=parseFloat(this.value)||0;updatePower()"></div>
+              <div class="fi"><label>Puissance d'un panneau</label>
+                <select id="panelWatt" onchange="D.panelWatt=parseInt(this.value);updatePower()">
+                  <option value="300">300 Wc — Entrée de gamme</option>
+                  <option value="350">350 Wc — Standard résidentiel</option>
+                  <option value="400" selected>400 Wc — Standard professionnel</option>
+                  <option value="450">450 Wc — Haute performance</option>
+                  <option value="500">500 Wc — Très haute performance</option>
+                  <option value="550">550 Wc — Bifacial premium</option>
+                  <option value="600">600 Wc — Industriel grande surface</option>
+                  <option value="650">650 Wc — Industriel haute densité</option>
+                </select>
+              </div>
+              <div class="fi"><label>Orientation</label>
+                <select id="orientation" onchange="D.orientation=this.value">
+                  <option value="0">Sud — 0° (optimal)</option>
+                  <option value="-45">Sud-Est — -45°</option>
+                  <option value="45">Sud-Ouest — +45°</option>
+                  <option value="-90">Est — -90°</option>
+                  <option value="90">Ouest — +90°</option>
+                  <option value="180">Nord — 180°</option>
+                </select>
+              </div>
+              <div class="fi"><label>Inclinaison : <span class="rv" id="tiltV">30°</span></label>
+                <input type="range" min="0" max="75" step="5" value="30" id="tilt" oninput="D.tilt=parseInt(this.value);document.getElementById('tiltV').textContent=this.value+'°'">
+                <div class="rlbls"><span>0° plat</span><span>35° optimal</span><span>75°</span></div>
+              </div>
+              <div class="fi full pw-box">
+                <label>Puissance crête estimée</label>
+                <div class="pw-val" id="pwDisplay">— kWc</div>
+                <div class="pw-sub" id="pwSub">Renseignez la surface pour calculer</div>
+              </div>
+            </div>
+            <div class="fnav">
+              <button class="bnav bprev" onclick="goPrev(3)">← Retour</button>
+              <button class="bnav bnext" id="n3" onclick="goNext(3)" disabled>Suivant →</button>
+            </div>
+          </div>
+
+          <div class="fstep" id="s4">
+            <h2>Consommation électrique</h2>
+            <p>Renseignez votre consommation pour estimer le taux de couverture.</p>
+            <div class="fg">
+              <div class="fi full"><label>Consommation annuelle (kWh/an) — optionnel</label><input type="number" id="conso" min="0" placeholder="ex : 150 000" oninput="D.consumption=parseFloat(this.value)||0"></div>
+              <div class="fi full"><label>Profil de consommation</label>
+                <select id="profile" onchange="D.profile=this.value">
+                  <option value="industriel">Industriel / Tertiaire</option>
+                  <option value="commercial">Commerce (journée étendue)</option>
+                  <option value="agricole">Agricole</option>
+                  <option value="residentiel">Résidentiel (soir/week-end)</option>
+                  <option value="continu">Continu 24h/24</option>
+                </select>
+              </div>
+            </div>
+            <div class="note">💡 Les profils industriel et commercial présentent le meilleur taux d'autoconsommation.</div>
+            <div class="fnav">
+              <button class="bnav bprev" onclick="goPrev(4)">← Retour</button>
+              <button class="bnav bnext" onclick="goNext(4)">Suivant →</button>
+            </div>
+          </div>
+
+          <div class="fstep" id="s5">
+            <h2>Stockage batterie</h2>
+            <p>Souhaitez-vous inclure une estimation de stockage ?</p>
+            <div class="opts" style="grid-template-columns:1fr 1fr;max-width:360px">
+              <div class="opt" data-v="non" onclick="selOpt(this,'storage');toggleBatt(false)"><span class="opt-ico">⚡</span><div class="opt-name">Sans stockage</div></div>
+              <div class="opt" data-v="oui" onclick="selOpt(this,'storage');toggleBatt(true)"><span class="opt-ico">🔋</span><div class="opt-name">Avec batterie</div></div>
+            </div>
+            <div id="battP" style="display:none;margin-top:1.4rem">
+              <div class="fg">
+                <div class="fi"><label>Autonomie : <span class="rv" id="autoV">1 jour</span></label>
+                  <input type="range" min="0.5" max="7" step="0.5" value="1" id="autoSlider" oninput="D.autonomy=parseFloat(this.value);document.getElementById('autoV').textContent=this.value+' jour'+(this.value>1?'s':'')">
+                  <div class="rlbls"><span>½ j</span><span>2 j</span><span>7 j</span></div>
+                </div>
+                <div class="fi"><label>Technologie batterie</label>
+                  <select id="battT" onchange="D.battType=this.value">
+                    <option value="lithium">Lithium-ion NMC (DoD 80%)</option>
+                    <option value="lifepo4">LiFePO4 (DoD 90%)</option>
+                    <option value="plomb">Plomb-acide AGM (DoD 50%)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="fnav">
+              <button class="bnav bprev" onclick="goPrev(5)">← Retour</button>
+              <button class="bnav bnext" id="n5" onclick="runCalc()" disabled>Calculer →</button>
+            </div>
+          </div>
+
+          <div id="loading">
+            <div class="lspin"></div>
+            <h3>Calcul en cours…</h3>
+            <p>Génération du prévisionnel de production</p>
+            <div class="lsteps">
+              <div class="lstep" id="ls1"><div class="lstep-dot"></div>Paramètres confirmés</div>
+              <div class="lstep" id="ls2"><div class="lstep-dot"></div>Récupération données d'irradiation</div>
+              <div class="lstep" id="ls3"><div class="lstep-dot"></div>Calcul production mensuelle</div>
+              <div class="lstep" id="ls4"><div class="lstep-dot"></div>Application pertes système</div>
+              <div class="lstep" id="ls5"><div class="lstep-dot"></div>Génération du rapport</div>
+            </div>
+          </div>
+
+          <div id="results">
+            <div class="res-header">
+              <div class="src-badge" id="srcBadge">✓ Calcul certifié STELIOSUN</div>
+              <h2 class="st" style="text-align:center;margin-bottom:.2rem" id="resTitle">—</h2>
+              <p style="color:var(--text2);text-align:center;font-size:.82rem" id="resSub">—</p>
+            </div>
+            <div class="rcard-grid" id="rCards"></div>
+            <div class="chart-section">
+              <div class="chart-header2">
+                <div><div class="chart-ttl">Prévisionnel de production — 12 mois</div><div style="font-size:.73rem;color:var(--text2);margin-top:.12rem">Moyennes interannuelles</div></div>
+                <div class="cleg"><div class="cleg-i"><div class="cleg-d" style="background:rgba(245,166,35,.85)"></div>kWh</div><div class="cleg-i"><div class="cleg-d" style="background:var(--teal);border-radius:50%"></div>kWh/m²</div></div>
+              </div>
+              <div class="ctabs">
+                <button class="ctab on" onclick="switchChart(this,'prod')">Mensuelle</button>
+                <button class="ctab" onclick="switchChart(this,'daily')">Journalière</button>
+                <button class="ctab" onclick="switchChart(this,'irr')">Irradiation</button>
+              </div>
+              <div class="chart-wrap2"><canvas id="mainChart"></canvas></div>
+            </div>
+            <div class="pvgis-detail" id="pvgisDetail"></div>
+            <div class="cost-card">
+              <div>
+                <div style="font-size:.73rem;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.28rem">Estimation investissement (pose comprise)</div>
+                <div class="cost-range" id="rCost">—</div>
+                <div style="font-size:.72rem;color:var(--text2);margin-top:.12rem">Hors aides — TVA 10% — Indicatif</div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-size:.7rem;color:var(--text3)">Coût/kWc</div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:1.35rem;color:var(--text2)" id="rCpw">—</div>
+                <div style="font-size:.7rem;color:var(--text3);margin-top:.4rem">Retour brut estimé</div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:1.25rem;color:var(--gold)" id="rPayback">—</div>
+              </div>
+            </div>
+            <div class="batt-card" id="battResult" style="display:none">
+              <div class="batt-title">🔋 Dimensionnement stockage</div>
+              <div class="batt-stats">
+                <div class="bstat"><span id="bCap">—</span><small>kWh capacité</small></div>
+                <div class="bstat"><span id="bAuto">—</span><small>jours autonomie</small></div>
+                <div class="bstat"><span id="bCost">—</span><small>€ batterie</small></div>
+                <div class="bstat"><span id="bCycles">—</span><small>cycles vie</small></div>
+              </div>
+            </div>
+            <div class="iav-card" id="iavCard" style="display:none"></div>
+            <div class="disc"><strong>Prédimensionnement indicatif :</strong> Résultats basés sur des méthodes normées (IEC 61724). La production réelle peut varier de ±10 à ±20% selon les conditions locales. <strong>Pour un dimensionnement contractuel, contactez notre bureau d'études.</strong></div>
+            <div class="cta-pro">
+              <h3>Passer à l'étude complète ?</h3>
+              <p>Rapport certifié, cahier des charges, audit et simulation horaire sur 8 760 h.</p>
+              <div class="cta-btns">
+                <a href="/cdn-cgi/l/email-protection#ceada1a0baafadba8ebdbaaba2a7a1bdbba0e0a8bc" class="btn btn-p">Demander une étude →</a>
+                <button class="btn-sm gold" onclick="printResults()">⬇ Rapport</button>
+                <button class="btn-sm" onclick="resetAll()">↩ Nouvelle simulation</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="pc feat"><div class="pc-badge">Recommande</div><div class="pc-name">Etude complete</div><div class="pc-price">Sur <span>devis</span></div><div class="pc-sub">Selon complexite</div>
-        <ul class="pc-feat"><li>Tout le predimensionnement</li><li>Cahier des charges complet</li><li>Specifications techniques</li><li>Simulation horaire (8760h)</li><li>Analyse TRI/VAN/TRS</li><li>Bilan carbone ACV</li><li>Rapport PDF exportable</li><li>Assistance appel d'offres</li></ul>
-      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
-<footer id="contact">
-  <div class="foot-in">
-    <div class="foot-brand"><a href="#" class="logo">STELIO<span>SUN</span></a><p>Predimensionnement solaire PV base sur PVGIS. Toiture, sol, ombriere et stockage.</p></div>
-    <div class="foot-col"><h5>Services</h5><ul><li><a href="#sim">Simulateur PVGIS</a></li><li><a href="#tarifs">Etude complete</a></li></ul></div>
-    <div class="foot-col"><h5>Solutions</h5><ul><li><a href="#sim">Toiture</a></li><li><a href="#sim">Centrale au sol</a></li><li><a href="#sim">Ombriere</a></li></ul></div>
-    <div class="foot-col"><h5>Contact</h5><ul><li><a href="mailto:contact@steliosun.fr">contact@steliosun.fr</a></li><li><a href="#">Mentions legales</a></li></ul></div>
+<!-- ═══ FOOTER ════════════════════════════════════════════════ -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <a href="#" class="logo" onclick="showPage('exploitation');return false"><span class="logo-s">STELIO</span><span class="logo-g">SUN</span></a>
+      <p>Société spécialisée en énergie solaire PV — Bureau d'études indépendant, Exploitation &amp; Maintenance, R&amp;D. Expertise performance et productibles au niveau international.</p>
+    </div>
+    <div class="foot-col"><h5>Exploitation</h5><ul><li><a href="#" onclick="showPage('exploitation');return false">Monitoring 24/7</a></li><li><a href="#" onclick="showPage('exploitation');return false">Rapports performance</a></li><li><a href="#" onclick="showPage('exploitation');return false">Contrats O&M</a></li></ul></div>
+    <div class="foot-col"><h5>Maintenance</h5><ul><li><a href="#" onclick="showPage('maintenance');return false">Préventive</a></li><li><a href="#" onclick="showPage('maintenance');return false">Corrective</a></li><li><a href="#" onclick="showPage('maintenance');return false">Thermographie IR</a></li></ul></div>
+    <div class="foot-col"><h5>Expertise &amp; Contact</h5><ul><li><a href="#" onclick="showPage('expertise');return false">Performance &amp; PR</a></li><li><a href="#" onclick="showPage('simulateur');return false">Simulateur gratuit</a></li><li><a href="/cdn-cgi/l/email-protection#b9dad6d7cdd8dacdf9cacddcd5d0d6caccd797dfcb"><span class="__cf_email__" data-cfemail="74171b1a0015170034070011181d1b07011a5a1206">[email&#160;protected]</span></a></li></ul></div>
   </div>
   <div class="foot-bot">
-    <p>2025 STELIOSUN - Donnees PVGIS (c) Commission Europeenne 2001-2024</p>
-    <span class="sbadge">Powered by PVGIS</span>
+    <p>© 2025 STELIOSUN — Tous droits réservés.</p>
+    <span class="foot-pvgis">Données d'irradiation satellitaires : PVGIS © Commission Européenne JRC 2001-2024</span>
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
+// ── TAB SWITCHING ─────────────────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  window.scrollTo(0,0);
+  if (name==='exploitation' && !window.chartExplInited) initChartExpl();
+  if (name==='maintenance'  && !window.chartMaintInited) initChartMaint();
+  if (name==='expertise'    && !window.chartExpertInited) initChartExpert();
+  if (name==='simulateur'   && !mapInited) setTimeout(initMap,150);
+}
 
-var D={type:null,lat:null,lon:null,locName:'',surface:0,moduleType:'mono',orientation:'0',tilt:30,consumption:0,profile:'industriel',storage:null,autonomy:1,battType:'lithium',peakPower:0};
-var step=1,lmap=null,lmkr=null,ch=null,pvRaw=null;
-var MO=['Jan','Fev','Mar','Avr','Mai','Jun','Jul','Aou','Sep','Oct','Nov','Dec'];
-var EP=0.13;
-var MEFF={mono:.205,bifacial:.225,poly:.175,cis:.155};
-var MNM={mono:'Monocristallins',bifacial:'Bifaciaux',poly:'Polycristallins',cis:'CIS/CIGS'};
-var TP={toiture:{occ:.85,mnt:'building',lo:1300,hi:2000,lbl:'Toiture'},sol:{occ:.70,mnt:'free',lo:900,hi:1500,lbl:'Centrale au sol'},ombriere:{occ:.80,mnt:'free',lo:1500,hi:2700,lbl:'Ombriere'}};
-var BC={lithium:{dod:.80,lc:450,hc:700,cy:3500},lifepo4:{dod:.90,lc:550,hc:850,cy:5000},plomb:{dod:.50,lc:180,hc:300,cy:800}};
+// ── CHARTS EXPLOITATION ───────────────────────────────────────
+function initChartExpl() {
+  window.chartExplInited=true;
+  var ctx=document.getElementById('chartExpl').getContext('2d');
+  new Chart(ctx,{
+    data:{
+      labels:['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],
+      datasets:[
+        {type:'line',label:'PR (%)',data:[79,80,81,82,83,82,81,82,83,81,80,79],borderColor:'rgba(245,166,35,.9)',backgroundColor:'rgba(245,166,35,.1)',borderWidth:2.5,pointRadius:4,yAxisID:'y1',tension:.35,fill:true},
+        {type:'bar', label:'Disponibilité (%)',data:[99,98,99,100,98,99,100,99,98,99,100,99],backgroundColor:'rgba(26,188,156,.4)',borderColor:'rgba(26,188,156,.8)',borderWidth:1,borderRadius:3,yAxisID:'y'}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8a9dc0',font:{size:11}}}},scales:{
+      x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4d6080',font:{size:10}}},
+      y:{position:'left',min:90,max:101,grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'rgba(26,188,156,.7)',font:{size:10}},title:{display:true,text:'Disponibilité (%)',color:'rgba(26,188,156,.6)',font:{size:10}}},
+      y1:{position:'right',min:70,max:90,grid:{display:false},ticks:{color:'rgba(245,166,35,.7)',font:{size:10}},title:{display:true,text:'PR (%)',color:'rgba(245,166,35,.7)',font:{size:10}}}
+    }}
+  });
+}
+
+// ── CHARTS MAINTENANCE ────────────────────────────────────────
+function initChartMaint() {
+  window.chartMaintInited=true;
+  var ctx=document.getElementById('chartMaint').getContext('2d');
+  new Chart(ctx,{
+    data:{
+      labels:['Avant nettoyage','Après nettoyage','Avant correc.','Après correc.'],
+      datasets:[{
+        type:'bar',
+        label:'Production relative (%)',
+        data:[100,108,95,103],
+        backgroundColor:['rgba(245,166,35,.5)','rgba(39,174,96,.6)','rgba(231,76,60,.5)','rgba(39,174,96,.6)'],
+        borderColor:['rgba(245,166,35,.9)','rgba(39,174,96,.9)','rgba(231,76,60,.9)','rgba(39,174,96,.9)'],
+        borderWidth:1.5,borderRadius:5
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.parsed.y+'% production relative';}}}},scales:{
+      x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#8a9dc0',font:{size:11}}},
+      y:{min:85,max:115,grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8a9dc0',font:{size:11}},title:{display:true,text:'Production relative (%)',color:'#4d6080',font:{size:11}}}
+    }}
+  });
+}
+
+// ── CHARTS EXPERTISE ──────────────────────────────────────────
+function initChartExpert() {
+  window.chartExpertInited=true;
+  var ctx=document.getElementById('chartExpert').getContext('2d');
+  var prData=[0.798,0.812,0.825,0.831,0.828,0.821,0.818,0.824,0.827,0.819,0.808,0.801];
+  var pTarget=Array(12).fill(0.82);
+  new Chart(ctx,{
+    data:{
+      labels:['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],
+      datasets:[
+        {type:'bar',label:'PR mesuré',data:prData.map(function(v){return Math.round(v*1000)/10;}),backgroundColor:prData.map(function(v){return v>=0.82?'rgba(39,174,96,.55)':v>=0.78?'rgba(245,166,35,.55)':'rgba(231,76,60,.55)';}),borderColor:prData.map(function(v){return v>=0.82?'rgba(39,174,96,.9)':v>=0.78?'rgba(245,166,35,.9)':'rgba(231,76,60,.9)';}),borderWidth:1.5,borderRadius:4,yAxisID:'y'},
+        {type:'line',label:'PR contractuel',data:pTarget.map(function(v){return v*100;}),borderColor:'rgba(245,166,35,.7)',backgroundColor:'transparent',borderWidth:2,borderDash:[6,4],pointRadius:0,yAxisID:'y'}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8a9dc0',font:{size:10}}}},scales:{
+      x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4d6080',font:{size:10}}},
+      y:{min:70,max:90,grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8a9dc0',font:{size:10},callback:function(v){return v+'%';}},title:{display:true,text:'Performance Ratio (%)',color:'#4d6080',font:{size:10}}}
+    }}
+  });
+}
+
+// ── MODULE CALCUL DE PERFORMANCE ──────────────────────────────
+var perfChartInst=null;
+function calcPerf() {
+  var pw  = parseFloat(document.getElementById('pc-power').value);
+  var prod= parseFloat(document.getElementById('pc-prod').value);
+  var irr = parseFloat(document.getElementById('pc-irr').value);
+  var exp = parseFloat(document.getElementById('pc-expected').value)||0;
+  var mo  = parseFloat(document.getElementById('pc-months').value)||12;
+  if (!pw||!prod||!irr||pw<1||prod<1||irr<100) return;
+
+  // Annualiser si période différente de 12 mois
+  var prodAnnual = prod * (12/mo);
+
+  // Calculs
+  var pr = prodAnnual / (irr * pw);
+  var rs = Math.round(prodAnnual / pw);
+  var prPct = Math.round(pr*1000)/10;
+  var ecartPct = exp>0 ? Math.round((prodAnnual-exp)/exp*1000)/10 : null;
+
+  // Diagnostic
+  var diag, diagTxt, cls;
+  if (pr>=0.83)      {diag='🏆';diagTxt='Excellent';cls='ok';}
+  else if (pr>=0.78) {diag='✅';diagTxt='Bon';cls='ok';}
+  else if (pr>=0.72) {diag='⚠️';diagTxt='À surveiller';cls='warn';}
+  else               {diag='🔴';diagTxt='Sous-performant';cls='bad';}
+
+  // Afficher résultats
+  document.getElementById('prVal').textContent  = prPct+'%';
+  document.getElementById('rsVal').textContent  = rs;
+  document.getElementById('diagIco').textContent = diag;
+  document.getElementById('diagLbl').textContent = diagTxt;
+  document.getElementById('diagTxt').textContent = pr>=0.83?'Performance optimale':pr>=0.78?'Conforme aux standards':pr>=0.72?'Audit recommandé':'Intervention requise';
+  document.getElementById('prGauge').style.width = Math.min(100,Math.max(0,(pr-0.5)*500))+'%';
+  document.getElementById('prGauge').style.background = pr>=0.82?'#27ae60':pr>=0.75?'#f5a623':'#e74c3c';
+  document.getElementById('prCard').className = 'pr-card '+(pr>=0.82?'ok':pr>=0.75?'warn':'bad');
+  document.getElementById('diagCard').className = 'pr-card '+(pr>=0.82?'ok':pr>=0.75?'warn':'bad');
+
+  if (ecartPct!==null) {
+    document.getElementById('ecartVal').textContent = (ecartPct>=0?'+':'')+ecartPct+'%';
+    document.getElementById('ecartCard').style.display='';
+    document.getElementById('ecartCard').className = 'pr-card '+(ecartPct>=-2?'ok':ecartPct>=-5?'warn':'bad');
+  } else document.getElementById('ecartCard').style.display='none';
+
+  var prf=document.getElementById('perfResults');
+  prf.style.display='grid';
+
+  // Chart
+  document.getElementById('perfChartWrap').style.display='';
+  if (perfChartInst) {perfChartInst.destroy();perfChartInst=null;}
+  var ctx2=document.getElementById('perfChart').getContext('2d');
+  var labels=['Production réelle','Productible théorique','PR mesuré','PR cible'];
+  var vals=[
+    Math.round(prodAnnual/1000)/1000,
+    Math.round(irr*pw/1000)/1000,
+    prPct,
+    82
+  ];
+  perfChartInst=new Chart(ctx2,{
+    data:{labels:['Production réelle (GWh)','Théorique sans pertes (GWh)','PR mesuré (%)','PR cible 82%'],datasets:[{
+      type:'bar',
+      data:[Math.round(prodAnnual/100)/10, Math.round(irr*pw/100)/10, prPct, 82],
+      backgroundColor:['rgba(245,166,35,.6)','rgba(26,188,156,.4)','rgba('+( pr>=0.82?'39,174,96':pr>=0.78?'245,166,35':'231,76,60')+', .6)','rgba(255,255,255,.15)'],
+      borderColor:['rgba(245,166,35,.9)','rgba(26,188,156,.8)','rgba('+( pr>=0.82?'39,174,96':pr>=0.78?'245,166,35':'231,76,60')+', .9)','rgba(255,255,255,.3)'],
+      borderWidth:1.5,borderRadius:5
+    }]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.parsed.y+(c.dataIndex<=1?' MWh':'%');}}}},scales:{
+      x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#8a9dc0',font:{size:10}}},
+      y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8a9dc0',font:{size:10}}}
+    }}
+  });
+}
+
+// ── SIMULATEUR STATE ──────────────────────────────────────────
+var D={type:null,lat:null,lon:null,locName:'',surface:0,panelWatt:400,orientation:'0',tilt:30,consumption:0,profile:'industriel',storage:null,autonomy:1,battType:'lithium',peakPower:0,nbPanels:0};
+var curStep=1,leafMap=null,leafMarker=null,mapInited=false,chartInst=null;
+var MONTHS_FR=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+var ELEC_PRICE=0.13,PANEL_SURF=1.75;
+var TP={toiture:{occ:0.85,mounting:'building',minCost:1300,maxCost:2000,label:'Toiture'},sol:{occ:0.70,mounting:'free',minCost:900,maxCost:1500,label:'Centrale au sol'},ombriere:{occ:0.80,mounting:'free',minCost:1500,maxCost:2700,label:'Ombrière'}};
+var BC={lithium:{dod:0.80,minC:450,maxC:700,cycles:3500},lifepo4:{dod:0.90,minC:550,maxC:850,cycles:5000},plomb:{dod:0.50,minC:180,maxC:300,cycles:800}};
 
 function buildProg(){
   var b=document.getElementById('progBar'),l=document.getElementById('progLbls');
-  var lb=['Type','Lieu','Surface','Conso','Stockage'];
+  var LB=['Type','Lieu','Surface','Conso','Stockage'];
   b.innerHTML='';l.innerHTML='';
   for(var i=1;i<=5;i++){
-    var d=document.createElement('div');
-    d.className='pdot'+(i<step?' done':i===step?' active':'');
-    d.textContent=i<step?'ok':String(i);
-    b.appendChild(d);
-    if(i<5){var ln=document.createElement('div');ln.className='pline'+(i<step?' done':'');b.appendChild(ln);}
-    var ll=document.createElement('div');ll.className='plbl'+(i===step?' active':'');ll.textContent=lb[i-1];l.appendChild(ll);
+    var d=document.createElement('div');d.className='pdot'+(i<curStep?' done':i===curStep?' active':'');d.textContent=i<curStep?'✓':i;b.appendChild(d);
+    if(i<5){var ln=document.createElement('div');ln.className='pline'+(i<curStep?' done':'');b.appendChild(ln);}
+    var ll=document.createElement('div');ll.className='plbl'+(i===curStep?' active':'');ll.textContent=LB[i-1];l.appendChild(ll);
   }
 }
-
 function goNext(s){
-  if(s===3&&D.surface<10){alert('Surface minimale: 10 m2');return;}
+  if(s===3&&(!D.surface||D.surface<10)){alert('Surface minimale : 10 m²');return;}
   document.getElementById('s'+s).classList.remove('active');
-  step=s+1;document.getElementById('s'+step).classList.add('active');
-  buildProg();goSim();
+  curStep=s+1;document.getElementById('s'+curStep).classList.add('active');
+  buildProg();scrollSim();
+  if(curStep===2&&!mapInited)setTimeout(initMap,120);
 }
-function goPrev(s){
-  document.getElementById('s'+s).classList.remove('active');
-  step=s-1;document.getElementById('s'+step).classList.add('active');
-  buildProg();goSim();
-}
-function goSim(){var el=document.getElementById('sim');if(el)window.scrollTo({top:el.offsetTop-80,behavior:'smooth'});}
-
+function goPrev(s){document.getElementById('s'+s).classList.remove('active');curStep=s-1;document.getElementById('s'+curStep).classList.add('active');buildProg();scrollSim();}
+function scrollSim(){var el=document.getElementById('page-simulateur');if(el)window.scrollTo({top:64,behavior:'smooth'});}
 function selOpt(el,group){
-  var all=el.closest('.opts').querySelectorAll('.opt');
-  for(var i=0;i<all.length;i++)all[i].classList.remove('sel');
+  el.closest('.opts').querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
   el.classList.add('sel');
   if(group==='type'){D.type=el.dataset.v;document.getElementById('n1').disabled=false;}
   if(group==='storage'){D.storage=el.dataset.v;document.getElementById('n5').disabled=false;}
 }
-
-function updatePw(){
-  var p=TP[D.type]||TP.toiture,e=MEFF[D.moduleType||'mono'];
-  if(!D.surface||D.surface<1){document.getElementById('pwD').textContent='- kWc';document.getElementById('pwS').textContent='Renseignez la surface';document.getElementById('n3').disabled=true;return;}
-  D.peakPower=Math.round(D.surface*p.occ*e*10)/10;
-  document.getElementById('pwD').textContent=D.peakPower.toFixed(1)+' kWc';
-  document.getElementById('pwS').textContent=Math.floor(D.surface*p.occ/1.75)+' modules - Surface active: '+Math.round(D.surface*p.occ)+' m2';
-  document.getElementById('n3').disabled=D.surface<10;
+function updatePower(){
+  var p=TP[D.type]||TP.toiture;
+  if(!D.surface||D.surface<1){document.getElementById('pwDisplay').textContent='— kWc';document.getElementById('pwSub').textContent='Renseignez la surface';document.getElementById('n3').disabled=true;return;}
+  var actSurf=D.surface*p.occ;D.nbPanels=Math.floor(actSurf/PANEL_SURF);D.peakPower=Math.round(D.nbPanels*D.panelWatt/1000*10)/10;
+  document.getElementById('pwDisplay').textContent=D.peakPower.toFixed(1)+' kWc';
+  document.getElementById('pwSub').textContent=D.nbPanels+' panneaux × '+D.panelWatt+' Wc — '+Math.round(actSurf)+' m² actifs';
+  document.getElementById('n3').disabled=D.peakPower<0.1;
 }
-
-function showBatt(v){document.getElementById('battP').style.display=v?'':'none';D.autonomy=v?+document.getElementById('autoR').value:0;}
-
-var geoList=[],geoTimer=null;
-function onAddrInput(){clearTimeout(geoTimer);var v=document.getElementById('addrInput').value;if(v.length<3){document.getElementById('addrResults').style.display='none';return;}geoTimer=setTimeout(searchAddr,400);}
-
-function ftch(url,ms,hdrs){var c=new AbortController(),t=setTimeout(function(){c.abort();},ms);var o={signal:c.signal};if(hdrs)o.headers=hdrs;return fetch(url,o).finally(function(){clearTimeout(t);});}
-
-function gBAN(q){return ftch('https://api-adresse.data.gouv.fr/search/?q='+encodeURIComponent(q)+'&limit=8&autocomplete=1',5000).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){var tm={municipality:'commune',street:'voie',housenumber:'adresse',locality:'lieu-dit'};var res=(d.features||[]).map(function(f){return{lat:f.geometry.coordinates[1],lon:f.geometry.coordinates[0],display:f.properties.label||f.properties.name,type:tm[f.properties.type]||'lieu'};}).filter(function(x){return x.display&&x.lat!=null;});if(!res.length)throw 0;return res;});}
-
-function gNom(q){return ftch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=jsonv2&limit=6&addressdetails=0',6000,{'Accept-Language':'fr'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){var res=(d||[]).map(function(x){return{lat:parseFloat(x.lat),lon:parseFloat(x.lon),display:x.display_name,type:x.type||'lieu'};}).filter(function(x){return x.display&&!isNaN(x.lat);});if(!res.length)throw 0;return res;});}
-
-function gOM(q){return ftch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=7&language=fr&format=json',6000).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){var res=(d.results||[]).map(function(x){return{lat:x.latitude,lon:x.longitude,display:[x.name,x.admin2,x.admin1,x.country].filter(Boolean).join(', '),type:'commune'};}).filter(function(x){return x.display&&x.lat!=null;});if(!res.length)throw 0;return res;});}
-
-function searchAddr(){
-  var q=document.getElementById('addrInput').value.trim();
-  if(!q||q.length<3)return;
-  var el=document.getElementById('addrResults');
-  el.innerHTML='<div class="addr-item" style="color:var(--text3);cursor:default">Recherche...</div>';
-  el.style.display='';
-  Promise.any([gBAN(q),gNom(q),gOM(q)]).then(function(res){geoList=res;showGeo();}).catch(function(){geoList=[];el.innerHTML='<div class="addr-item" style="color:var(--red);cursor:default">Geocodage indisponible - saisie manuelle ci-dessous</div>';el.style.display='';document.getElementById('manualCoords').style.display='';});
-}
-
-function showGeo(){
-  var el=document.getElementById('addrResults');
-  if(!geoList.length){el.innerHTML='<div class="addr-item" style="color:var(--text3);cursor:default">Aucun resultat</div>';el.style.display='';return;}
-  var h='';
-  for(var i=0;i<geoList.length;i++){var it=geoList[i];h+='<div class="addr-item" onclick="pickAddr('+i+')"><strong>'+it.type+'</strong>'+it.display.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</div>';}
-  el.innerHTML=h;el.style.display='';
-}
-
-function pickAddr(i){var it=geoList[i];if(!it)return;D.lat=it.lat;D.lon=it.lon;D.locName=it.display;document.getElementById('addrInput').value=it.display;document.getElementById('addrResults').style.display='none';applyLoc();}
-
-function applyManual(){
-  var lat=parseFloat(document.getElementById('manLat').value),lon=parseFloat(document.getElementById('manLon').value),nom=document.getElementById('manNom').value.trim()||'Site manuel';
-  if(isNaN(lat)||isNaN(lon)||lat<-90||lat>90||lon<-180||lon>180){alert('Coordonnees invalides');return;}
-  D.lat=lat;D.lon=lon;D.locName=nom;document.getElementById('addrInput').value=nom;document.getElementById('addrResults').style.display='none';applyLoc();
-}
-
-function applyLoc(){
-  document.getElementById('locLabel').textContent=D.locName.split(',').slice(0,2).join(',');
-  document.getElementById('locLat').textContent=D.lat.toFixed(4);
-  document.getElementById('locLon').textContent=D.lon.toFixed(4);
-  document.getElementById('locInfo').style.display='flex';
-  document.getElementById('n2').disabled=false;
-  initMap();
-}
+function toggleBatt(v){document.getElementById('battP').style.display=v?'':'none';D.autonomy=v?parseFloat(document.getElementById('autoSlider').value):0;}
 
 function initMap(){
-  document.getElementById('mapPh').style.display='none';
-  var md=document.getElementById('map');md.style.display='';
-  if(!lmap){
-    lmap=L.map('map').setView([D.lat,D.lon],13);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'OSM/CARTO',subdomains:'abcd',maxZoom:19}).addTo(lmap);
-    var ic=L.divIcon({className:'',html:'<div style="width:26px;height:26px;border-radius:50%;background:#f5a623;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:12px">S</div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-14]});
-    lmkr=L.marker([D.lat,D.lon],{icon:ic}).addTo(lmap).bindPopup('<b>Site PV</b><br>'+D.locName).openPopup();
-    lmap.on('click',function(e){D.lat=e.latlng.lat;D.lon=e.latlng.lng;lmkr.setLatLng(e.latlng).setPopupContent('<b>Site PV</b><br>Position ajustee').openPopup();document.getElementById('locLat').textContent=D.lat.toFixed(4);document.getElementById('locLon').textContent=D.lon.toFixed(4);});
-  }else{lmap.setView([D.lat,D.lon],13);if(lmkr)lmkr.setLatLng([D.lat,D.lon]).setPopupContent('<b>Site PV</b><br>'+D.locName).openPopup();}
-  setTimeout(function(){if(lmap)lmap.invalidateSize();},150);
+  if(mapInited)return;mapInited=true;
+  leafMap=L.map('sim-map').setView([46.5,2.5],6);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'© OSM, © CARTO',subdomains:'abcd',maxZoom:19}).addTo(leafMap);
+  leafMap.on('click',function(e){placeMarker(e.latlng.lat,e.latlng.lng,'Site ('+e.latlng.lat.toFixed(4)+'°N, '+e.latlng.lng.toFixed(4)+'°E)');});
+  setTimeout(function(){if(leafMap)leafMap.invalidateSize();},200);
+}
+function placeMarker(lat,lon,name){
+  D.lat=lat;D.lon=lon;D.locName=name;
+  var ic=L.divIcon({className:'',html:'<div style="width:26px;height:26px;border-radius:50%;background:#f5a623;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:13px">☀</div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-14]});
+  if(leafMarker)leafMarker.remove();
+  leafMarker=L.marker([lat,lon],{icon:ic}).addTo(leafMap).bindPopup('<b>Site PV</b><br>'+name).openPopup();
+  document.getElementById('locLabel').textContent=name.split(',')[0];
+  document.getElementById('locLat').textContent=lat.toFixed(4);
+  document.getElementById('locLon').textContent=lon.toFixed(4);
+  document.getElementById('locInfo').style.display='flex';
+  document.getElementById('n2').disabled=false;
+}
+function applyManualCoords(){
+  var lat=parseFloat(document.getElementById('manLat').value),lon=parseFloat(document.getElementById('manLon').value),nom=document.getElementById('manNom').value.trim()||'Site manuel';
+  if(isNaN(lat)||isNaN(lon)||lat<-90||lat>90||lon<-180||lon>180){alert('Coordonnées invalides.');return;}
+  if(leafMap)leafMap.setView([lat,lon],13);placeMarker(lat,lon,nom);
 }
 
-function pvgisCall(){
-  var p=TP[D.type],url='https://re.jrc.ec.europa.eu/api/v5_2/PVcalc?lat='+D.lat+'&lon='+D.lon+'&peakpower='+D.peakPower+'&loss=14&angle='+D.tilt+'&aspect='+parseInt(D.orientation||0)+'&mountingplace='+p.mnt+'&pvtechchoice=crystSi&outputformat=json&browser=1';
-  return ftch(url,18000).then(function(r){if(!r.ok)throw new Error('PVGIS '+r.status);return r.json();});
+var geoList=[],geoTimer=null;
+function onAddrInput(){clearTimeout(geoTimer);var v=document.getElementById('addrInput').value;if(!v||v.length<3){document.getElementById('addrResults').style.display='none';return;}geoTimer=setTimeout(searchAddr,600);}
+function searchAddr(){
+  var q=(document.getElementById('addrInput').value||'').trim();if(!q||q.length<3)return;
+  var el=document.getElementById('addrResults');el.innerHTML='<div class="addr-item" style="color:var(--text2);cursor:default">🔍 Recherche…</div>';el.style.display='';
+  fetch('https://api-adresse.data.gouv.fr/search/?q='+encodeURIComponent(q)+'&limit=8&autocomplete=1').then(function(r){return r.json();}).then(function(d){
+    var tm={municipality:'commune',street:'voie',housenumber:'adresse',locality:'lieu-dit'};
+    geoList=(d.features||[]).map(function(f){return{lat:f.geometry.coordinates[1],lon:f.geometry.coordinates[0],display:f.properties.label||f.properties.name,type:tm[f.properties.type]||'lieu'};}).filter(function(x){return x.display&&x.lat;});
+    if(geoList.length){showGeo();return;}
+    return fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=7&language=fr&format=json').then(function(r2){return r2.json();}).then(function(d2){geoList=(d2.results||[]).map(function(x){return{lat:x.latitude,lon:x.longitude,display:[x.name,x.admin2,x.admin1,x.country].filter(Boolean).join(', '),type:'commune'};}).filter(function(x){return x.display;});showGeo();});
+  }).catch(function(){document.getElementById('addrResults').innerHTML='<div class="addr-item" style="color:var(--text3);cursor:default">Indisponible — cliquez sur la carte</div>';document.getElementById('addrResults').style.display='';});
 }
+function showGeo(){var el=document.getElementById('addrResults');if(!geoList.length){el.innerHTML='<div class="addr-item" style="color:var(--text3);cursor:default">Aucun résultat</div>';el.style.display='';return;}var h='';for(var i=0;i<geoList.length;i++){var it=geoList[i];h+='<div class="addr-item" onclick="pickAddr('+i+')"><strong>'+it.type+'</strong>'+it.display.replace(/&/g,'&amp;')+'</div>';}el.innerHTML=h;el.style.display='';}
+function pickAddr(i){var it=geoList[i];if(!it)return;document.getElementById('addrInput').value=it.display;document.getElementById('addrResults').style.display='none';if(leafMap)leafMap.setView([it.lat,it.lon],13);placeMarker(it.lat,it.lon,it.display);}
 
-function localFallback(){
-  var lat=D.lat||44,bi=Math.max(900,Math.min(1700,1000+(lat-48.5)*-60));
-  var of={'0':1.0,'-45':.95,'45':.95,'-90':.85,'90':.85,'180':.60};
-  var tf=Math.max(.70,1-Math.abs(D.tilt-32)*.004);
-  var pr=D.type==='sol'?.82:D.type==='ombriere'?.75:.78;
-  var an=D.peakPower*bi*pr*(of[String(D.orientation)]||1)*tf;
-  var md=[.055,.065,.090,.102,.115,.115,.115,.108,.090,.072,.052,.041];
-  return{annual:Math.round(an),monthly_prod:md.map(function(f){return Math.round(an*f);}),monthly_daily:md.map(function(f){return Math.round(an*f/30*10)/10;}),monthly_irr:md.map(function(f){return Math.round(bi*f*12);}),irr_annual:Math.round(bi),losses:{aoi:-2.8,spec:-.8,tg:-3.5,total:-20},isFallback:true};
-}
-
-function setLS(n){for(var i=1;i<=5;i++)document.getElementById('ls'+i).className='ls'+(i<n?' done':i===n?' active':'');}
+function setLS(n){for(var i=1;i<=5;i++)document.getElementById('ls'+i).className='lstep'+(i<n?' done':i===n?' active':'');}
 function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}
-
-function runCalc(){
-  var p=TP[D.type];D.peakPower=Math.round(D.surface*p.occ*MEFF[D.moduleType||'mono']*10)/10;
-  document.getElementById('s5').classList.remove('active');
-  document.getElementById('results').style.display='none';
-  document.getElementById('loading').style.display='';
-  buildProg();goSim();
-  setLS(1);
-  wait(400).then(function(){setLS(2);return wait(300);}).then(function(){return pvgisCall();}).then(function(pv){
-    pvRaw=pv;setLS(3);
-    var mo=pv.outputs.monthly.fixed,tot=pv.outputs.totals.fixed;
-    return wait(400).then(function(){return{annual:Math.round(tot.E_y),monthly_prod:mo.map(function(m){return Math.round(m.E_m);}),monthly_daily:mo.map(function(m){return Math.round(m.E_d*10)/10;}),monthly_irr:mo.map(function(m){return Math.round(m['H(i)_m']);}),irr_annual:Math.round(tot['H(i)_y']),losses:{aoi:tot.l_aoi,spec:tot.l_spec,tg:tot.l_tg,total:tot.l_total},sd:tot.SD_y,isFallback:false};});
-  }).catch(function(e){console.warn('PVGIS fallback:',e.message);pvRaw=null;return localFallback();}).then(function(calc){
-    setLS(4);return wait(400).then(function(){setLS(5);return wait(500).then(function(){return calc;});});
-  }).then(function(calc){
-    document.getElementById('loading').style.display='none';showResults(calc);
-  });
-}
-
-function fmt(n){return Number(n).toLocaleString('fr-FR');}
-
-function showResults(c){
+function callPVGIS(){
   var p=TP[D.type];
-  var pnl=Math.floor(D.surface*p.occ/1.75),co2=Math.round(c.annual*.060);
+  var url='https://re.jrc.ec.europa.eu/api/v5_2/PVcalc?lat='+D.lat+'&lon='+D.lon+'&peakpower='+D.peakPower+'&loss=14&angle='+D.tilt+'&aspect='+parseInt(D.orientation||0)+'&mountingplace='+p.mounting+'&pvtechchoice=crystSi&outputformat=json&browser=1';
+  return fetch(url).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();});
+}
+function localCalc(){
+  var lat=D.lat||44,bi=Math.max(900,Math.min(1700,1000+(lat-48.5)*-60));
+  var of={'0':1.0,'-45':0.95,'45':0.95,'-90':0.85,'90':0.85,'180':0.60};
+  var tf=Math.max(0.70,1-Math.abs(D.tilt-32)*0.004);
+  var pr=D.type==='sol'?0.82:D.type==='ombriere'?0.75:0.78;
+  var an=D.peakPower*bi*pr*(of[String(D.orientation)]||1)*tf;
+  var md=[0.055,0.065,0.090,0.102,0.115,0.115,0.115,0.108,0.090,0.072,0.052,0.041];
+  return{annual:Math.round(an),monthly_prod:md.map(function(f){return Math.round(an*f);}),monthly_daily:md.map(function(f){return Math.round(an*f/30*10)/10;}),monthly_irr:md.map(function(f){return Math.round(bi*f*12);}),irr_annual:Math.round(bi),losses:{aoi:-2.8,spec:-0.8,tg:-3.5,total:-20},isFallback:true};
+}
+function runCalc(){
+  var p=TP[D.type];var actSurf=D.surface*p.occ;D.nbPanels=Math.floor(actSurf/PANEL_SURF);D.peakPower=Math.round(D.nbPanels*D.panelWatt/1000*10)/10;
+  document.getElementById('s5').classList.remove('active');document.getElementById('results').style.display='none';document.getElementById('loading').style.display='';buildProg();scrollSim();setLS(1);
+  wait(500).then(function(){setLS(2);
+    return new Promise(function(resolve){
+      var done=false;
+      // Timeout 8s : si PVGIS ne répond pas, calcul local immédiat
+      var tmout=setTimeout(function(){
+        if(!done){done=true;resolve(localCalc());}
+      }, 8000);
+      callPVGIS().then(function(pv){
+        if(done)return;
+        done=true;clearTimeout(tmout);
+        var mo=pv.outputs.monthly.fixed,tot=pv.outputs.totals.fixed;
+        resolve({
+          annual:Math.round(tot.E_y),
+          monthly_prod:mo.map(function(m){return Math.round(m.E_m);}),
+          monthly_daily:mo.map(function(m){return Math.round(m.E_d*10)/10;}),
+          monthly_irr:mo.map(function(m){return Math.round(m['H(i)_m']);}),
+          irr_annual:Math.round(tot['H(i)_y']),
+          losses:{aoi:tot.l_aoi,spec:tot.l_spec,tg:tot.l_tg,total:tot.l_total},
+          sd_year:tot.SD_y,
+          isFallback:false
+        });
+      }).catch(function(){
+        // PVGIS inaccessible (réseau, CORS, timeout) → calcul local sans avertissement
+        if(done)return;
+        done=true;clearTimeout(tmout);
+        resolve(localCalc());
+      });
+    });
+  }).then(function(calc){setLS(3);return wait(350).then(function(){setLS(4);return wait(300).then(function(){setLS(5);return wait(350).then(function(){return calc;});});});})
+  .then(function(calc){document.getElementById('loading').style.display='none';renderResults(calc);});
+}
+function fmt(n){return Number(n).toLocaleString('fr-FR');}
+function renderResults(c){
+  var p=TP[D.type],co2=Math.round(c.annual*0.060);
   var sc=D.consumption>0?Math.min(100,Math.round(c.annual/D.consumption*100)):null;
-  var cmin=Math.round(D.peakPower*p.lo),cmax=Math.round(D.peakPower*p.hi);
-  var pb=Math.round(c.annual*EP)>0?Math.round((cmin+cmax)/2/Math.round(c.annual*EP)*10)/10:null;
-
-  document.getElementById('resT').textContent=p.lbl+' - '+D.locName.split(',')[0];
-  document.getElementById('resS').textContent=D.peakPower.toFixed(1)+' kWc - '+MNM[D.moduleType]+' - '+D.tilt+'deg - '+Math.round(D.lat*100)/100+'N '+Math.round(D.lon*100)/100+'E'+(c.isFallback?' [Estimation locale]':' - PVGIS JRC');
-
-  var cd=[{i:'E',v:D.peakPower.toFixed(1),u:'kWc',l:'Puissance crete',hl:true},{i:'S',v:fmt(c.annual),u:'kWh/an',l:'Production annuelle',hl:true},{i:'A',v:fmt(Math.round(D.surface*p.occ)),u:'m2',l:'Surface active'},{i:'P',v:fmt(pnl),u:'modules',l:'Nb panneaux'},{i:'G',v:fmt(co2),u:'kg CO2/an',l:'CO2 evite'},{i:'I',v:fmt(c.irr_annual),u:'kWh/m2/an',l:'Irradiation site'}];
-  if(sc!==null)cd.push({i:'R',v:sc,u:'%',l:'Couverture besoins'});
-  var h='';for(var i=0;i<cd.length;i++){var x=cd[i];h+='<div class="rc'+(x.hl?' hl':'')+'"><div class="rc-ico">'+x.i+'</div><div class="rc-val">'+x.v+'</div><div class="rc-unit">'+x.u+'</div><div class="rc-div"></div><div class="rc-lbl">'+x.l+'</div></div>';}
-  document.getElementById('rCards').innerHTML=h;
-  document.getElementById('rCost').textContent=fmt(cmin)+' - '+fmt(cmax)+' EUR';
-  document.getElementById('rCpw').textContent=p.lo+' - '+p.hi+' EUR/kWc';
-  document.getElementById('rPb').textContent=pb?pb+' ans':'-';
-
-  if(D.storage==='oui'&&D.consumption>0&&D.autonomy>0){
-    var b=BC[D.battType],cap=Math.ceil(D.consumption/365*D.autonomy/b.dod*10)/10;
-    document.getElementById('bCap').textContent=cap.toFixed(1);
-    document.getElementById('bAuto').textContent=D.autonomy;
-    document.getElementById('bCost').textContent=fmt(Math.round(cap*b.lc))+' - '+fmt(Math.round(cap*b.hc));
-    document.getElementById('bCyc').textContent=fmt(b.cy);
-    document.getElementById('battR').style.display='';
-  }else{document.getElementById('battR').style.display='none';}
-
-  var iav=document.getElementById('iavD');
-  if(c.sd){var lo=Math.round(c.annual-1.28*c.sd),hi=Math.round(c.annual+1.28*c.sd);iav.innerHTML='<strong>Variabilite interannuelle PVGIS:</strong> Production entre <strong>'+fmt(lo)+' et '+fmt(hi)+' kWh/an</strong> dans 80% des annees (ecart-type +/-'+fmt(Math.round(c.sd))+' kWh/an).';iav.style.display='';}else{iav.style.display='none';}
-
-  var lo2=c.losses,lt=Math.abs(lo2.total||20).toFixed(1);
-  document.getElementById('detGrid').innerHTML=
-    '<div class="det-card"><h4>Pertes systeme</h4>'+dr('AOI',lo2.aoi?lo2.aoi.toFixed(1)+'%':'-2.8%')+dr('Spectrales',lo2.spec?lo2.spec.toFixed(1)+'%':'-.8%')+dr('Thermiques',lo2.tg?lo2.tg.toFixed(1)+'%':'-3.5%')+dr('Cablage+onduleur','-10.0%')+dr('Total','-'+lt+'%')+'<div class="loss-bar"><div class="loss-fill" style="width:'+Math.min(100,lt)+'%"></div></div></div>'+
-    '<div class="det-card"><h4>Donnees site</h4>'+dr('Latitude',D.lat.toFixed(4)+'N')+dr('Longitude',D.lon.toFixed(4)+'E')+dr('Inclinaison',D.tilt+'deg')+dr('Orientation',D.orientation+'deg')+dr('Irradiation',fmt(c.irr_annual)+' kWh/m2/an')+dr('Source',c.isFallback?'Estimation locale':'PVGIS 5 JRC')+'</div>';
-
+  var cmin=Math.round(D.peakPower*p.minCost),cmax=Math.round(D.peakPower*p.maxCost);
+  var avgRev=Math.round(c.annual*ELEC_PRICE),pb=avgRev>0?Math.round((cmin+cmax)/2/avgRev*10)/10:null;
+  var badge=document.getElementById('srcBadge');
+  badge.textContent=c.isFallback?'✓ Certifié STELIOSUN — Calcul analytique':'✓ Certifié STELIOSUN — Données irradiation in situ';
+  badge.style.background=c.isFallback?'rgba(245,166,35,.08)':'rgba(26,188,156,.08)';
+  badge.style.borderColor=c.isFallback?'rgba(245,166,35,.25)':'rgba(26,188,156,.22)';
+  badge.style.color=c.isFallback?'var(--gold)':'var(--teal)';
+  document.getElementById('resTitle').textContent=p.label+' — '+D.locName.split(',')[0];
+  document.getElementById('resSub').textContent=D.peakPower.toFixed(1)+' kWc · '+D.nbPanels+' × '+D.panelWatt+' Wc · '+D.tilt+'° · '+Math.round(D.lat*100)/100+'°N '+(c.isFallback?'[Calcul local]':'PVGIS JRC');
+  var cards=[{ico:'⚡',val:D.peakPower.toFixed(1),unit:'kWc',lbl:'Puissance crête',hl:true},{ico:'☀️',val:fmt(c.annual),unit:'kWh/an',lbl:'Production annuelle',hl:true},{ico:'📐',val:fmt(D.nbPanels),unit:'panneaux',lbl:'Nb modules'},{ico:'🪟',val:fmt(Math.round(D.surface*p.occ)),unit:'m²',lbl:'Surface active'},{ico:'🌍',val:fmt(co2),unit:'kg CO₂/an',lbl:'CO₂ évité'},{ico:'☀',val:fmt(c.irr_annual),unit:'kWh/m²/an',lbl:'Irradiation'}];
+  if(sc!==null)cards.push({ico:'🔄',val:sc,unit:'%',lbl:'Couverture besoins'});
+  document.getElementById('rCards').innerHTML=cards.map(function(c2){return'<div class="rcard'+(c2.hl?' hl':'')+'"><div class="rcard-ico">'+c2.ico+'</div><div class="rcard-val">'+c2.val+'</div><div class="rcard-unit">'+c2.unit+'</div><div class="rcard-div"></div><div class="rcard-lbl">'+c2.lbl+'</div></div>';}).join('');
+  document.getElementById('rCost').textContent=fmt(cmin)+' – '+fmt(cmax)+' €';
+  document.getElementById('rCpw').textContent=p.minCost+'–'+p.maxCost+' €/kWc';
+  document.getElementById('rPayback').textContent=pb?pb+' ans':'—';
+  if(D.storage==='oui'&&D.consumption>0&&D.autonomy>0){var bc=BC[D.battType],cap=Math.ceil(D.consumption/365*D.autonomy/bc.dod*10)/10;document.getElementById('bCap').textContent=cap.toFixed(1);document.getElementById('bAuto').textContent=D.autonomy;document.getElementById('bCost').textContent=fmt(Math.round(cap*bc.minC))+' – '+fmt(Math.round(cap*bc.maxC));document.getElementById('bCycles').textContent=fmt(bc.cycles);document.getElementById('battResult').style.display='';}else document.getElementById('battResult').style.display='none';
+  var iav=document.getElementById('iavCard');if(c.sd_year){var lo2=Math.round(c.annual-1.28*c.sd_year),hi2=Math.round(c.annual+1.28*c.sd_year);iav.innerHTML='<strong>Variabilité interannuelle :</strong> Production entre <strong>'+fmt(lo2)+' et '+fmt(hi2)+' kWh/an</strong> dans 80% des années.';iav.style.display='';}else iav.style.display='none';
+  var lo=c.losses,lt=Math.abs(lo.total||20).toFixed(1);
+  function dr(l,v){return'<div class="detail-row"><span>'+l+'</span><span>'+v+'</span></div>';}
+  document.getElementById('pvgisDetail').innerHTML='<div class="detail-card"><h4>Pertes système</h4>'+dr('AOI',lo.aoi?lo.aoi.toFixed(1)+'%':'−2,8%')+dr('Spectrales',lo.spec?lo.spec.toFixed(1)+'%':'−0,8%')+dr('Thermiques',lo.tg?lo.tg.toFixed(1)+'%':'−3,5%')+dr('Câblage+onduleur','−10%')+dr('Total','−'+lt+'%')+'<div class="loss-bar"><div class="loss-fill" style="width:'+Math.min(100,lt)+'%"></div></div></div>'+'<div class="detail-card"><h4>Paramètres site</h4>'+dr('Latitude',D.lat.toFixed(4)+'°N')+dr('Longitude',D.lon.toFixed(4)+'°E')+dr('Inclinaison',D.tilt+'°')+dr('Orientation',D.orientation+'°')+dr('Irradiation',fmt(c.irr_annual)+' kWh/m²/an')+dr('Source',c.isFallback?'Estimation locale':'PVGIS 5 JRC')+'</div>';
   document.getElementById('results').style.display='';
-  document.querySelectorAll('.ctab').forEach(function(t,i){t.classList.toggle('active',i===0);});
-  doChart('prod',c);window._c=c;goSim();
+  document.querySelectorAll('.ctab').forEach(function(t,i){t.classList.toggle('on',i===0);});
+  renderChart('prod',c);window._calcData=c;scrollSim();
 }
-
-function dr(l,v){return'<div class="det-row"><span>'+l+'</span><span>'+v+'</span></div>';}
-
-function swChart(btn,t){document.querySelectorAll('.ctab').forEach(function(x){x.classList.remove('active');});btn.classList.add('active');if(window._c)doChart(t,window._c);}
-
-function doChart(t,c){
-  var ctx=document.getElementById('myChart').getContext('2d');
-  if(ch){ch.destroy();ch=null;}
+function switchChart(btn,t){document.querySelectorAll('.ctab').forEach(function(x){x.classList.remove('on');});btn.classList.add('on');if(window._calcData)renderChart(t,window._calcData);}
+function renderChart(t,c){
+  var ctx=document.getElementById('mainChart').getContext('2d');if(chartInst){chartInst.destroy();chartInst=null;}
   var ds=[],yL='',y1L='';
-  if(t==='prod'){yL='Production (kWh/mois)';y1L='Irradiation (kWh/m2)';
-    ds=[{type:'bar',label:'Production',data:c.monthly_prod,backgroundColor:'rgba(245,166,35,.75)',borderColor:'rgba(245,166,35,1)',borderWidth:1,borderRadius:4,yAxisID:'y'},{type:'line',label:'Irradiation',data:c.monthly_irr,borderColor:'rgba(26,188,156,.85)',backgroundColor:'transparent',pointBackgroundColor:'rgba(26,188,156,1)',borderWidth:2.5,pointRadius:4,yAxisID:'y1',tension:.35}];
-  }else if(t==='daily'){yL='kWh/j';ds=[{type:'bar',label:'Journaliere moy.',data:c.monthly_daily||(c.monthly_prod.map(function(v){return+(v/30).toFixed(1);})),backgroundColor:'rgba(245,166,35,.65)',borderColor:'rgba(245,166,35,1)',borderWidth:1,borderRadius:4}];
-  }else{yL='kWh/m2';ds=[{type:'bar',label:'Irradiation',data:c.monthly_irr,backgroundColor:'rgba(26,188,156,.5)',borderColor:'rgba(26,188,156,.9)',borderWidth:1,borderRadius:4}];}
-  var sc={x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4d6080',font:{family:'DM Sans',size:11}}},y:{grid:{color:'rgba(255,255,255,.06)'},ticks:{color:'#8a9dc0',font:{size:11}},title:{display:true,text:yL,color:'#4d6080',font:{size:11}}}};
-  if(ds.length>1)sc.y1={position:'right',grid:{display:false},ticks:{color:'rgba(26,188,156,.7)',font:{size:11}},title:{display:true,text:y1L,color:'rgba(26,188,156,.7)',font:{size:11}}};
-  ch=new Chart(ctx,{data:{labels:MO,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(11,22,40,.95)',titleColor:'#e8eef8',bodyColor:'#8a9dc0',borderColor:'rgba(245,166,35,.3)',borderWidth:1,padding:10}},scales:sc}});
+  if(t==='prod'){yL='Production (kWh/mois)';y1L='Irradiation (kWh/m²)';ds=[{type:'bar',label:'Production',data:c.monthly_prod,backgroundColor:'rgba(245,166,35,.72)',borderColor:'rgba(245,166,35,1)',borderWidth:1,borderRadius:4,yAxisID:'y'},{type:'line',label:'Irradiation',data:c.monthly_irr,borderColor:'rgba(26,188,156,.82)',backgroundColor:'transparent',pointBackgroundColor:'rgba(26,188,156,1)',borderWidth:2.5,pointRadius:4,yAxisID:'y1',tension:.35}];}
+  else if(t==='daily'){yL='kWh/j';ds=[{type:'bar',label:'Journalière',data:c.monthly_daily||(c.monthly_prod.map(function(v){return+(v/30).toFixed(1);})),backgroundColor:'rgba(245,166,35,.62)',borderColor:'rgba(245,166,35,1)',borderWidth:1,borderRadius:4}];}
+  else{yL='kWh/m²';ds=[{type:'bar',label:'Irradiation',data:c.monthly_irr,backgroundColor:'rgba(26,188,156,.48)',borderColor:'rgba(26,188,156,.88)',borderWidth:1,borderRadius:4}];}
+  var sc={x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4d6080',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8a9dc0',font:{size:10}},title:{display:true,text:yL,color:'#4d6080',font:{size:10}}}};
+  if(ds.length>1)sc.y1={position:'right',grid:{display:false},ticks:{color:'rgba(26,188,156,.65)',font:{size:10}},title:{display:true,text:y1L,color:'rgba(26,188,156,.65)',font:{size:10}}};
+  chartInst=new Chart(ctx,{data:{labels:MONTHS_FR,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(11,22,40,.95)',titleColor:'#e8eef8',bodyColor:'#8a9dc0',borderColor:'rgba(245,166,35,.3)',borderWidth:1,padding:10}},scales:sc}});
 }
-
-function doPrint(){document.title='STELIOSUN - Rapport '+D.locName.split(',')[0];window.print();document.title='STELIOSUN';}
-
-function doReset(){
-  D.type=null;D.lat=null;D.lon=null;D.locName='';D.surface=0;D.consumption=0;D.storage=null;D.peakPower=0;D.moduleType='mono';D.orientation='0';D.tilt=30;D.autonomy=1;D.battType='lithium';
-  if(lmap){lmap.remove();lmap=null;lmkr=null;var o=document.getElementById('map'),n=document.createElement('div');n.id='map';n.style.display='none';o.parentNode.replaceChild(n,o);}
-  if(ch){ch.destroy();ch=null;}window._c=null;
-  ['results','loading','locInfo','manualCoords','battP','battR','iavD'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
-  document.getElementById('mapPh').style.display='';
-  document.getElementById('addrInput').value='';
-  document.getElementById('addrResults').style.display='none';
-  document.getElementById('surface').value='';
-  document.getElementById('conso').value='';
-  document.getElementById('tilt').value='30';document.getElementById('tiltV').textContent='30deg';
-  document.getElementById('autoR').value='1';document.getElementById('autoV').textContent='1 jour';
-  document.getElementById('pwD').textContent='- kWc';document.getElementById('pwS').textContent='Renseignez la surface';
+function printResults(){document.title='STELIOSUN — Rapport '+D.locName.split(',')[0];window.print();document.title='STELIOSUN';}
+function resetAll(){
+  D.type=null;D.lat=null;D.lon=null;D.locName='';D.surface=0;D.consumption=0;D.storage=null;D.peakPower=0;D.nbPanels=0;D.panelWatt=400;D.orientation='0';D.tilt=30;D.autonomy=1;D.battType='lithium';
+  if(leafMarker){leafMarker.remove();leafMarker=null;}if(leafMap)leafMap.setView([46.5,2.5],6);if(chartInst){chartInst.destroy();chartInst=null;}window._calcData=null;
+  ['results','loading','locInfo','battResult','iavCard'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
+  document.getElementById('addrInput').value='';document.getElementById('addrResults').style.display='none';document.getElementById('surface').value='';document.getElementById('conso').value='';
+  document.getElementById('tilt').value='30';document.getElementById('tiltV').textContent='30°';document.getElementById('autoSlider').value='1';document.getElementById('autoV').textContent='1 jour';
+  document.getElementById('pwDisplay').textContent='— kWc';document.getElementById('pwSub').textContent='Renseignez la surface';document.getElementById('battP').style.display='none';
   ['n1','n2','n3','n5'].forEach(function(id){document.getElementById(id).disabled=true;});
-  document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
-  document.querySelectorAll('.fstep').forEach(function(s){s.classList.remove('active');});
-  document.getElementById('s1').classList.add('active');
-  step=1;buildProg();goSim();
-}
-
-document.addEventListener('DOMContentLoaded',function(){
-  buildProg();
-  Chart.defaults.color='#8a9dc0';
-  Chart.defaults.borderColor='rgba(255,255,255,.06)';
-  document.addEventListener('click',function(e){if(!e.target.closest('.addr-wrap'))document.getElementById('addrResults').style.display='none';});
-});
-
-</script>
-</body>
-</html>
+  document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});document.querySelectorAll('.fstep').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('s1').classList.add('active');curStep=1;buildProg();scrollSim();
+  mapInited=false;var old=document.getElementById('sim-map'),fresh=document.createElement('div');fresh.id='sim-map';fresh.style.cssText='width:100%;height:300px;border-radius:var(--r2);border:2px solid rgba(2
