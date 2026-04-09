@@ -248,6 +248,51 @@ footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.05);paddin
   .nav-tabs .nav-tab span:not(.tab-ico){display:none}
   .nav-tabs .nav-tab{padding:.45rem .7rem}
 }
+
+/* ── RESPONSIVE ── */
+.page h1{font-size:clamp(2rem,4.5vw,4.5rem)}
+.st{font-size:clamp(1.5rem,2.8vw,2.8rem)}
+.hero-desc{font-size:clamp(.88rem,1.1vw,1rem)}
+.card p,.step-body p,.card-sm p{font-size:clamp(.78rem,.9vw,.86rem)}
+.kpi-val{font-size:clamp(1.5rem,2.2vw,2.2rem)}
+.kpi-lbl{font-size:clamp(.6rem,.75vw,.75rem)}
+.chart-h{height:clamp(220px,22vw,320px);position:relative}
+.chart-h2{height:clamp(180px,18vw,260px);position:relative}
+.chart-wrap2{height:clamp(200px,20vw,280px);position:relative}
+.hero{padding:clamp(3rem,5vw,5rem) clamp(1rem,3vw,2rem)}
+.sec{padding:clamp(2.5rem,4vw,4.5rem) clamp(1rem,3vw,2rem)}
+.hero-inner{gap:clamp(2rem,4vw,5rem)}
+/* ── VISUEL ── */
+#page-exploitation .hero{background:radial-gradient(ellipse 80% 70% at 70% 30%,rgba(245,166,35,.09),transparent 65%),linear-gradient(160deg,#070f1c 0%,#0d1f38 100%)}
+#page-maintenance .hero{background:radial-gradient(ellipse 70% 60% at 30% 60%,rgba(26,188,156,.08),transparent 60%),linear-gradient(160deg,#06101e 0%,#0a1c38 100%)}
+#page-expertise .hero{background:radial-gradient(ellipse 80% 65% at 65% 40%,rgba(245,166,35,.07),rgba(26,188,156,.05) 50%,transparent 70%),linear-gradient(160deg,#070f1e 0%,#0c1c38 100%)}
+.card{background:linear-gradient(135deg,#131f35,rgba(245,166,35,.025));box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.card:hover{box-shadow:0 8px 30px rgba(0,0,0,.3),0 0 0 1px rgba(245,166,35,.15)}
+.exp-card{background:linear-gradient(135deg,#131f35,rgba(245,166,35,.025));box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.kpi{background:linear-gradient(135deg,var(--navy3),rgba(245,166,35,.07));border:1px solid rgba(245,166,35,.16);position:relative;overflow:hidden}
+.kpi::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.chart-box{background:linear-gradient(135deg,var(--navy3),rgba(245,166,35,.03));box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.sec-alt{background:linear-gradient(180deg,var(--navy2) 0%,rgba(12,24,46,.95) 100%)}
+.proc-num{background:linear-gradient(135deg,var(--navy3),rgba(245,166,35,.12));border:2px solid rgba(245,166,35,.4);box-shadow:0 0 16px rgba(245,166,35,.07)}
+/* ── NAV CENTRÉ ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:68px;background:rgba(7,15,28,.98);backdrop-filter:blur(16px);border-bottom:1px solid rgba(245,166,35,.14);display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:0 2rem;gap:1.5rem}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.85rem;letter-spacing:.08em;text-decoration:none}
+.logo-s{color:var(--text2)}.logo-g{color:var(--gold)}
+.nav-tabs{display:flex;gap:.2rem;justify-content:center}
+.nav-tab{padding:.5rem 1.3rem;border-radius:6px;font-size:.88rem;font-weight:600;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text2);font-family:inherit;transition:all .22s;white-space:nowrap;display:flex;align-items:center;gap:.5rem}
+.nav-tab:hover{color:var(--text);background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
+.nav-tab.active{background:rgba(245,166,35,.12);color:var(--gold);border-color:rgba(245,166,35,.3);box-shadow:0 0 16px rgba(245,166,35,.09)}
+.nav-tab .tab-ico{font-size:1.05rem}
+.nav-contact{background:var(--gold);color:var(--navy);padding:.5rem 1.3rem;border-radius:5px;font-size:.85rem;font-weight:700;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-contact:hover{background:var(--gold2);transform:translateY(-1px)}
+/* ── WORLD MAP ── */
+#world-map{width:100%;height:clamp(260px,26vw,380px);border-radius:var(--r2);border:1px solid rgba(245,166,35,.18);overflow:hidden}
+/* ── PROGRESS CLIQUABLE ── */
+.pdot.done{cursor:pointer}.pdot.done:hover{transform:scale(1.15);box-shadow:0 0 10px rgba(245,166,35,.4)}
+.plbl{cursor:default;transition:color .2s}
+/* ── MOBILE ── */
+@media(max-width:900px){.g3{grid-template-columns:1fr 1fr}.kpi-row{grid-template-columns:1fr 1fr}.hero-inner{grid-template-columns:1fr}}
+@media(max-width:640px){nav{grid-template-columns:auto 1fr;height:auto;padding:.4rem .75rem;row-gap:.2rem}.nav-tabs{gap:.1rem;flex-wrap:wrap}.nav-tab span:not(.tab-ico){display:none}.nav-tab{padding:.4rem .6rem}.nav-contact{display:none}.g3{grid-template-columns:1fr}.kpi-row{grid-template-columns:1fr 1fr}}
 </style></head><body>
 <!-- ═══ NAV ═══════════════════════════════════════════════════ -->
 <nav>
@@ -309,7 +354,7 @@ footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.05);paddin
           </g>
           <!-- KPI boxes -->
           <rect x="35" y="218" width="85" height="62" rx="6" fill="#1a2843" stroke="rgba(245,166,35,.15)" stroke-width="1"/>
-          <text x="77" y="240" font-family="Bebas Neue" font-size="18" fill="#f5a623" text-anchor="middle">98.7%</text>
+          <text x="77" y="240" font-family="Bebas Neue" font-size="18" fill="#f5a623" text-anchor="middle">97%</text>
           <text x="77" y="252" font-family="DM Sans" font-size="7" fill="#8a9dc0" text-anchor="middle">DISPONIBILITÉ</text>
           <rect x="132" y="218" width="85" height="62" rx="6" fill="#1a2843" stroke="rgba(26,188,156,.15)" stroke-width="1"/>
           <text x="174" y="240" font-family="Bebas Neue" font-size="18" fill="#1abc9c" text-anchor="middle">0.812</text>
@@ -332,9 +377,9 @@ footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.05);paddin
   <section class="sec sec-alt">
     <div class="ctr">
       <div class="kpi-row">
-        <div class="kpi"><span class="kpi-val">98.7%</span><div class="kpi-lbl">Disponibilité garantie</div></div>
+        <div class="kpi"><span class="kpi-val">97%</span><div class="kpi-lbl">Disponibilité garantie</div></div>
         <div class="kpi"><span class="kpi-val">24/7</span><div class="kpi-lbl">Supervision continue</div></div>
-        <div class="kpi"><span class="kpi-val">&lt; 4h</span><div class="kpi-lbl">Délai intervention critique</div></div>
+        <div class="kpi"><span class="kpi-val">&lt; 48h</span><div class="kpi-lbl">Délai intervention critique</div></div>
         <div class="kpi"><span class="kpi-val">INTL</span><div class="kpi-lbl">Couverture internationale</div></div>
       </div>
       <div class="g2" style="gap:2rem;align-items:start">
@@ -375,42 +420,13 @@ footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.05);paddin
         <div class="card"><span class="card-ico">🏆</span><h3>Performance garantie</h3><p>O&M complet + garantie de productible annuel contractuel. Idéal pour les investisseurs souhaitant sécuriser leur retour financier.</p><span class="badge bt2">Premium</span></div>
       </div>
       <div class="chart-box" style="margin-top:1.5rem">
-        <div class="chart-title">🌍 Zones d'intervention internationales</div>
-        <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:160px">
-          <rect width="700" height="200" fill="transparent"/>
-          <!-- Timeline zones -->
-          <text x="350" y="20" font-family="DM Sans" font-size="9" fill="#4d6080" text-anchor="middle">PRÉSENCE OPÉRATIONNELLE PAR ZONE GÉOGRAPHIQUE</text>
-          <g transform="translate(20,35)">
-            <!-- France -->
-            <rect x="0" y="0" width="130" height="32" rx="4" fill="rgba(245,166,35,.15)" stroke="rgba(245,166,35,.3)" stroke-width="1"/>
-            <text x="12" y="12" font-family="DM Sans" font-size="8" fill="#f5a623" font-weight="600">🇫🇷 France</text>
-            <text x="12" y="24" font-family="DM Sans" font-size="7" fill="#8a9dc0">Siège + équipes terrain</text>
-            <!-- Europe Sud -->
-            <rect x="145" y="0" width="130" height="32" rx="4" fill="rgba(245,166,35,.12)" stroke="rgba(245,166,35,.25)" stroke-width="1"/>
-            <text x="157" y="12" font-family="DM Sans" font-size="8" fill="#f5a623" font-weight="600">🌍 Europe du Sud</text>
-            <text x="157" y="24" font-family="DM Sans" font-size="7" fill="#8a9dc0">Espagne, Italie, Portugal</text>
-            <!-- Afrique -->
-            <rect x="290" y="0" width="130" height="32" rx="4" fill="rgba(26,188,156,.1)" stroke="rgba(26,188,156,.25)" stroke-width="1"/>
-            <text x="302" y="12" font-family="DM Sans" font-size="8" fill="#1abc9c" font-weight="600">🌍 Afrique</text>
-            <text x="302" y="24" font-family="DM Sans" font-size="7" fill="#8a9dc0">Maghreb, Afrique Sub-Sah.</text>
-            <!-- Moyen-Orient -->
-            <rect x="435" y="0" width="130" height="32" rx="4" fill="rgba(26,188,156,.08)" stroke="rgba(26,188,156,.2)" stroke-width="1"/>
-            <text x="447" y="12" font-family="DM Sans" font-size="8" fill="#1abc9c" font-weight="600">🌏 Moyen-Orient</text>
-            <text x="447" y="24" font-family="DM Sans" font-size="7" fill="#8a9dc0">EAU, Arabie Saoudite</text>
-            <!-- Amériques -->
-            <rect x="72" y="48" width="130" height="32" rx="4" fill="rgba(245,166,35,.08)" stroke="rgba(245,166,35,.18)" stroke-width="1"/>
-            <text x="84" y="60" font-family="DM Sans" font-size="8" fill="#f5a623" font-weight="600">🌎 Amériques</text>
-            <text x="84" y="72" font-family="DM Sans" font-size="7" fill="#8a9dc0">Brésil, Chili, Mexique</text>
-            <!-- Asie Pacifique -->
-            <rect x="218" y="48" width="140" height="32" rx="4" fill="rgba(245,166,35,.06)" stroke="rgba(245,166,35,.15)" stroke-width="1"/>
-            <text x="230" y="60" font-family="DM Sans" font-size="8" fill="#f5a623" font-weight="600">🌏 Asie-Pacifique</text>
-            <text x="230" y="72" font-family="DM Sans" font-size="7" fill="#8a9dc0">Inde, Australie, Vietnam</text>
-            <!-- DOM-TOM -->
-            <rect x="374" y="48" width="130" height="32" rx="4" fill="rgba(39,174,96,.08)" stroke="rgba(39,174,96,.2)" stroke-width="1"/>
-            <text x="386" y="60" font-family="DM Sans" font-size="8" fill="#27ae60" font-weight="600">🏝 DOM-TOM</text>
-            <text x="386" y="72" font-family="DM Sans" font-size="7" fill="#8a9dc0">Réunion, Martinique, Guyane</text>
-          </g>
-        </svg>
+        <div class="chart-title" style="margin-bottom:.75rem">🌍 Présence internationale — zones d&rsquo;intervention</div>
+        <div id="world-map"></div>
+        <div style="display:flex;gap:2rem;padding:.75rem 0 0;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:.45rem;font-size:.76rem;color:var(--text2)"><div style="width:10px;height:10px;border-radius:50%;background:#f5a623;flex-shrink:0"></div>Siège &amp; équipes permanentes</div>
+          <div style="display:flex;align-items:center;gap:.45rem;font-size:.76rem;color:var(--text2)"><div style="width:10px;height:10px;border-radius:50%;background:#1abc9c;flex-shrink:0"></div>Partenaires certifiés</div>
+          <div style="display:flex;align-items:center;gap:.45rem;font-size:.76rem;color:var(--text2)"><div style="width:10px;height:10px;border-radius:50%;background:#e74c3c;flex-shrink:0"></div>Interventions ponctuelles</div>
+        </div>
       </div>
     </div>
   </section>
@@ -672,7 +688,7 @@ footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.05);paddin
             </div>
             <div class="card-sm" style="border-left:3px solid var(--teal)">
               <h4>📉 Analyse des pertes</h4>
-              <p>Décomposition des pertes : ombrage, réflexion, spectral, thermique, câblage, onduleur, disponibilité — selon la méthode de bilan énergétique IEC 61724.</p>
+              <p>Décomposition des pertes : ombrage, réflexion, spectral, thermique, câblage, onduleur, disponibilité — selon les méthodes reconnues de bilan énergétique.</p>
             </div>
             <div class="card-sm" style="border-left:3px solid var(--green)">
               <h4>🔬 R&D — Modèles propriétaires</h4>
@@ -696,7 +712,7 @@ footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.05);paddin
         <div class="card">
           <span class="card-ico">📈</span>
           <h3>Performance Ratio (PR)</h3>
-          <p>Rapport entre énergie produite et énergie théorique sans pertes. Un PR &gt; 0.80 indique une installation en bon état. Calculé selon IEC 61724-1.</p>
+          <p>Rapport entre énergie produite et énergie théorique sans pertes. Un PR &gt; 0.80 indique une installation en bon état. </p>
           <div style="margin-top:1rem;background:var(--navy3);border-radius:var(--r);padding:.75rem">
             <div style="font-size:.75rem;color:var(--text3);margin-bottom:.4rem">PR = E_ac / (G_poa × P_stc / 1000)</div>
             <div style="display:flex;gap:.5rem;font-size:.72rem;flex-wrap:wrap">
@@ -812,7 +828,7 @@ footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.05);paddin
           <span style="font-size:1.6rem">🏅</span>
           <div>
             <div style="font-weight:700;margin-bottom:.15rem">Calculs vérifiés et certifiés par STELIOSUN</div>
-            <div style="font-size:.83rem;color:var(--text2)">Méthodes conformes IEC 61724. Données d'irradiation issues de sources météorologiques de référence.</div>
+            <div style="font-size:.83rem;color:var(--text2)">Calculs certifiés par STELIOSUN. Données d'irradiation issues de sources de référence.</div>
           </div>
         </div>
 
@@ -1012,7 +1028,7 @@ footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.05);paddin
               </div>
             </div>
             <div class="iav-card" id="iavCard" style="display:none"></div>
-            <div class="disc"><strong>Prédimensionnement indicatif :</strong> Résultats basés sur des méthodes normées (IEC 61724). La production réelle peut varier de ±10 à ±20% selon les conditions locales. <strong>Pour un dimensionnement contractuel, contactez notre bureau d'études.</strong></div>
+            <div class="disc"><strong>Prédimensionnement indicatif :</strong> Résultats basés sur des méthodes éprouvées. La production réelle peut varier de ±10 à ±20% selon les conditions locales. <strong>Pour un dimensionnement contractuel, contactez notre bureau d'études.</strong></div>
             <div class="cta-pro">
               <h3>Passer à l'étude complète ?</h3>
               <p>Rapport certifié, cahier des charges, audit et simulation horaire sur 8 760 h.</p>
@@ -1045,19 +1061,24 @@ footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.05);paddin
     <span class="foot-pvgis">Données d'irradiation satellitaires : PVGIS © Commission Européenne JRC 2001-2024</span>
   </div>
 </footer>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
+/* ============================================================
+   STELIOSUN V5 — JS complet
+   ============================================================ */
+
 // ── TAB SWITCHING ─────────────────────────────────────────────
 function showPage(name) {
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
-  document.getElementById('page-'+name).classList.add('active');
-  document.getElementById('tab-'+name).classList.add('active');
+  var pg = document.getElementById('page-'+name);
+  var tb = document.getElementById('tab-'+name);
+  if (pg) pg.classList.add('active');
+  if (tb) tb.classList.add('active');
   window.scrollTo(0,0);
   setTimeout(function(){
-    if (name==='exploitation' && !window.chartExplInited) initChartExpl();
+    if (name==='exploitation') { if(!window.chartExplInited) initChartExpl(); initWorldMap(); }
     if (name==='maintenance'  && !window.chartMaintInited)  initChartMaint();
     if (name==='expertise'    && !window.chartExpertInited) initChartExpert();
     if (name==='simulateur'   && !mapInited) initMap();
@@ -1067,156 +1088,254 @@ function showPage(name) {
 // ── CHARTS EXPLOITATION ───────────────────────────────────────
 function initChartExpl() {
   window.chartExplInited=true;
-  var ctx=document.getElementById('chartExpl').getContext('2d');
-  new Chart(ctx,{
+  var el = document.getElementById('chartExpl');
+  if (!el) return;
+  new Chart(el.getContext('2d'),{
     data:{
       labels:['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],
       datasets:[
-        {type:'line',label:'PR (%)',data:[79,80,81,82,83,82,81,82,83,81,80,79],borderColor:'rgba(245,166,35,.9)',backgroundColor:'rgba(245,166,35,.1)',borderWidth:2.5,pointRadius:4,yAxisID:'y1',tension:.35,fill:true},
-        {type:'bar', label:'Disponibilité (%)',data:[99,98,99,100,98,99,100,99,98,99,100,99],backgroundColor:'rgba(26,188,156,.4)',borderColor:'rgba(26,188,156,.8)',borderWidth:1,borderRadius:3,yAxisID:'y'}
+        {type:'line',label:'PR (%)',data:[79,80,81,82,83,82,81,82,83,81,80,79],
+         borderColor:'rgba(245,166,35,.9)',backgroundColor:'rgba(245,166,35,.1)',
+         borderWidth:2.5,pointRadius:4,yAxisID:'y1',tension:.35,fill:true},
+        {type:'bar',label:'Disponibilité (%)',data:[99,98,99,100,97,99,100,99,98,99,100,99],
+         backgroundColor:'rgba(26,188,156,.4)',borderColor:'rgba(26,188,156,.8)',
+         borderWidth:1,borderRadius:3,yAxisID:'y'}
       ]
     },
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8a9dc0',font:{size:11}}}},scales:{
-      x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4d6080',font:{size:10}}},
-      y:{position:'left',min:90,max:101,grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'rgba(26,188,156,.7)',font:{size:10}},title:{display:true,text:'Disponibilité (%)',color:'rgba(26,188,156,.6)',font:{size:10}}},
-      y1:{position:'right',min:70,max:90,grid:{display:false},ticks:{color:'rgba(245,166,35,.7)',font:{size:10}},title:{display:true,text:'PR (%)',color:'rgba(245,166,35,.7)',font:{size:10}}}
-    }}
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#8a9dc0',font:{size:11}}}},
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4d6080',font:{size:10}}},
+        y:{position:'left',min:90,max:101,grid:{color:'rgba(255,255,255,.05)'},
+          ticks:{color:'rgba(26,188,156,.7)',font:{size:10}},
+          title:{display:true,text:'Disponibilité (%)',color:'rgba(26,188,156,.6)',font:{size:10}}},
+        y1:{position:'right',min:70,max:90,grid:{display:false},
+          ticks:{color:'rgba(245,166,35,.7)',font:{size:10}},
+          title:{display:true,text:'PR (%)',color:'rgba(245,166,35,.7)',font:{size:10}}}
+      }}
   });
 }
 
 // ── CHARTS MAINTENANCE ────────────────────────────────────────
 function initChartMaint() {
   window.chartMaintInited=true;
-  var ctx=document.getElementById('chartMaint').getContext('2d');
-  new Chart(ctx,{
+  var el = document.getElementById('chartMaint');
+  if (!el) return;
+  new Chart(el.getContext('2d'),{
     data:{
       labels:['Avant nettoyage','Après nettoyage','Avant correc.','Après correc.'],
-      datasets:[{
-        type:'bar',
-        label:'Production relative (%)',
+      datasets:[{type:'bar',label:'Production relative (%)',
         data:[100,108,95,103],
         backgroundColor:['rgba(245,166,35,.5)','rgba(39,174,96,.6)','rgba(231,76,60,.5)','rgba(39,174,96,.6)'],
         borderColor:['rgba(245,166,35,.9)','rgba(39,174,96,.9)','rgba(231,76,60,.9)','rgba(39,174,96,.9)'],
-        borderWidth:1.5,borderRadius:5
-      }]
+        borderWidth:1.5,borderRadius:5}]
     },
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.parsed.y+'% production relative';}}}},scales:{
-      x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#8a9dc0',font:{size:11}}},
-      y:{min:85,max:115,grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8a9dc0',font:{size:11}},title:{display:true,text:'Production relative (%)',color:'#4d6080',font:{size:11}}}
-    }}
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#8a9dc0',font:{size:11}}},
+        y:{min:85,max:115,grid:{color:'rgba(255,255,255,.05)'},
+          ticks:{color:'#8a9dc0',font:{size:11}},
+          title:{display:true,text:'Production relative (%)',color:'#4d6080',font:{size:11}}}
+      }}
   });
 }
 
 // ── CHARTS EXPERTISE ──────────────────────────────────────────
 function initChartExpert() {
   window.chartExpertInited=true;
-  var ctx=document.getElementById('chartExpert').getContext('2d');
+  var el = document.getElementById('chartExpert');
+  if (!el) return;
   var prData=[0.798,0.812,0.825,0.831,0.828,0.821,0.818,0.824,0.827,0.819,0.808,0.801];
-  var pTarget=Array(12).fill(0.82);
-  new Chart(ctx,{
+  new Chart(el.getContext('2d'),{
     data:{
       labels:['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],
       datasets:[
-        {type:'bar',label:'PR mesuré',data:prData.map(function(v){return Math.round(v*1000)/10;}),backgroundColor:prData.map(function(v){return v>=0.82?'rgba(39,174,96,.55)':v>=0.78?'rgba(245,166,35,.55)':'rgba(231,76,60,.55)';}),borderColor:prData.map(function(v){return v>=0.82?'rgba(39,174,96,.9)':v>=0.78?'rgba(245,166,35,.9)':'rgba(231,76,60,.9)';}),borderWidth:1.5,borderRadius:4,yAxisID:'y'},
-        {type:'line',label:'PR contractuel',data:pTarget.map(function(v){return v*100;}),borderColor:'rgba(245,166,35,.7)',backgroundColor:'transparent',borderWidth:2,borderDash:[6,4],pointRadius:0,yAxisID:'y'}
+        {type:'bar',label:'PR mesuré',
+         data:prData.map(function(v){return Math.round(v*1000)/10;}),
+         backgroundColor:prData.map(function(v){return v>=0.82?'rgba(39,174,96,.55)':v>=0.78?'rgba(245,166,35,.55)':'rgba(231,76,60,.55)';}),
+         borderColor:prData.map(function(v){return v>=0.82?'rgba(39,174,96,.9)':v>=0.78?'rgba(245,166,35,.9)':'rgba(231,76,60,.9)';}),
+         borderWidth:1.5,borderRadius:4,yAxisID:'y'},
+        {type:'line',label:'PR contractuel (82%)',
+         data:Array(12).fill(82),borderColor:'rgba(245,166,35,.7)',
+         backgroundColor:'transparent',borderWidth:2,borderDash:[6,4],pointRadius:0,yAxisID:'y'}
       ]
     },
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8a9dc0',font:{size:10}}}},scales:{
-      x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4d6080',font:{size:10}}},
-      y:{min:70,max:90,grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8a9dc0',font:{size:10},callback:function(v){return v+'%';}},title:{display:true,text:'Performance Ratio (%)',color:'#4d6080',font:{size:10}}}
-    }}
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#8a9dc0',font:{size:10}}}},
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4d6080',font:{size:10}}},
+        y:{min:70,max:90,grid:{color:'rgba(255,255,255,.05)'},
+          ticks:{color:'#8a9dc0',font:{size:10},callback:function(v){return v+'%';}},
+          title:{display:true,text:'Performance Ratio (%)',color:'#4d6080',font:{size:10}}}
+      }}
   });
 }
 
-// ── MODULE CALCUL DE PERFORMANCE ──────────────────────────────
-var perfChartInst=null;
-function calcPerf() {
-  var pw  = parseFloat(document.getElementById('pc-power').value);
-  var prod= parseFloat(document.getElementById('pc-prod').value);
-  var irr = parseFloat(document.getElementById('pc-irr').value);
-  var exp = parseFloat(document.getElementById('pc-expected').value)||0;
-  var mo  = parseFloat(document.getElementById('pc-months').value)||12;
-  if (!pw||!prod||!irr||pw<1||prod<1||irr<100) return;
-
-  // Annualiser si période différente de 12 mois
-  var prodAnnual = prod * (12/mo);
-
-  // Calculs
-  var pr = prodAnnual / (irr * pw);
-  var rs = Math.round(prodAnnual / pw);
-  var prPct = Math.round(pr*1000)/10;
-  var ecartPct = exp>0 ? Math.round((prodAnnual-exp)/exp*1000)/10 : null;
-
-  // Diagnostic
-  var diag, diagTxt, cls;
-  if (pr>=0.83)      {diag='🏆';diagTxt='Excellent';cls='ok';}
-  else if (pr>=0.78) {diag='✅';diagTxt='Bon';cls='ok';}
-  else if (pr>=0.72) {diag='⚠️';diagTxt='À surveiller';cls='warn';}
-  else               {diag='🔴';diagTxt='Sous-performant';cls='bad';}
-
-  // Afficher résultats
-  document.getElementById('prVal').textContent  = prPct+'%';
-  document.getElementById('rsVal').textContent  = rs;
-  document.getElementById('diagIco').textContent = diag;
-  document.getElementById('diagLbl').textContent = diagTxt;
-  document.getElementById('diagTxt').textContent = pr>=0.83?'Performance optimale':pr>=0.78?'Conforme aux standards':pr>=0.72?'Audit recommandé':'Intervention requise';
-  document.getElementById('prGauge').style.width = Math.min(100,Math.max(0,(pr-0.5)*500))+'%';
-  document.getElementById('prGauge').style.background = pr>=0.82?'#27ae60':pr>=0.75?'#f5a623':'#e74c3c';
-  document.getElementById('prCard').className = 'pr-card '+(pr>=0.82?'ok':pr>=0.75?'warn':'bad');
-  document.getElementById('diagCard').className = 'pr-card '+(pr>=0.82?'ok':pr>=0.75?'warn':'bad');
-
-  if (ecartPct!==null) {
-    document.getElementById('ecartVal').textContent = (ecartPct>=0?'+':'')+ecartPct+'%';
-    document.getElementById('ecartCard').style.display='';
-    document.getElementById('ecartCard').className = 'pr-card '+(ecartPct>=-2?'ok':ecartPct>=-5?'warn':'bad');
-  } else document.getElementById('ecartCard').style.display='none';
-
-  var prf=document.getElementById('perfResults');
-  prf.style.display='grid';
-
-  // Chart
-  document.getElementById('perfChartWrap').style.display='';
-  if (perfChartInst) {perfChartInst.destroy();perfChartInst=null;}
-  var ctx2=document.getElementById('perfChart').getContext('2d');
-  var labels=['Production réelle','Productible théorique','PR mesuré','PR cible'];
-  var vals=[
-    Math.round(prodAnnual/1000)/1000,
-    Math.round(irr*pw/1000)/1000,
-    prPct,
-    82
+// ── WORLD MAP (OpenStreetMap — fonctionne en local + HTTPS) ───
+function initWorldMap() {
+  if (window.worldMapInited) return;
+  var el = document.getElementById('world-map');
+  if (!el || !window.L) return;
+  window.worldMapInited = true;
+  var wmap = L.map('world-map', {
+    zoomControl:true, attributionControl:true,
+    scrollWheelZoom:false, minZoom:1, maxZoom:6
+  }).setView([25,10],2);
+  // OpenStreetMap tiles — compatibles file:// et HTTPS, CORS ouvert
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'© OpenStreetMap contributors',
+    maxZoom:6
+  }).addTo(wmap);
+  var zones=[
+    {ll:[46.8,2.4],   lbl:'France — Siège & équipes',   t:'siege'},
+    {ll:[40.4,-3.7],  lbl:'Espagne',                    t:'siege'},
+    {ll:[41.9,12.5],  lbl:'Italie',                     t:'siege'},
+    {ll:[38.7,-9.1],  lbl:'Portugal',                   t:'siege'},
+    {ll:[-21.1,55.5], lbl:'La Réunion (DOM)',            t:'siege'},
+    {ll:[14.6,-61.0], lbl:'Martinique (DOM)',            t:'siege'},
+    {ll:[4.0,-53.0],  lbl:'Guyane française (DOM)',      t:'siege'},
+    {ll:[36.7,3.0],   lbl:'Algérie / Maghreb',           t:'partner'},
+    {ll:[31.8,-7.1],  lbl:'Maroc',                      t:'partner'},
+    {ll:[36.8,10.2],  lbl:'Tunisie',                    t:'partner'},
+    {ll:[12.4,-1.5],  lbl:'Afrique subsaharienne',       t:'partner'},
+    {ll:[25.2,55.3],  lbl:'Émirats Arabes Unis',         t:'partner'},
+    {ll:[24.7,46.7],  lbl:'Arabie Saoudite',             t:'partner'},
+    {ll:[20.6,78.9],  lbl:'Inde',                       t:'partner'},
+    {ll:[-23.5,-46.6],lbl:'Brésil',                     t:'partner'},
+    {ll:[-33.5,-70.7],lbl:'Chili',                      t:'occasional'},
+    {ll:[19.4,-99.1], lbl:'Mexique',                    t:'occasional'},
+    {ll:[-25.3,133.8],lbl:'Australie',                  t:'occasional'},
+    {ll:[14.1,108.3], lbl:'Vietnam / Asie SE',           t:'occasional'}
   ];
-  perfChartInst=new Chart(ctx2,{
-    data:{labels:['Production réelle (GWh)','Théorique sans pertes (GWh)','PR mesuré (%)','PR cible 82%'],datasets:[{
-      type:'bar',
-      data:[Math.round(prodAnnual/100)/10, Math.round(irr*pw/100)/10, prPct, 82],
-      backgroundColor:['rgba(245,166,35,.6)','rgba(26,188,156,.4)','rgba('+( pr>=0.82?'39,174,96':pr>=0.78?'245,166,35':'231,76,60')+', .6)','rgba(255,255,255,.15)'],
-      borderColor:['rgba(245,166,35,.9)','rgba(26,188,156,.8)','rgba('+( pr>=0.82?'39,174,96':pr>=0.78?'245,166,35':'231,76,60')+', .9)','rgba(255,255,255,.3)'],
-      borderWidth:1.5,borderRadius:5
-    }]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.parsed.y+(c.dataIndex<=1?' MWh':'%');}}}},scales:{
-      x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#8a9dc0',font:{size:10}}},
-      y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8a9dc0',font:{size:10}}}
-    }}
+  var cfg={siege:{c:'#f5a623',r:12},partner:{c:'#1abc9c',r:9},occasional:{c:'#e74c3c',r:7}};
+  zones.forEach(function(z){
+    var s=cfg[z.t];
+    var ic=L.divIcon({
+      className:'',
+      html:'<div style="width:'+s.r+'px;height:'+s.r+'px;border-radius:50%;background:'+s.c+
+           ';border:2px solid rgba(255,255,255,.7);box-shadow:0 0 6px '+s.c+'99;cursor:pointer"></div>',
+      iconSize:[s.r,s.r],iconAnchor:[s.r/2,s.r/2]
+    });
+    L.marker(z.ll,{icon:ic}).addTo(wmap)
+      .bindPopup('<b>'+z.lbl+'</b>');
+  });
+  setTimeout(function(){wmap.invalidateSize();},300);
+}
+
+// ── CALCUL PERFORMANCE ────────────────────────────────────────
+var perfChartInst=null;
+function calcPerf(){
+  var pw=parseFloat(document.getElementById('pc-power').value);
+  var prod=parseFloat(document.getElementById('pc-prod').value);
+  var irr=parseFloat(document.getElementById('pc-irr').value);
+  var exp=parseFloat(document.getElementById('pc-expected').value)||0;
+  var mo=parseFloat(document.getElementById('pc-months').value)||12;
+  if(!pw||!prod||!irr||pw<1||prod<1||irr<100)return;
+  var prodA=prod*(12/mo);
+  var pr=prodA/(irr*pw);
+  var prPct=Math.round(pr*1000)/10;
+  var rs=Math.round(prodA/pw);
+  var ecartPct=exp>0?Math.round((prodA-exp)/exp*1000)/10:null;
+  var diag,diagTxt,cls;
+  if(pr>=0.83){diag='🏆';diagTxt='Excellent';cls='ok';}
+  else if(pr>=0.78){diag='✅';diagTxt='Bon';cls='ok';}
+  else if(pr>=0.72){diag='⚠️';diagTxt='À surveiller';cls='warn';}
+  else{diag='🔴';diagTxt='Sous-performant';cls='bad';}
+  document.getElementById('prVal').textContent=prPct+'%';
+  document.getElementById('rsVal').textContent=rs;
+  document.getElementById('diagIco').textContent=diag;
+  document.getElementById('diagLbl').textContent=diagTxt;
+  document.getElementById('diagTxt').textContent=pr>=0.83?'Performance optimale':pr>=0.78?'Conforme':pr>=0.72?'Audit recommandé':'Intervention requise';
+  document.getElementById('prGauge').style.width=Math.min(100,Math.max(0,(pr-0.5)*500))+'%';
+  document.getElementById('prGauge').style.background=pr>=0.82?'#27ae60':pr>=0.75?'#f5a623':'#e74c3c';
+  document.getElementById('prCard').className='pr-card '+(pr>=0.82?'ok':pr>=0.75?'warn':'bad');
+  document.getElementById('diagCard').className='pr-card '+(pr>=0.82?'ok':pr>=0.75?'warn':'bad');
+  if(ecartPct!==null){
+    document.getElementById('ecartVal').textContent=(ecartPct>=0?'+':'')+ecartPct+'%';
+    document.getElementById('ecartCard').style.display='';
+    document.getElementById('ecartCard').className='pr-card '+(ecartPct>=-2?'ok':ecartPct>=-5?'warn':'bad');
+  }else document.getElementById('ecartCard').style.display='none';
+  document.getElementById('perfResults').style.display='grid';
+  document.getElementById('perfChartWrap').style.display='';
+  if(perfChartInst){perfChartInst.destroy();perfChartInst=null;}
+  var ctx2=document.getElementById('perfChart').getContext('2d');
+  perfChartInst=new Chart(ctx2,{data:{
+    labels:['Production réelle (MWh)','Théorique sans pertes (MWh)','PR mesuré (%)','PR cible 82%'],
+    datasets:[{type:'bar',
+      data:[Math.round(prodA/100)/10,Math.round(irr*pw/100)/10,prPct,82],
+      backgroundColor:['rgba(245,166,35,.6)','rgba(26,188,156,.4)',
+        'rgba('+(pr>=0.82?'39,174,96':pr>=0.78?'245,166,35':'231,76,60')+',.6)',
+        'rgba(255,255,255,.12)'],
+      borderColor:['rgba(245,166,35,.9)','rgba(26,188,156,.8)',
+        'rgba('+(pr>=0.82?'39,174,96':pr>=0.78?'245,166,35':'231,76,60')+',.9)',
+        'rgba(255,255,255,.25)'],
+      borderWidth:1.5,borderRadius:5}]
+  },options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#8a9dc0',font:{size:10}}},
+            y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8a9dc0',font:{size:10}}}}}
   });
 }
 
 // ── SIMULATEUR STATE ──────────────────────────────────────────
-var D={type:null,lat:null,lon:null,locName:'',surface:0,panelWatt:400,orientation:'0',tilt:30,consumption:0,profile:'industriel',storage:null,autonomy:1,battType:'lithium',peakPower:0,nbPanels:0};
+var D={type:null,lat:null,lon:null,locName:'',surface:0,panelWatt:400,
+       orientation:'0',tilt:30,consumption:0,profile:'industriel',
+       storage:null,autonomy:1,battType:'lithium',peakPower:0,nbPanels:0};
 var curStep=1,leafMap=null,leafMarker=null,mapInited=false,chartInst=null;
 var MONTHS_FR=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
 var ELEC_PRICE=0.13,PANEL_SURF=1.75;
-var TP={toiture:{occ:0.85,mounting:'building',minCost:1300,maxCost:2000,label:'Toiture'},sol:{occ:0.70,mounting:'free',minCost:900,maxCost:1500,label:'Centrale au sol'},ombriere:{occ:0.80,mounting:'free',minCost:1500,maxCost:2700,label:'Ombrière'}};
-var BC={lithium:{dod:0.80,minC:450,maxC:700,cycles:3500},lifepo4:{dod:0.90,minC:550,maxC:850,cycles:5000},plomb:{dod:0.50,minC:180,maxC:300,cycles:800}};
+var TP={
+  toiture: {occ:0.85,mounting:'building',minCost:1300,maxCost:2000,label:'Toiture'},
+  sol:     {occ:0.70,mounting:'free',    minCost:900, maxCost:1500,label:'Centrale au sol'},
+  ombriere:{occ:0.80,mounting:'free',    minCost:1500,maxCost:2700,label:'Ombrière'}
+};
+var BC={
+  lithium: {dod:0.80,minC:450,maxC:700, cycles:3500},
+  lifepo4: {dod:0.90,minC:550,maxC:850, cycles:5000},
+  plomb:   {dod:0.50,minC:180,maxC:300, cycles:800}
+};
 
+// ── PROGRESS BAR (avec étapes cliquables) ─────────────────────
 function buildProg(){
   var b=document.getElementById('progBar'),l=document.getElementById('progLbls');
+  if(!b||!l)return;
   var LB=['Type','Lieu','Surface','Conso','Stockage'];
   b.innerHTML='';l.innerHTML='';
   for(var i=1;i<=5;i++){
-    var d=document.createElement('div');d.className='pdot'+(i<curStep?' done':i===curStep?' active':'');d.textContent=i<curStep?'✓':i;b.appendChild(d);
+    var d=document.createElement('div');
+    d.className='pdot'+(i<curStep?' done':i===curStep?' active':'');
+    d.textContent=i<curStep?'✓':i;
+    // Étapes passées = cliquables pour revenir
+    if(i<curStep){
+      (function(step){
+        d.style.cursor='pointer';
+        d.title='Revenir à l\'étape '+step;
+        d.addEventListener('click',function(){goToStep(step);});
+      })(i);
+    }
+    b.appendChild(d);
     if(i<5){var ln=document.createElement('div');ln.className='pline'+(i<curStep?' done':'');b.appendChild(ln);}
-    var ll=document.createElement('div');ll.className='plbl'+(i===curStep?' active':'');ll.textContent=LB[i-1];l.appendChild(ll);
+    var ll=document.createElement('div');
+    ll.className='plbl'+(i===curStep?' active':'');
+    ll.textContent=LB[i-1];
+    // Labels aussi cliquables
+    if(i<curStep){
+      (function(step){
+        ll.style.cursor='pointer';
+        ll.addEventListener('click',function(){goToStep(step);});
+      })(i);
+    }
+    l.appendChild(ll);
   }
+}
+
+function goToStep(target){
+  if(target>=curStep||target<1)return;
+  document.getElementById('s'+curStep).classList.remove('active');
+  curStep=target;
+  document.getElementById('s'+curStep).classList.add('active');
+  buildProg();scrollSim();
 }
 function goNext(s){
   if(s===3&&(!D.surface||D.surface<10)){alert('Surface minimale : 10 m²');return;}
@@ -1225,8 +1344,13 @@ function goNext(s){
   buildProg();scrollSim();
   if(curStep===2&&!mapInited)setTimeout(initMap,120);
 }
-function goPrev(s){document.getElementById('s'+s).classList.remove('active');curStep=s-1;document.getElementById('s'+curStep).classList.add('active');buildProg();scrollSim();}
-function scrollSim(){var el=document.getElementById('page-simulateur');if(el)window.scrollTo({top:64,behavior:'smooth'});}
+function goPrev(s){
+  document.getElementById('s'+s).classList.remove('active');
+  curStep=s-1;document.getElementById('s'+curStep).classList.add('active');
+  buildProg();scrollSim();
+}
+function scrollSim(){window.scrollTo({top:64,behavior:'smooth'});}
+
 function selOpt(el,group){
   el.closest('.opts').querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
   el.classList.add('sel');
@@ -1235,26 +1359,47 @@ function selOpt(el,group){
 }
 function updatePower(){
   var p=TP[D.type]||TP.toiture;
-  if(!D.surface||D.surface<1){document.getElementById('pwDisplay').textContent='— kWc';document.getElementById('pwSub').textContent='Renseignez la surface';document.getElementById('n3').disabled=true;return;}
-  var actSurf=D.surface*p.occ;D.nbPanels=Math.floor(actSurf/PANEL_SURF);D.peakPower=Math.round(D.nbPanels*D.panelWatt/1000*10)/10;
+  if(!D.surface||D.surface<1){
+    document.getElementById('pwDisplay').textContent='— kWc';
+    document.getElementById('pwSub').textContent='Renseignez la surface';
+    document.getElementById('n3').disabled=true;return;
+  }
+  var actSurf=D.surface*p.occ;
+  D.nbPanels=Math.floor(actSurf/PANEL_SURF);
+  D.peakPower=Math.round(D.nbPanels*D.panelWatt/1000*10)/10;
   document.getElementById('pwDisplay').textContent=D.peakPower.toFixed(1)+' kWc';
   document.getElementById('pwSub').textContent=D.nbPanels+' panneaux × '+D.panelWatt+' Wc — '+Math.round(actSurf)+' m² actifs';
   document.getElementById('n3').disabled=D.peakPower<0.1;
 }
-function toggleBatt(v){document.getElementById('battP').style.display=v?'':'none';D.autonomy=v?parseFloat(document.getElementById('autoSlider').value):0;}
+function toggleBatt(v){
+  document.getElementById('battP').style.display=v?'':'none';
+  D.autonomy=v?parseFloat(document.getElementById('autoSlider').value):0;
+}
 
+// ── CARTE SIMULATEUR (OpenStreetMap — universel) ──────────────
 function initMap(){
-  if(mapInited)return;mapInited=true;
-  leafMap=L.map('sim-map').setView([46.5,2.5],6);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'© OSM, © CARTO',subdomains:'abcd',maxZoom:19}).addTo(leafMap);
-  leafMap.on('click',function(e){placeMarker(e.latlng.lat,e.latlng.lng,'Site ('+e.latlng.lat.toFixed(4)+'°N, '+e.latlng.lng.toFixed(4)+'°E)');});
-  setTimeout(function(){if(leafMap)leafMap.invalidateSize();},200);
+  if(mapInited)return;
+  mapInited=true;
+  var el=document.getElementById('sim-map');
+  if(!el)return;
+  leafMap=L.map('sim-map',{scrollWheelZoom:false}).setView([46.5,2.5],5);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'© OpenStreetMap',maxZoom:18
+  }).addTo(leafMap);
+  leafMap.on('click',function(e){
+    placeMarker(e.latlng.lat,e.latlng.lng,
+      'Site ('+e.latlng.lat.toFixed(4)+'°N, '+e.latlng.lng.toFixed(4)+'°E)');
+  });
+  setTimeout(function(){if(leafMap)leafMap.invalidateSize();},250);
 }
 function placeMarker(lat,lon,name){
   D.lat=lat;D.lon=lon;D.locName=name;
-  var ic=L.divIcon({className:'',html:'<div style="width:26px;height:26px;border-radius:50%;background:#f5a623;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:13px">☀</div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-14]});
+  var ic=L.divIcon({className:'',
+    html:'<div style="width:28px;height:28px;border-radius:50%;background:#f5a623;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:14px">☀</div>',
+    iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-16]});
   if(leafMarker)leafMarker.remove();
-  leafMarker=L.marker([lat,lon],{icon:ic}).addTo(leafMap).bindPopup('<b>Site PV</b><br>'+name).openPopup();
+  leafMarker=L.marker([lat,lon],{icon:ic}).addTo(leafMap)
+    .bindPopup('<b>Site PV</b><br>'+name).openPopup();
   document.getElementById('locLabel').textContent=name.split(',')[0];
   document.getElementById('locLat').textContent=lat.toFixed(4);
   document.getElementById('locLon').textContent=lon.toFixed(4);
@@ -1262,113 +1407,429 @@ function placeMarker(lat,lon,name){
   document.getElementById('n2').disabled=false;
 }
 function applyManualCoords(){
-  var lat=parseFloat(document.getElementById('manLat').value),lon=parseFloat(document.getElementById('manLon').value),nom=document.getElementById('manNom').value.trim()||'Site manuel';
+  var lat=parseFloat(document.getElementById('manLat').value);
+  var lon=parseFloat(document.getElementById('manLon').value);
+  var nom=document.getElementById('manNom').value.trim()||'Site manuel';
   if(isNaN(lat)||isNaN(lon)||lat<-90||lat>90||lon<-180||lon>180){alert('Coordonnées invalides.');return;}
-  if(leafMap)leafMap.setView([lat,lon],13);placeMarker(lat,lon,nom);
+  if(leafMap)leafMap.setView([lat,lon],12);
+  placeMarker(lat,lon,nom);
 }
 
+// ── GEOCODAGE (optionnel, HTTPS) ──────────────────────────────
 var geoList=[],geoTimer=null;
-function onAddrInput(){clearTimeout(geoTimer);var v=document.getElementById('addrInput').value;if(!v||v.length<3){document.getElementById('addrResults').style.display='none';return;}geoTimer=setTimeout(searchAddr,600);}
-function searchAddr(){
-  var q=(document.getElementById('addrInput').value||'').trim();if(!q||q.length<3)return;
-  var el=document.getElementById('addrResults');el.innerHTML='<div class="addr-item" style="color:var(--text2);cursor:default">🔍 Recherche…</div>';el.style.display='';
-  fetch('https://api-adresse.data.gouv.fr/search/?q='+encodeURIComponent(q)+'&limit=8&autocomplete=1').then(function(r){return r.json();}).then(function(d){
-    var tm={municipality:'commune',street:'voie',housenumber:'adresse',locality:'lieu-dit'};
-    geoList=(d.features||[]).map(function(f){return{lat:f.geometry.coordinates[1],lon:f.geometry.coordinates[0],display:f.properties.label||f.properties.name,type:tm[f.properties.type]||'lieu'};}).filter(function(x){return x.display&&x.lat;});
-    if(geoList.length){showGeo();return;}
-    return fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=7&language=fr&format=json').then(function(r2){return r2.json();}).then(function(d2){geoList=(d2.results||[]).map(function(x){return{lat:x.latitude,lon:x.longitude,display:[x.name,x.admin2,x.admin1,x.country].filter(Boolean).join(', '),type:'commune'};}).filter(function(x){return x.display;});showGeo();});
-  }).catch(function(){document.getElementById('addrResults').innerHTML='<div class="addr-item" style="color:var(--text3);cursor:default">Indisponible — cliquez sur la carte</div>';document.getElementById('addrResults').style.display='';});
+function onAddrInput(){
+  clearTimeout(geoTimer);
+  var v=document.getElementById('addrInput').value;
+  if(!v||v.length<3){document.getElementById('addrResults').style.display='none';return;}
+  geoTimer=setTimeout(searchAddr,600);
 }
-function showGeo(){var el=document.getElementById('addrResults');if(!geoList.length){el.innerHTML='<div class="addr-item" style="color:var(--text3);cursor:default">Aucun résultat</div>';el.style.display='';return;}var h='';for(var i=0;i<geoList.length;i++){var it=geoList[i];h+='<div class="addr-item" onclick="pickAddr('+i+')"><strong>'+it.type+'</strong>'+it.display.replace(/&/g,'&amp;')+'</div>';}el.innerHTML=h;el.style.display='';}
-function pickAddr(i){var it=geoList[i];if(!it)return;document.getElementById('addrInput').value=it.display;document.getElementById('addrResults').style.display='none';if(leafMap)leafMap.setView([it.lat,it.lon],13);placeMarker(it.lat,it.lon,it.display);}
+function searchAddr(){
+  var q=(document.getElementById('addrInput').value||'').trim();
+  if(!q||q.length<3)return;
+  var el=document.getElementById('addrResults');
+  el.innerHTML='<div class="addr-item" style="color:var(--text2);cursor:default">🔍 Recherche…</div>';
+  el.style.display='';
+  fetch('https://api-adresse.data.gouv.fr/search/?q='+encodeURIComponent(q)+'&limit=8&autocomplete=1')
+  .then(function(r){return r.json();})
+  .then(function(d){
+    var tm={municipality:'commune',street:'voie',housenumber:'adresse',locality:'lieu-dit'};
+    geoList=(d.features||[]).map(function(f){return{
+      lat:f.geometry.coordinates[1],lon:f.geometry.coordinates[0],
+      display:f.properties.label||f.properties.name,type:tm[f.properties.type]||'lieu'};
+    }).filter(function(x){return x.display&&x.lat;});
+    if(geoList.length){showGeo();return;}
+    return fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=7&language=fr&format=json')
+    .then(function(r2){return r2.json();})
+    .then(function(d2){
+      geoList=(d2.results||[]).map(function(x){return{
+        lat:x.latitude,lon:x.longitude,
+        display:[x.name,x.admin2,x.admin1,x.country].filter(Boolean).join(', '),
+        type:'commune'};}).filter(function(x){return x.display;});
+      showGeo();
+    });
+  })
+  .catch(function(){
+    el.innerHTML='<div class="addr-item" style="color:var(--text3);cursor:default">Indisponible — cliquez sur la carte</div>';
+    el.style.display='';
+  });
+}
+function showGeo(){
+  var el=document.getElementById('addrResults');
+  if(!geoList.length){el.innerHTML='<div class="addr-item" style="color:var(--text3);cursor:default">Aucun résultat</div>';el.style.display='';return;}
+  var h='';
+  for(var i=0;i<geoList.length;i++){
+    var it=geoList[i];
+    h+='<div class="addr-item" onclick="pickAddr('+i+')"><strong>'+it.type+'</strong>'+it.display.replace(/&/g,'&amp;')+'</div>';
+  }
+  el.innerHTML=h;el.style.display='';
+}
+function pickAddr(i){
+  var it=geoList[i];if(!it)return;
+  document.getElementById('addrInput').value=it.display;
+  document.getElementById('addrResults').style.display='none';
+  if(leafMap)leafMap.setView([it.lat,it.lon],12);
+  placeMarker(it.lat,it.lon,it.display);
+}
 
-function setLS(n){for(var i=1;i<=5;i++)document.getElementById('ls'+i).className='lstep'+(i<n?' done':i===n?' active':'');}
-function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}
+// ── SOURCE DONNÉES IRRADIATION ────────────────────────────────
+// Ordre: 1) PVGIS (HTTPS) → 2) Open-Meteo Solar → 3) Calcul local
+
 function callPVGIS(){
   var p=TP[D.type];
-  var url='https://re.jrc.ec.europa.eu/api/v5_2/PVcalc?lat='+D.lat+'&lon='+D.lon+'&peakpower='+D.peakPower+'&loss=14&angle='+D.tilt+'&aspect='+parseInt(D.orientation||0)+'&mountingplace='+p.mounting+'&pvtechchoice=crystSi&outputformat=json&browser=1';
-  return fetch(url).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();});
+  var url='https://re.jrc.ec.europa.eu/api/v5_2/PVcalc?lat='+D.lat+'&lon='+D.lon+
+    '&peakpower='+D.peakPower+'&loss=14&angle='+D.tilt+'&aspect='+parseInt(D.orientation||0)+
+    '&mountingplace='+p.mounting+'&pvtechchoice=crystSi&outputformat=json&browser=1';
+  return new Promise(function(resolve,reject){
+    var t=setTimeout(function(){reject(new Error('timeout'));},6000);
+    fetch(url).then(function(r){
+      clearTimeout(t);
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      return r.json();
+    }).then(function(d){
+      var mo=d.outputs.monthly.fixed,tot=d.outputs.totals.fixed;
+      resolve({
+        annual:Math.round(tot.E_y),
+        monthly_prod:mo.map(function(m){return Math.round(m.E_m);}),
+        monthly_daily:mo.map(function(m){return Math.round(m.E_d*10)/10;}),
+        monthly_irr:mo.map(function(m){return Math.round(m['H(i)_m']);}),
+        irr_annual:Math.round(tot['H(i)_y']),
+        losses:{aoi:tot.l_aoi,spec:tot.l_spec,tg:tot.l_tg,total:tot.l_total},
+        sd_year:tot.SD_y,source:'PVGIS JRC',isFallback:false
+      });
+    }).catch(function(e){clearTimeout(t);reject(e);});
+  });
 }
+
+function callOpenMeteoSolar(){
+  // API Open-Meteo archive — donnees rayonnement solaire reel 2021-2023
+  // shortwave_radiation_sum en MJ/m²/j → ÷3.6 = kWh/m²/j
+  var end='2023-12-31',start='2021-01-01';
+  var url='https://archive-api.open-meteo.com/v1/archive?latitude='+D.lat+'&longitude='+D.lon+
+    '&start_date='+start+'&end_date='+end+
+    '&daily=shortwave_radiation_sum&timezone=auto';
+  return new Promise(function(resolve,reject){
+    var t=setTimeout(function(){reject(new Error('timeout'));},10000);
+    fetch(url).then(function(r){
+      clearTimeout(t);
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      return r.json();
+    }).then(function(d){
+      var daily_mj=d.daily.shortwave_radiation_sum; // MJ/m²/j
+      var dates=d.daily.time;
+      // Regrouper par mois sur 3 ans → moyenne mensuelle kWh/m²
+      var monthly_sum=Array(12).fill(0),monthly_cnt=Array(12).fill(0);
+      for(var i=0;i<dates.length;i++){
+        if(daily_mj[i]===null)continue;
+        var m=parseInt(dates[i].split('-')[1])-1; // 0-11
+        monthly_sum[m]+=daily_mj[i]/3.6; // kWh/m²/j
+        monthly_cnt[m]++;
+      }
+      // Moyenne journaliere par mois → mensuelle (× nb jours)
+      var days=[31,28,31,30,31,30,31,31,30,31,30,31];
+      var monthly_ghi=monthly_sum.map(function(s,i){
+        return monthly_cnt[i]>0?Math.round(s/monthly_cnt[i]*days[i]):0;
+      });
+      var annual_ghi=monthly_ghi.reduce(function(a,b){return a+b;},0);
+
+      // Correction pour plan incline
+      var tiltRad=D.tilt*Math.PI/180;
+      var latRad=Math.abs(D.lat)*Math.PI/180;
+      var tiltFactor=1+0.25*Math.sin(tiltRad)*Math.cos(latRad-tiltRad);
+      tiltFactor=Math.max(0.85,Math.min(1.35,tiltFactor));
+      var orientCorr={'0':1.0,'-45':0.96,'45':0.96,'-90':0.87,'90':0.87,'180':0.62};
+      var oFact=orientCorr[String(D.orientation)]||1.0;
+      var irr_annual=Math.round(annual_ghi*tiltFactor*oFact);
+      var monthly_irr=monthly_ghi.map(function(v){return Math.round(v*tiltFactor*oFact);});
+
+      // Production avec PR
+      var pr=TP[D.type].mounting==='building'?0.78:D.type==='ombriere'?0.75:0.82;
+      var monthly_prod=monthly_irr.map(function(g){return Math.round(g*D.peakPower*pr);});
+      var annual=monthly_prod.reduce(function(a,b){return a+b;},0);
+
+      resolve({
+        annual:annual,
+        monthly_prod:monthly_prod,
+        monthly_daily:monthly_prod.map(function(v,i){return Math.round(v/days[i]*10)/10;}),
+        monthly_irr:monthly_irr,
+        irr_annual:irr_annual,
+        losses:{aoi:-2.5,spec:-0.8,tg:-3.2,total:-(100*(1-pr)).toFixed(0)},
+        source:'Open-Meteo Solar Archive 2021-2023',
+        isFallback:false
+      });
+    }).catch(function(e){clearTimeout(t);reject(e);});
+  });
+}
+
 function localCalc(){
-  var lat=D.lat||44,bi=Math.max(900,Math.min(1700,1000+(lat-48.5)*-60));
-  var of={'0':1.0,'-45':0.95,'45':0.95,'-90':0.85,'90':0.85,'180':0.60};
-  var tf=Math.max(0.70,1-Math.abs(D.tilt-32)*0.004);
-  var pr=D.type==='sol'?0.82:D.type==='ombriere'?0.75:0.78;
-  var an=D.peakPower*bi*pr*(of[String(D.orientation)]||1)*tf;
+  var lat=D.lat||44;
+  var baseIrr=Math.max(900,Math.min(2200,1000+(lat-48.5)*-60));
+  // Ajustement plus précis par latitude
+  if(Math.abs(lat)<25)baseIrr=Math.min(2200,baseIrr*1.3);
+  else if(Math.abs(lat)<35)baseIrr=Math.min(1900,baseIrr*1.15);
+  var of={'0':1.0,'-45':0.96,'45':0.96,'-90':0.87,'90':0.87,'180':0.62};
+  var tiltRad=D.tilt*Math.PI/180;
+  var latRad=Math.abs(lat)*Math.PI/180;
+  var tiltFactor=1+0.22*Math.sin(tiltRad)*Math.cos(latRad-tiltRad);
+  tiltFactor=Math.max(0.85,Math.min(1.32,tiltFactor));
+  var pr=TP[D.type].mounting==='building'?0.78:D.type==='ombriere'?0.75:0.82;
+  var annual=D.peakPower*baseIrr*pr*(of[String(D.orientation)]||1)*tiltFactor;
   var md=[0.055,0.065,0.090,0.102,0.115,0.115,0.115,0.108,0.090,0.072,0.052,0.041];
-  return{annual:Math.round(an),monthly_prod:md.map(function(f){return Math.round(an*f);}),monthly_daily:md.map(function(f){return Math.round(an*f/30*10)/10;}),monthly_irr:md.map(function(f){return Math.round(bi*f*12);}),irr_annual:Math.round(bi),losses:{aoi:-2.8,spec:-0.8,tg:-3.5,total:-20},isFallback:true};
+  var irr=Math.round(baseIrr*tiltFactor*(of[String(D.orientation)]||1));
+  return{
+    annual:Math.round(annual),
+    monthly_prod:md.map(function(f){return Math.round(annual*f);}),
+    monthly_daily:md.map(function(f){return Math.round(annual*f/30*10)/10;}),
+    monthly_irr:md.map(function(f){return Math.round(irr*f*12);}),
+    irr_annual:irr,
+    losses:{aoi:-2.8,spec:-0.8,tg:-3.5,total:-20},
+    source:'Estimation analytique (latitude)',
+    isFallback:true
+  };
 }
+
+// ── LOADING STEPS ─────────────────────────────────────────────
+function setLS(n){for(var i=1;i<=5;i++)document.getElementById('ls'+i).className='lstep'+(i<n?' done':i===n?' active':'');}
+function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}
+
+// ── CALCUL PRINCIPAL — 3 sources en cascade ───────────────────
 function runCalc(){
-  var p=TP[D.type];var actSurf=D.surface*p.occ;D.nbPanels=Math.floor(actSurf/PANEL_SURF);D.peakPower=Math.round(D.nbPanels*D.panelWatt/1000*10)/10;
-  document.getElementById('s5').classList.remove('active');document.getElementById('results').style.display='none';document.getElementById('loading').style.display='';buildProg();scrollSim();setLS(1);
-  wait(500).then(function(){setLS(2);
-    return new Promise(function(resolve){
-      var done=false;
-      var tmout=setTimeout(function(){if(!done){done=true;resolve(localCalc());}},12000);
-      callPVGIS().then(function(pv){
-        if(done)return;done=true;clearTimeout(tmout);
-        var mo=pv.outputs.monthly.fixed,tot=pv.outputs.totals.fixed;
-        resolve({annual:Math.round(tot.E_y),monthly_prod:mo.map(function(m){return Math.round(m.E_m);}),monthly_daily:mo.map(function(m){return Math.round(m.E_d*10)/10;}),monthly_irr:mo.map(function(m){return Math.round(m['H(i)_m']);}),irr_annual:Math.round(tot['H(i)_y']),losses:{aoi:tot.l_aoi,spec:tot.l_spec,tg:tot.l_tg,total:tot.l_total},sd_year:tot.SD_y,isFallback:false});
-      }).catch(function(){if(done)return;done=true;clearTimeout(tmout);resolve(localCalc());});
+  if(!D.type||!D.lat||!D.peakPower){
+    alert('Veuillez compléter toutes les étapes avant de calculer.');return;
+  }
+  var p=TP[D.type];
+  var actSurf=D.surface*p.occ;
+  D.nbPanels=Math.floor(actSurf/PANEL_SURF);
+  D.peakPower=Math.round(D.nbPanels*D.panelWatt/1000*10)/10;
+
+  document.getElementById('s5').classList.remove('active');
+  document.getElementById('results').style.display='none';
+  document.getElementById('loading').style.display='';
+  buildProg();scrollSim();setLS(1);
+
+  wait(400).then(function(){
+    setLS(2);
+    // Tentative 1 : PVGIS
+    return callPVGIS().catch(function(){
+      // Tentative 2 : Open-Meteo Solar Archive
+      setLS(2); // garder le step 2 actif pendant le 2e essai
+      return callOpenMeteoSolar().catch(function(){
+        // Tentative 3 : calcul local
+        return localCalc();
+      });
     });
-  }).then(function(calc){setLS(3);return wait(350).then(function(){setLS(4);return wait(300).then(function(){setLS(5);return wait(350).then(function(){return calc;});});});})
-  .then(function(calc){document.getElementById('loading').style.display='none';renderResults(calc);});
+  }).then(function(calc){
+    setLS(3);return wait(350).then(function(){
+      setLS(4);return wait(300).then(function(){
+        setLS(5);return wait(350).then(function(){return calc;});
+      });
+    });
+  }).then(function(calc){
+    document.getElementById('loading').style.display='none';
+    renderResults(calc);
+  }).catch(function(e){
+    document.getElementById('loading').style.display='none';
+    alert('Erreur de calcul. Veuillez réessayer.');
+  });
 }
+
+// ── RÉSULTATS ─────────────────────────────────────────────────
 function fmt(n){return Number(n).toLocaleString('fr-FR');}
+
 function renderResults(c){
-  var p=TP[D.type],co2=Math.round(c.annual*0.060);
+  var p=TP[D.type];
+  var co2=Math.round(c.annual*0.060);
   var sc=D.consumption>0?Math.min(100,Math.round(c.annual/D.consumption*100)):null;
   var cmin=Math.round(D.peakPower*p.minCost),cmax=Math.round(D.peakPower*p.maxCost);
-  var avgRev=Math.round(c.annual*ELEC_PRICE),pb=avgRev>0?Math.round((cmin+cmax)/2/avgRev*10)/10:null;
-  document.getElementById('srcBadge').textContent=c.isFallback?'✓ Certifié STELIOSUN (estimation locale)':'✓ Certifié STELIOSUN';
+  var avgRev=Math.round(c.annual*ELEC_PRICE);
+  var pb=avgRev>0?Math.round((cmin+cmax)/2/avgRev*10)/10:null;
+
+  // Badge source
+  var badge=document.getElementById('srcBadge');
+  if(badge){
+    badge.textContent=c.isFallback?'✓ Certifié STELIOSUN — Calcul analytique':
+      '✓ Certifié STELIOSUN — '+c.source;
+    badge.style.background=c.isFallback?'rgba(245,166,35,.08)':'rgba(26,188,156,.08)';
+    badge.style.borderColor=c.isFallback?'rgba(245,166,35,.25)':'rgba(26,188,156,.22)';
+    badge.style.color=c.isFallback?'var(--gold)':'var(--teal)';
+  }
+
   document.getElementById('resTitle').textContent=p.label+' — '+D.locName.split(',')[0];
-  document.getElementById('resSub').textContent=D.peakPower.toFixed(1)+' kWc · '+D.nbPanels+' × '+D.panelWatt+' Wc · '+D.tilt+'° · '+Math.round(D.lat*100)/100+'°N '+(c.isFallback?'[Calcul local]':'PVGIS JRC');
-  var cards=[{ico:'⚡',val:D.peakPower.toFixed(1),unit:'kWc',lbl:'Puissance crête',hl:true},{ico:'☀️',val:fmt(c.annual),unit:'kWh/an',lbl:'Production annuelle',hl:true},{ico:'📐',val:fmt(D.nbPanels),unit:'panneaux',lbl:'Nb modules'},{ico:'🪟',val:fmt(Math.round(D.surface*p.occ)),unit:'m²',lbl:'Surface active'},{ico:'🌍',val:fmt(co2),unit:'kg CO₂/an',lbl:'CO₂ évité'},{ico:'☀',val:fmt(c.irr_annual),unit:'kWh/m²/an',lbl:'Irradiation'}];
+  document.getElementById('resSub').textContent=
+    D.peakPower.toFixed(1)+' kWc · '+D.nbPanels+' × '+D.panelWatt+' Wc · '+
+    D.tilt+'° · '+Math.round(D.lat*100)/100+'°N · '+c.source;
+
+  var cards=[
+    {ico:'⚡',val:D.peakPower.toFixed(1),unit:'kWc',lbl:'Puissance crête',hl:true},
+    {ico:'☀️',val:fmt(c.annual),unit:'kWh/an',lbl:'Production annuelle',hl:true},
+    {ico:'📐',val:fmt(D.nbPanels),unit:'panneaux',lbl:'Nb modules'},
+    {ico:'🪟',val:fmt(Math.round(D.surface*p.occ)),unit:'m²',lbl:'Surface active'},
+    {ico:'🌍',val:fmt(co2),unit:'kg CO₂/an',lbl:'CO₂ évité'},
+    {ico:'☀',val:fmt(c.irr_annual),unit:'kWh/m²/an',lbl:'Irradiation'}
+  ];
   if(sc!==null)cards.push({ico:'🔄',val:sc,unit:'%',lbl:'Couverture besoins'});
-  document.getElementById('rCards').innerHTML=cards.map(function(c2){return'<div class="rcard'+(c2.hl?' hl':'')+'"><div class="rcard-ico">'+c2.ico+'</div><div class="rcard-val">'+c2.val+'</div><div class="rcard-unit">'+c2.unit+'</div><div class="rcard-div"></div><div class="rcard-lbl">'+c2.lbl+'</div></div>';}).join('');
+  document.getElementById('rCards').innerHTML=cards.map(function(c2){
+    return'<div class="rcard'+(c2.hl?' hl':'')+'">'+
+      '<div class="rcard-ico">'+c2.ico+'</div>'+
+      '<div class="rcard-val">'+c2.val+'</div>'+
+      '<div class="rcard-unit">'+c2.unit+'</div>'+
+      '<div class="rcard-div"></div>'+
+      '<div class="rcard-lbl">'+c2.lbl+'</div></div>';
+  }).join('');
+
   document.getElementById('rCost').textContent=fmt(cmin)+' – '+fmt(cmax)+' €';
   document.getElementById('rCpw').textContent=p.minCost+'–'+p.maxCost+' €/kWc';
   document.getElementById('rPayback').textContent=pb?pb+' ans':'—';
-  if(D.storage==='oui'&&D.consumption>0&&D.autonomy>0){var bc=BC[D.battType],cap=Math.ceil(D.consumption/365*D.autonomy/bc.dod*10)/10;document.getElementById('bCap').textContent=cap.toFixed(1);document.getElementById('bAuto').textContent=D.autonomy;document.getElementById('bCost').textContent=fmt(Math.round(cap*bc.minC))+' – '+fmt(Math.round(cap*bc.maxC));document.getElementById('bCycles').textContent=fmt(bc.cycles);document.getElementById('battResult').style.display='';}else document.getElementById('battResult').style.display='none';
-  var iav=document.getElementById('iavCard');if(c.sd_year){var lo2=Math.round(c.annual-1.28*c.sd_year),hi2=Math.round(c.annual+1.28*c.sd_year);iav.innerHTML='<strong>Variabilité interannuelle :</strong> Production entre <strong>'+fmt(lo2)+' et '+fmt(hi2)+' kWh/an</strong> dans 80% des années.';iav.style.display='';}else iav.style.display='none';
+
+  if(D.storage==='oui'&&D.consumption>0&&D.autonomy>0){
+    var bc=BC[D.battType];
+    var cap=Math.ceil(D.consumption/365*D.autonomy/bc.dod*10)/10;
+    document.getElementById('bCap').textContent=cap.toFixed(1);
+    document.getElementById('bAuto').textContent=D.autonomy;
+    document.getElementById('bCost').textContent=fmt(Math.round(cap*bc.minC))+' – '+fmt(Math.round(cap*bc.maxC));
+    document.getElementById('bCycles').textContent=fmt(bc.cycles);
+    document.getElementById('battResult').style.display='';
+  }else document.getElementById('battResult').style.display='none';
+
+  var iav=document.getElementById('iavCard');
+  if(c.sd_year){
+    var lo2=Math.round(c.annual-1.28*c.sd_year),hi2=Math.round(c.annual+1.28*c.sd_year);
+    iav.innerHTML='<strong>Variabilité interannuelle :</strong> Production entre <strong>'+
+      fmt(lo2)+' et '+fmt(hi2)+' kWh/an</strong> dans 80% des années (±'+fmt(Math.round(c.sd_year))+' kWh/an).';
+    iav.style.display='';
+  }else iav.style.display='none';
+
   var lo=c.losses,lt=Math.abs(lo.total||20).toFixed(1);
   function dr(l,v){return'<div class="detail-row"><span>'+l+'</span><span>'+v+'</span></div>';}
-  document.getElementById('pvgisDetail').innerHTML='<div class="detail-card"><h4>Pertes système</h4>'+dr('AOI',lo.aoi?lo.aoi.toFixed(1)+'%':'−2,8%')+dr('Spectrales',lo.spec?lo.spec.toFixed(1)+'%':'−0,8%')+dr('Thermiques',lo.tg?lo.tg.toFixed(1)+'%':'−3,5%')+dr('Câblage+onduleur','−10%')+dr('Total','−'+lt+'%')+'<div class="loss-bar"><div class="loss-fill" style="width:'+Math.min(100,lt)+'%"></div></div></div>'+'<div class="detail-card"><h4>Paramètres site</h4>'+dr('Latitude',D.lat.toFixed(4)+'°N')+dr('Longitude',D.lon.toFixed(4)+'°E')+dr('Inclinaison',D.tilt+'°')+dr('Orientation',D.orientation+'°')+dr('Irradiation',fmt(c.irr_annual)+' kWh/m²/an')+dr('Source',c.isFallback?'Estimation locale':'PVGIS 5 JRC')+'</div>';
+  document.getElementById('pvgisDetail').innerHTML=
+    '<div class="detail-card"><h4>Pertes système</h4>'+
+    dr('Pertes angulaires (AOI)',lo.aoi?Math.abs(lo.aoi).toFixed(1)+'%':'2,8%')+
+    dr('Pertes spectrales',lo.spec?Math.abs(lo.spec).toFixed(1)+'%':'0,8%')+
+    dr('Pertes thermiques',lo.tg?Math.abs(lo.tg).toFixed(1)+'%':'3,5%')+
+    dr('Câblage + onduleur','~10%')+
+    dr('Total pertes système',lt+'%')+
+    '<div class="loss-bar"><div class="loss-fill" style="width:'+Math.min(100,lt)+'%"></div></div></div>'+
+    '<div class="detail-card"><h4>Paramètres site</h4>'+
+    dr('Latitude',D.lat.toFixed(4)+'° N')+
+    dr('Longitude',D.lon.toFixed(4)+'° E')+
+    dr('Inclinaison',D.tilt+'°')+
+    dr('Orientation',D.orientation+'° (0=Sud)')+
+    dr('Irradiation plan incliné',fmt(c.irr_annual)+' kWh/m²/an')+
+    dr('Source données',c.source)+'</div>';
+
   document.getElementById('results').style.display='';
   document.querySelectorAll('.ctab').forEach(function(t,i){t.classList.toggle('on',i===0);});
-  renderChart('prod',c);window._calcData=c;scrollSim();
-}
-function switchChart(btn,t){document.querySelectorAll('.ctab').forEach(function(x){x.classList.remove('on');});btn.classList.add('on');if(window._calcData)renderChart(t,window._calcData);}
-function renderChart(t,c){
-  var ctx=document.getElementById('mainChart').getContext('2d');if(chartInst){chartInst.destroy();chartInst=null;}
-  var ds=[],yL='',y1L='';
-  if(t==='prod'){yL='Production (kWh/mois)';y1L='Irradiation (kWh/m²)';ds=[{type:'bar',label:'Production',data:c.monthly_prod,backgroundColor:'rgba(245,166,35,.72)',borderColor:'rgba(245,166,35,1)',borderWidth:1,borderRadius:4,yAxisID:'y'},{type:'line',label:'Irradiation',data:c.monthly_irr,borderColor:'rgba(26,188,156,.82)',backgroundColor:'transparent',pointBackgroundColor:'rgba(26,188,156,1)',borderWidth:2.5,pointRadius:4,yAxisID:'y1',tension:.35}];}
-  else if(t==='daily'){yL='kWh/j';ds=[{type:'bar',label:'Journalière',data:c.monthly_daily||(c.monthly_prod.map(function(v){return+(v/30).toFixed(1);})),backgroundColor:'rgba(245,166,35,.62)',borderColor:'rgba(245,166,35,1)',borderWidth:1,borderRadius:4}];}
-  else{yL='kWh/m²';ds=[{type:'bar',label:'Irradiation',data:c.monthly_irr,backgroundColor:'rgba(26,188,156,.48)',borderColor:'rgba(26,188,156,.88)',borderWidth:1,borderRadius:4}];}
-  var sc={x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4d6080',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8a9dc0',font:{size:10}},title:{display:true,text:yL,color:'#4d6080',font:{size:10}}}};
-  if(ds.length>1)sc.y1={position:'right',grid:{display:false},ticks:{color:'rgba(26,188,156,.65)',font:{size:10}},title:{display:true,text:y1L,color:'rgba(26,188,156,.65)',font:{size:10}}};
-  chartInst=new Chart(ctx,{data:{labels:MONTHS_FR,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(11,22,40,.95)',titleColor:'#e8eef8',bodyColor:'#8a9dc0',borderColor:'rgba(245,166,35,.3)',borderWidth:1,padding:10}},scales:sc}});
-}
-function printResults(){document.title='STELIOSUN — Rapport '+D.locName.split(',')[0];window.print();document.title='STELIOSUN';}
-function resetAll(){
-  D.type=null;D.lat=null;D.lon=null;D.locName='';D.surface=0;D.consumption=0;D.storage=null;D.peakPower=0;D.nbPanels=0;D.panelWatt=400;D.orientation='0';D.tilt=30;D.autonomy=1;D.battType='lithium';
-  if(leafMarker){leafMarker.remove();leafMarker=null;}if(leafMap)leafMap.setView([46.5,2.5],6);if(chartInst){chartInst.destroy();chartInst=null;}window._calcData=null;
-  ['results','loading','locInfo','battResult','iavCard'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
-  document.getElementById('addrInput').value='';document.getElementById('addrResults').style.display='none';document.getElementById('surface').value='';document.getElementById('conso').value='';
-  document.getElementById('tilt').value='30';document.getElementById('tiltV').textContent='30°';document.getElementById('autoSlider').value='1';document.getElementById('autoV').textContent='1 jour';
-  document.getElementById('pwDisplay').textContent='— kWc';document.getElementById('pwSub').textContent='Renseignez la surface';document.getElementById('battP').style.display='none';
-  ['n1','n2','n3','n5'].forEach(function(id){document.getElementById(id).disabled=true;});
-  document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});document.querySelectorAll('.fstep').forEach(function(s){s.classList.remove('active');});
-  document.getElementById('s1').classList.add('active');curStep=1;buildProg();scrollSim();
-  mapInited=false;var old=document.getElementById('sim-map'),fresh=document.createElement('div');fresh.id='sim-map';fresh.style.cssText='width:100%;height:300px;border-radius:var(--r2);border:2px solid rgba(245,166,35,.18);margin-top:.5rem;overflow:hidden';old.parentNode.replaceChild(fresh,old);leafMap=null;
+  renderChart('prod',c);
+  window._calcData=c;
+  scrollSim();
 }
 
+// ── GRAPHIQUES ────────────────────────────────────────────────
+function switchChart(btn,t){
+  document.querySelectorAll('.ctab').forEach(function(x){x.classList.remove('on');});
+  btn.classList.add('on');
+  if(window._calcData)renderChart(t,window._calcData);
+}
+function renderChart(t,c){
+  var ctx=document.getElementById('mainChart').getContext('2d');
+  if(chartInst){chartInst.destroy();chartInst=null;}
+  var ds=[],yL='',y1L='';
+  if(t==='prod'){
+    yL='Production (kWh/mois)';y1L='Irradiation (kWh/m²)';
+    ds=[
+      {type:'bar',label:'Production',data:c.monthly_prod,
+       backgroundColor:'rgba(245,166,35,.72)',borderColor:'rgba(245,166,35,1)',
+       borderWidth:1,borderRadius:4,yAxisID:'y'},
+      {type:'line',label:'Irradiation',data:c.monthly_irr,
+       borderColor:'rgba(26,188,156,.82)',backgroundColor:'transparent',
+       pointBackgroundColor:'rgba(26,188,156,1)',borderWidth:2.5,pointRadius:4,
+       yAxisID:'y1',tension:.35}
+    ];
+  }else if(t==='daily'){
+    yL='kWh/j';
+    ds=[{type:'bar',label:'Journalière',
+      data:c.monthly_daily||(c.monthly_prod.map(function(v){return+(v/30).toFixed(1);})),
+      backgroundColor:'rgba(245,166,35,.62)',borderColor:'rgba(245,166,35,1)',
+      borderWidth:1,borderRadius:4}];
+  }else{
+    yL='kWh/m²';
+    ds=[{type:'bar',label:'Irradiation',data:c.monthly_irr,
+      backgroundColor:'rgba(26,188,156,.48)',borderColor:'rgba(26,188,156,.88)',
+      borderWidth:1,borderRadius:4}];
+  }
+  var sc={
+    x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4d6080',font:{size:10}}},
+    y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8a9dc0',font:{size:10}},
+       title:{display:true,text:yL,color:'#4d6080',font:{size:10}}}
+  };
+  if(ds.length>1)sc.y1={position:'right',grid:{display:false},
+    ticks:{color:'rgba(26,188,156,.65)',font:{size:10}},
+    title:{display:true,text:y1L,color:'rgba(26,188,156,.65)',font:{size:10}}};
+  chartInst=new Chart(ctx,{data:{labels:MONTHS_FR,datasets:ds},options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{
+      backgroundColor:'rgba(11,22,40,.95)',titleColor:'#e8eef8',
+      bodyColor:'#8a9dc0',borderColor:'rgba(245,166,35,.3)',borderWidth:1,padding:10}},
+    scales:sc}});
+}
+
+// ── IMPRESSION ────────────────────────────────────────────────
+function printResults(){
+  document.title='STELIOSUN — Rapport '+D.locName.split(',')[0];
+  window.print();document.title='STELIOSUN';
+}
+
+// ── RESET ─────────────────────────────────────────────────────
+function resetAll(){
+  D.type=null;D.lat=null;D.lon=null;D.locName='';D.surface=0;D.consumption=0;
+  D.storage=null;D.peakPower=0;D.nbPanels=0;D.panelWatt=400;
+  D.orientation='0';D.tilt=30;D.autonomy=1;D.battType='lithium';
+  if(leafMarker){leafMarker.remove();leafMarker=null;}
+  if(leafMap)leafMap.setView([46.5,2.5],5);
+  if(chartInst){chartInst.destroy();chartInst=null;}
+  window._calcData=null;
+  ['results','loading','locInfo','battResult','iavCard'].forEach(function(id){
+    var e=document.getElementById(id);if(e)e.style.display='none';
+  });
+  document.getElementById('addrInput').value='';
+  document.getElementById('addrResults').style.display='none';
+  document.getElementById('surface').value='';
+  document.getElementById('conso').value='';
+  document.getElementById('tilt').value='30';
+  document.getElementById('tiltV').textContent='30°';
+  document.getElementById('autoSlider').value='1';
+  document.getElementById('autoV').textContent='1 jour';
+  document.getElementById('pwDisplay').textContent='— kWc';
+  document.getElementById('pwSub').textContent='Renseignez la surface';
+  document.getElementById('battP').style.display='none';
+  ['n1','n2','n3','n5'].forEach(function(id){document.getElementById(id).disabled=true;});
+  document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
+  document.querySelectorAll('.fstep').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('s1').classList.add('active');
+  curStep=1;buildProg();scrollSim();
+  mapInited=false;
+  var old=document.getElementById('sim-map');
+  if(old){
+    var fresh=document.createElement('div');
+    fresh.id='sim-map';
+    fresh.style.cssText='width:100%;height:300px;border-radius:var(--r2);border:2px solid rgba(245,166,35,.18);margin-top:.5rem;overflow:hidden';
+    old.parentNode.replaceChild(fresh,old);
+  }
+  leafMap=null;
+}
+
+// ── INIT ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded',function(){
   buildProg();
   Chart.defaults.color='#8a9dc0';
   Chart.defaults.borderColor='rgba(255,255,255,.06)';
-  setTimeout(function(){if(!window.chartExplInited)initChartExpl();},200);
-  document.addEventListener('click',function(e){if(!e.target.closest('.addr-wrap'))document.getElementById('addrResults').style.display='none';});
+  setTimeout(function(){
+    if(!window.chartExplInited)initChartExpl();
+    initWorldMap();
+  },350);
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.addr-wrap'))
+      document.getElementById('addrResults').style.display='none';
+  });
 });
 </script>
 </body>
