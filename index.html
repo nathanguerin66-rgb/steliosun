@@ -3,34 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STELIOSUN — Prédimensionnement Solaire</title>
+<title>STELIOSUN - Predimensionnement Solaire PV</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --navy:#0b1628;--navy2:#131f35;--navy3:#1a2843;--navy4:#223054;
-  --gold:#f5a623;--gold2:#ffd064;--text:#e8eef8;--text2:#8a9dc0;--text3:#4d6080;
-  --green:#27ae60;--teal:#1abc9c;--red:#e74c3c;--r:8px;--r2:16px;
-}
+:root{--navy:#0b1628;--navy2:#131f35;--navy3:#1a2843;--navy4:#223054;--gold:#f5a623;--gold2:#ffd064;--text:#e8eef8;--text2:#8a9dc0;--text3:#4d6080;--green:#27ae60;--teal:#1abc9c;--red:#e74c3c;--r:8px;--r2:16px}
 html{scroll-behavior:smooth}
 body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(11,22,40,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(245,166,35,0.15)}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.08em;color:var(--gold);text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(11,22,40,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(245,166,35,.15)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.08em;color:var(--gold);text-decoration:none}
 .logo span{color:var(--text2)}
 nav ul{display:flex;gap:2rem;list-style:none}
-nav ul a{color:var(--text2);text-decoration:none;font-size:0.875rem;font-weight:500;transition:color .2s}
+nav ul a{color:var(--text2);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s}
 nav ul a:hover{color:var(--gold)}
 .nav-cta{background:var(--gold)!important;color:var(--navy)!important;padding:.45rem 1.2rem;border-radius:4px;font-weight:600!important}
-.nav-cta:hover{background:var(--gold2)!important}
-
-/* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;padding:80px 2rem 2rem;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 65% 50%,rgba(245,166,35,.07),transparent 70%)}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(245,166,35,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,.04) 1px,transparent 1px);background-size:60px 60px}
-.hero-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative}
+.hero-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;width:100%}
 .hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.3);color:var(--gold);font-size:.78rem;font-weight:600;letter-spacing:.1em;padding:.35rem .9rem;border-radius:20px;text-transform:uppercase;margin-bottom:1.5rem}
 .hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
@@ -38,7 +29,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,5.5rem);line-hei
 h1 em{color:var(--gold);font-style:normal;display:block}
 .hero-sub{font-size:1.05rem;color:var(--text2);line-height:1.75;max-width:480px;margin-bottom:2.5rem}
 .hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.8rem;border-radius:6px;font-weight:600;font-size:.95rem;cursor:pointer;text-decoration:none;border:none;transition:all .2s;letter-spacing:.02em;font-family:'DM Sans',sans-serif}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.8rem;border-radius:6px;font-weight:600;font-size:.95rem;cursor:pointer;text-decoration:none;border:none;transition:all .2s;font-family:'DM Sans',sans-serif}
 .btn-primary{background:var(--gold);color:var(--navy)}
 .btn-primary:hover{background:var(--gold2);transform:translateY(-1px)}
 .btn-outline{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
@@ -47,530 +38,443 @@ h1 em{color:var(--gold);font-style:normal;display:block}
 .stat-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);letter-spacing:.05em;display:block}
 .stat-lbl{font-size:.78rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em}
 .hero-visual{display:flex;justify-content:center;align-items:center}
-.sun-wrap{position:relative;width:360px;height:360px}
+.sun-wrap{position:relative;width:300px;height:300px}
 .sun-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(245,166,35,.15);animation:spin 20s linear infinite}
 .sun-ring:nth-child(2){inset:22px;animation-direction:reverse;animation-duration:15s;border-style:dashed}
 .sun-ring:nth-child(3){inset:44px;animation-duration:28s}
-.sun-core{position:absolute;inset:82px;border-radius:50%;background:rgba(245,166,35,.06);border:2px solid rgba(245,166,35,.35);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px}
-.sun-kw{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--gold);letter-spacing:.05em;text-align:center}
-.panels-wrap{position:absolute;bottom:0;left:50%;transform:translateX(-50%);display:flex;gap:5px}
-.spanel{width:48px;height:34px;background:var(--navy3);border:1px solid rgba(245,166,35,.3);border-radius:3px;position:relative;overflow:hidden}
-.spanel::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0,transparent 13px,rgba(245,166,35,.15) 13px,rgba(245,166,35,.15) 14px),repeating-linear-gradient(0,transparent 0,transparent 9px,rgba(245,166,35,.15) 9px,rgba(245,166,35,.15) 10px)}
+.sun-core{position:absolute;inset:80px;border-radius:50%;background:rgba(245,166,35,.06);border:2px solid rgba(245,166,35,.35);display:flex;align-items:center;justify-content:center}
+.sun-kw{font-family:'Bebas Neue',sans-serif;font-size:.9rem;color:var(--gold);letter-spacing:.05em;text-align:center}
+.panels-wrap{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
+.spanel{width:44px;height:32px;background:var(--navy3);border:1px solid rgba(245,166,35,.3);border-radius:3px;position:relative;overflow:hidden}
+.spanel::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0,transparent 12px,rgba(245,166,35,.15) 12px,rgba(245,166,35,.15) 13px),repeating-linear-gradient(0,transparent 0,transparent 8px,rgba(245,166,35,.15) 8px,rgba(245,166,35,.15) 9px)}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-
-/* SECTIONS */
 .section{padding:5rem 2rem}
 .container{max-width:1200px;margin:0 auto}
 .stag{font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem}
 .stitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:.03em;margin-bottom:1rem}
 .ssub{color:var(--text2);max-width:520px;line-height:1.7;margin-bottom:3rem}
-
-/* SERVICES */
-.srv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
+.srv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem}
 .srv-card{background:var(--navy2);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.75rem;position:relative;overflow:hidden;transition:border-color .2s,transform .2s}
 .srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s}
 .srv-card:hover{border-color:rgba(245,166,35,.3);transform:translateY(-4px)}
 .srv-card:hover::before{transform:scaleX(1)}
-.srv-ico{width:48px;height:48px;border-radius:12px;background:rgba(245,166,35,.1);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.4rem}
-.srv-card h3{font-size:1.05rem;font-weight:600;margin-bottom:.4rem}
-.srv-card p{font-size:.86rem;color:var(--text2);line-height:1.65}
-.badge{display:inline-block;margin-top:1rem;font-size:.7rem;font-weight:600;letter-spacing:.07em;padding:.2rem .65rem;border-radius:4px;text-transform:uppercase}
+.srv-ico{width:44px;height:44px;border-radius:10px;background:rgba(245,166,35,.1);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.3rem}
+.srv-card h3{font-size:1rem;font-weight:600;margin-bottom:.4rem}
+.srv-card p{font-size:.85rem;color:var(--text2);line-height:1.6}
+.badge{display:inline-block;margin-top:.75rem;font-size:.7rem;font-weight:600;letter-spacing:.07em;padding:.2rem .6rem;border-radius:4px;text-transform:uppercase}
 .badge-free{background:rgba(39,174,96,.15);color:#27ae60;border:1px solid rgba(39,174,96,.3)}
 .badge-pro{background:rgba(245,166,35,.1);color:var(--gold);border:1px solid rgba(245,166,35,.3)}
-
-/* SIMULATOR */
-.calc-section{background:var(--navy2);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
-.calc-wrap{max-width:900px;margin:0 auto}
-
-/* PROGRESS */
+.calc-section{background:var(--navy2);border-top:1px solid rgba(255,255,255,.06)}
+.calc-wrap{max-width:880px;margin:0 auto}
 .prog-bar{display:flex;align-items:center;margin-bottom:.75rem}
-.pdot{width:34px;height:34px;border-radius:50%;border:2px solid var(--navy4);background:var(--navy3);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:var(--text3);transition:all .3s;position:relative;z-index:1;flex-shrink:0}
+.pdot{width:32px;height:32px;border-radius:50%;border:2px solid var(--navy4);background:var(--navy3);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:var(--text3);transition:all .3s;flex-shrink:0;z-index:1}
 .pdot.active{border-color:var(--gold);color:var(--gold);background:rgba(245,166,35,.1)}
-.pdot.done{background:var(--gold);border-color:var(--gold);color:var(--navy);font-size:.85rem}
+.pdot.done{background:var(--gold);border-color:var(--gold);color:var(--navy)}
 .pline{flex:1;height:2px;background:var(--navy4);transition:background .3s}
 .pline.done{background:var(--gold)}
 .plabels{display:flex;justify-content:space-between;margin-bottom:2.5rem}
-.plbl{font-size:.68rem;color:var(--text3);text-align:center;width:34px;letter-spacing:.02em;white-space:nowrap}
+.plbl{font-size:.68rem;color:var(--text3);text-align:center;width:32px;white-space:nowrap}
 .plbl.active{color:var(--gold)}
-
-/* FORM STEPS */
 .fstep{display:none;animation:fIn .3s}
 .fstep.active{display:block}
 @keyframes fIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .fstep h2{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.04em;margin-bottom:.4rem}
 .fstep>p{color:var(--text2);font-size:.9rem;margin-bottom:1.75rem}
-.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;margin-bottom:2rem}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
 .opt{background:var(--navy3);border:2px solid transparent;border-radius:var(--r2);padding:1.4rem;cursor:pointer;text-align:center;transition:all .2s;position:relative}
 .opt:hover{border-color:rgba(245,166,35,.4)}
 .opt.sel{border-color:var(--gold);background:rgba(245,166,35,.07)}
-.opt.sel::after{content:'✓';position:absolute;top:.6rem;right:.7rem;font-size:.72rem;color:var(--gold);font-weight:700}
-.opt-ico{font-size:1.8rem;margin-bottom:.65rem;display:block}
+.opt.sel::after{content:'OK';position:absolute;top:.5rem;right:.6rem;font-size:.65rem;color:var(--gold);font-weight:700}
+.opt-ico{font-size:1.8rem;margin-bottom:.5rem;display:block}
 .opt-name{font-weight:600;font-size:.88rem}
-.opt-sub{font-size:.76rem;color:var(--text2);margin-top:.25rem}
+.opt-sub{font-size:.75rem;color:var(--text2);margin-top:.2rem}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem}
 .field{display:flex;flex-direction:column;gap:.4rem}
 .field.full{grid-column:1/-1}
-label{font-size:.8rem;font-weight:500;color:var(--text2);letter-spacing:.03em}
+label{font-size:.8rem;font-weight:500;color:var(--text2)}
 input,select{background:var(--navy3);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:.7rem 1rem;color:var(--text);font-size:.95rem;font-family:inherit;transition:border-color .2s;outline:none;width:100%}
 input:focus,select:focus{border-color:var(--gold)}
 select option{background:var(--navy3)}
 input[type=range]{padding:0;cursor:pointer;accent-color:var(--gold)}
 .rlbls{display:flex;justify-content:space-between;font-size:.7rem;color:var(--text3);margin-top:.2rem}
-.rval{font-size:1.05rem;font-weight:600;color:var(--gold)}
-.note{font-size:.8rem;color:var(--text3);background:rgba(245,166,35,.05);border-left:3px solid rgba(245,166,35,.3);padding:.7rem 1rem;border-radius:0 var(--r) var(--r) 0;line-height:1.6;margin-bottom:1.5rem}
+.rval{font-size:1rem;font-weight:600;color:var(--gold)}
+.note{font-size:.8rem;color:var(--text3);background:rgba(245,166,35,.05);border-left:3px solid rgba(245,166,35,.3);padding:.65rem 1rem;border-radius:0 var(--r) var(--r) 0;line-height:1.6;margin-bottom:1.5rem}
 .fnav{display:flex;justify-content:space-between;align-items:center;margin-top:2rem}
-.bnav{padding:.72rem 1.9rem;border-radius:6px;border:none;cursor:pointer;font-family:inherit;font-size:.95rem;font-weight:600;transition:all .2s}
+.bnav{padding:.7rem 1.8rem;border-radius:6px;border:none;cursor:pointer;font-family:inherit;font-size:.9rem;font-weight:600;transition:all .2s}
 .bprev{background:transparent;color:var(--text2);border:1px solid rgba(255,255,255,.15)}
 .bprev:hover{color:var(--text);border-color:rgba(255,255,255,.3)}
 .bnext{background:var(--gold);color:var(--navy)}
 .bnext:hover:not(:disabled){background:var(--gold2)}
 .bnext:disabled{opacity:.35;cursor:not-allowed}
-
-/* ADDRESS SEARCH */
 .addr-wrap{position:relative;margin-bottom:1rem}
 .addr-wrap input{padding-right:3rem}
-.addr-btn{position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gold);font-size:1.1rem;padding:.2rem}
-.addr-results{position:absolute;top:100%;left:0;right:0;background:var(--navy3);border:1px solid rgba(245,166,35,.3);border-radius:0 0 var(--r) var(--r);z-index:200;max-height:220px;overflow-y:auto;display:none}
-.addr-item{padding:.75rem 1rem;font-size:.875rem;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);transition:background .15s}
+.addr-btn{position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gold);font-size:1.1rem}
+.addr-results{position:absolute;top:100%;left:0;right:0;background:var(--navy3);border:1px solid rgba(245,166,35,.3);border-radius:0 0 var(--r) var(--r);z-index:500;max-height:240px;overflow-y:auto;display:none}
+.addr-item{padding:.7rem 1rem;font-size:.875rem;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);transition:background .15s}
 .addr-item:last-child{border:none}
-.addr-item:hover{background:rgba(245,166,35,.08)}
-.addr-item strong{color:var(--gold);font-size:.75rem;display:block}
-#map{width:100%;height:320px;border-radius:var(--r2);overflow:hidden;position:relative}
-
-.loc-info{display:flex;align-items:center;gap:.75rem;background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.2);border-radius:var(--r);padding:.7rem 1rem;font-size:.85rem;margin-top:.75rem}
-.loc-info span{color:var(--teal);font-weight:600}
-
-/* LOADING SCREEN */
+.addr-item:hover{background:rgba(245,166,35,.1)}
+.addr-item strong{color:var(--gold);font-size:.72rem;display:block}
+#map{width:100%;height:260px;border-radius:var(--r2);border:1px solid rgba(255,255,255,.1);margin-top:1rem;overflow:hidden}
+.map-ph{width:100%;height:260px;border-radius:var(--r2);border:1px solid rgba(255,255,255,.08);background:var(--navy3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:.88rem;margin-top:1rem}
+.loc-info{display:flex;align-items:center;gap:.75rem;background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.2);border-radius:var(--r);padding:.65rem 1rem;font-size:.85rem;margin-top:.75rem;flex-wrap:wrap}
 #loading{display:none;text-align:center;padding:4rem 2rem}
-.loader-sun{width:80px;height:80px;border-radius:50%;border:3px solid rgba(245,166,35,.15);border-top-color:var(--gold);animation:spin 1s linear infinite;margin:0 auto 2rem}
-#loading h3{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.04em;margin-bottom:.5rem}
+.spin{width:72px;height:72px;border-radius:50%;border:3px solid rgba(245,166,35,.15);border-top-color:var(--gold);animation:spin 1s linear infinite;margin:0 auto 1.5rem}
+#loading h3{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;margin-bottom:.4rem}
 #loading p{color:var(--text2);font-size:.9rem}
-.load-steps{margin:2rem auto;max-width:340px;text-align:left;display:flex;flex-direction:column;gap:.75rem}
-.lstep{display:flex;align-items:center;gap:.75rem;font-size:.85rem;color:var(--text3);transition:color .3s}
-.lstep.done{color:var(--teal)}
-.lstep.active{color:var(--text)}
-.lstep-dot{width:8px;height:8px;border-radius:50%;background:var(--navy4);flex-shrink:0;transition:background .3s}
-.lstep.done .lstep-dot{background:var(--teal)}
-.lstep.active .lstep-dot{background:var(--gold);animation:pulse 1s infinite}
-
-/* RESULTS */
+.lsteps{margin:1.5rem auto;max-width:320px;text-align:left;display:flex;flex-direction:column;gap:.65rem}
+.ls{display:flex;align-items:center;gap:.7rem;font-size:.85rem;color:var(--text3);transition:color .3s}
+.ls.done{color:var(--teal)}.ls.active{color:var(--text)}
+.ls-dot{width:7px;height:7px;border-radius:50%;background:var(--navy4);flex-shrink:0;transition:background .3s}
+.ls.done .ls-dot{background:var(--teal)}.ls.active .ls-dot{background:var(--gold);animation:pulse 1s infinite}
 #results{display:none}
-.res-header{text-align:center;margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.07)}
-.pvgis-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(26,188,156,.1);border:1px solid rgba(26,188,156,.3);color:var(--teal);font-size:.72rem;font-weight:600;padding:.3rem .8rem;border-radius:10px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
-.rcard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1.1rem;margin-bottom:1.5rem}
-.rcard{background:var(--navy3);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:1.4rem;text-align:center}
-.rcard-ico{font-size:1.3rem;margin-bottom:.6rem}
-.rcard-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);letter-spacing:.03em;line-height:1.1}
-.rcard-unit{font-size:.72rem;color:var(--text3);margin:.1rem 0 .3rem}
-.rcard-div{width:32px;height:2px;background:rgba(245,166,35,.25);margin:.45rem auto}
-.rcard-lbl{font-size:.8rem;color:var(--text2);font-weight:500}
-.rcard.highlight{background:linear-gradient(135deg,var(--navy3),rgba(245,166,35,.07));border-color:rgba(245,166,35,.25)}
-
-/* CHART */
-.chart-section{background:var(--navy3);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:1.75rem;margin-bottom:1.5rem}
-.chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
-.chart-title{font-weight:600;font-size:1rem}
-.chart-legend{display:flex;gap:1.25rem}
-.cleg{display:flex;align-items:center;gap:.45rem;font-size:.78rem;color:var(--text2)}
-.cleg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
-.chart-wrap{position:relative;height:280px}
-.chart-tabs{display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap}
-.ctab{padding:.4rem 1rem;border-radius:4px;font-size:.8rem;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--text2);font-family:inherit;transition:all .2s}
+.res-hdr{text-align:center;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.pvgis-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(26,188,156,.1);border:1px solid rgba(26,188,156,.3);color:var(--teal);font-size:.72rem;font-weight:600;padding:.3rem .75rem;border-radius:10px;text-transform:uppercase;margin-bottom:.75rem}
+.rcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:1rem;margin-bottom:1.5rem}
+.rc{background:var(--navy3);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:1.3rem;text-align:center}
+.rc-ico{font-size:1.2rem;margin-bottom:.5rem}
+.rc-val{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--gold);letter-spacing:.03em;line-height:1}
+.rc-unit{font-size:.7rem;color:var(--text3);margin:.1rem 0 .25rem}
+.rc-div{width:28px;height:2px;background:rgba(245,166,35,.25);margin:.35rem auto}
+.rc-lbl{font-size:.78rem;color:var(--text2);font-weight:500}
+.rc.hl{background:linear-gradient(135deg,var(--navy3),rgba(245,166,35,.07));border-color:rgba(245,166,35,.25)}
+.chart-box{background:var(--navy3);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:1.5rem;margin-bottom:1.5rem}
+.chart-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem}
+.chart-ttl{font-weight:600;font-size:.95rem}
+.cleg{display:flex;gap:1rem}
+.cl{display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--text2)}
+.cl-dot{width:9px;height:9px;border-radius:2px}
+.chart-tabs{display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap}
+.ctab{padding:.35rem .9rem;border-radius:4px;font-size:.78rem;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--text2);font-family:inherit;transition:all .2s}
 .ctab.active{background:rgba(245,166,35,.1);border-color:var(--gold);color:var(--gold)}
-
-/* PVGIS DETAILS */
-.pvgis-detail{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem}
-.detail-card{background:var(--navy3);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:1.4rem}
-.detail-card h4{font-size:.85rem;font-weight:600;color:var(--text2);margin-bottom:1rem;text-transform:uppercase;letter-spacing:.07em}
-.detail-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.85rem}
-.detail-row:last-child{border:none}
-.detail-row span:last-child{font-weight:600;color:var(--text)}
-.loss-bar{height:4px;border-radius:2px;background:var(--navy4);margin-top:.3rem;overflow:hidden}
+.chart-wrap{position:relative;height:260px}
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.det-card{background:var(--navy3);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:1.3rem}
+.det-card h4{font-size:.8rem;font-weight:600;color:var(--text2);margin-bottom:.9rem;text-transform:uppercase;letter-spacing:.06em}
+.det-row{display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.83rem}
+.det-row:last-child{border:none}
+.det-row span:last-child{font-weight:600;color:var(--text)}
+.loss-bar{height:4px;border-radius:2px;background:var(--navy4);margin-top:.6rem;overflow:hidden}
 .loss-fill{height:100%;border-radius:2px;background:var(--red);transition:width .8s}
-
-/* COST & BATTERY */
-.cost-card{background:linear-gradient(135deg,var(--navy3),rgba(245,166,35,.06));border:1px solid rgba(245,166,35,.22);border-radius:var(--r2);padding:1.75rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
-.cost-range{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gold);letter-spacing:.03em}
-.batt-card{background:rgba(26,188,156,.06);border:1px solid rgba(26,188,156,.2);border-radius:var(--r2);padding:1.5rem;margin-bottom:1.5rem}
-.batt-title{display:flex;align-items:center;gap:.5rem;font-weight:600;color:var(--teal);margin-bottom:1rem;font-size:.95rem}
-.batt-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-.bstat span{font-size:1.25rem;font-weight:700;color:var(--teal);display:block}
-.bstat small{font-size:.75rem;color:var(--text2)}
-
-/* INTERANNUAL */
-.iav-card{background:rgba(245,166,35,.04);border:1px solid rgba(245,166,35,.15);border-radius:var(--r2);padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;gap:1rem;align-items:center}
-.iav-icon{font-size:1.6rem;flex-shrink:0}
-.iav-text{font-size:.85rem;color:var(--text2);line-height:1.65}
-.iav-text strong{color:var(--gold)}
-
-/* DISCLAIMER */
-.disc{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.25rem 1.5rem;font-size:.8rem;color:var(--text2);line-height:1.7;margin-bottom:1.5rem}
+.cost-card{background:linear-gradient(135deg,var(--navy3),rgba(245,166,35,.06));border:1px solid rgba(245,166,35,.22);border-radius:var(--r2);padding:1.5rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.cost-range{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold)}
+.batt-card{background:rgba(26,188,156,.06);border:1px solid rgba(26,188,156,.2);border-radius:var(--r2);padding:1.4rem;margin-bottom:1.5rem}
+.batt-ttl{font-weight:600;color:var(--teal);margin-bottom:.9rem;font-size:.9rem}
+.batt-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
+.bstat span{font-size:1.15rem;font-weight:700;color:var(--teal);display:block}
+.bstat small{font-size:.73rem;color:var(--text2)}
+.iav{background:rgba(245,166,35,.04);border:1px solid rgba(245,166,35,.15);border-radius:var(--r2);padding:1.1rem 1.4rem;margin-bottom:1.5rem;font-size:.84rem;color:var(--text2);line-height:1.65}
+.iav strong{color:var(--gold)}
+.disc{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);padding:1.1rem 1.4rem;font-size:.79rem;color:var(--text2);line-height:1.7;margin-bottom:1.5rem}
 .disc strong{color:var(--gold)}
-
-/* CTA PRO */
-.cta-pro{background:linear-gradient(135deg,rgba(245,166,35,.1),rgba(245,166,35,.03));border:1px solid rgba(245,166,35,.28);border-radius:var(--r2);padding:2.25rem;text-align:center;margin-bottom:1.5rem}
-.cta-pro h3{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.04em;margin-bottom:.5rem}
-.cta-pro p{font-size:.88rem;color:var(--text2);margin-bottom:1.5rem;max-width:480px;margin-left:auto;margin-right:auto}
-.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn-sm{padding:.6rem 1.2rem;font-size:.85rem;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--text2);cursor:pointer;font-family:inherit;font-weight:500;transition:all .2s}
-.btn-sm:hover{color:var(--text);border-color:rgba(255,255,255,.3)}
-.btn-sm.gold{border-color:rgba(245,166,35,.4);color:var(--gold)}
-.btn-sm.gold:hover{background:rgba(245,166,35,.1)}
-
-/* HOW IT WORKS */
+.cta-pro{background:linear-gradient(135deg,rgba(245,166,35,.1),rgba(245,166,35,.03));border:1px solid rgba(245,166,35,.28);border-radius:var(--r2);padding:2rem;text-align:center;margin-bottom:1rem}
+.cta-pro h3{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;margin-bottom:.4rem}
+.cta-pro p{font-size:.87rem;color:var(--text2);margin-bottom:1.25rem}
+.cta-row{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.bsm{padding:.55rem 1.1rem;font-size:.84rem;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--text2);cursor:pointer;font-family:inherit;font-weight:500;transition:all .2s}
+.bsm:hover{color:var(--text)}
+.bsm.g{border-color:rgba(245,166,35,.4);color:var(--gold)}
+.bsm.g:hover{background:rgba(245,166,35,.1)}
 .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;position:relative}
-.how-grid::before{content:'';position:absolute;top:27px;left:calc(16.67% + 27px);right:calc(16.67% + 27px);height:1px;background:linear-gradient(90deg,var(--navy4),rgba(245,166,35,.3),var(--navy4))}
-.how-step{text-align:center;position:relative;z-index:1}
-.hnum{width:54px;height:54px;border-radius:50%;background:var(--navy2);border:2px solid rgba(245,166,35,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--gold)}
-.how-step h4{font-weight:600;margin-bottom:.45rem}
+.how-step{text-align:center}
+.hnum{width:52px;height:52px;border-radius:50%;background:var(--navy2);border:2px solid rgba(245,166,35,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gold)}
+.how-step h4{font-weight:600;margin-bottom:.4rem}
 .how-step p{font-size:.84rem;color:var(--text2);line-height:1.6}
-
-/* PRICING */
-.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:680px;margin:0 auto}
-.pc{background:var(--navy2);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:2rem;position:relative}
-.pc.feat{border-color:rgba(245,166,35,.35);background:linear-gradient(135deg,var(--navy2),rgba(245,166,35,.04))}
-.pc-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy);font-size:.68rem;font-weight:700;padding:.22rem .85rem;border-radius:10px;letter-spacing:.06em;white-space:nowrap;text-transform:uppercase}
-.pc-name{font-weight:600;font-size:1.05rem;margin-bottom:.5rem}
-.pc-price{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--gold);letter-spacing:.03em;line-height:1;margin:1rem 0}
-.pc-price span{font-size:1.05rem;font-family:'DM Sans',sans-serif;color:var(--text2)}
-.pc-sub{font-size:.78rem;color:var(--text3);margin-bottom:1.5rem}
-.pc-feat{list-style:none;font-size:.86rem;color:var(--text2);display:flex;flex-direction:column;gap:.55rem}
-.pc-feat li{display:flex;gap:.5rem;align-items:flex-start}
-.pc-feat li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:.1rem}
-.pc-feat li.x::before{content:'—';color:var(--text3)}
-
-/* FOOTER */
-footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.06);padding:3rem 2rem 2rem}
-.foot-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem}
-.foot-brand p{font-size:.85rem;color:var(--text2);line-height:1.7;margin-top:.75rem;max-width:260px}
-.foot-col h5{font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:1rem}
-.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:.45rem}
-.foot-col a{font-size:.84rem;color:var(--text2);text-decoration:none;transition:color .2s}
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:660px;margin:0 auto}
+.pc{background:var(--navy2);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:1.75rem;position:relative}
+.pc.feat{border-color:rgba(245,166,35,.35)}
+.pc-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy);font-size:.67rem;font-weight:700;padding:.2rem .8rem;border-radius:10px;white-space:nowrap;text-transform:uppercase}
+.pc-name{font-weight:600;font-size:1rem;margin-bottom:.4rem}
+.pc-price{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--gold);line-height:1;margin:.75rem 0}
+.pc-price span{font-size:1rem;font-family:'DM Sans',sans-serif;color:var(--text2)}
+.pc-sub{font-size:.76rem;color:var(--text3);margin-bottom:1.25rem}
+.pc-feat{list-style:none;font-size:.84rem;color:var(--text2);display:flex;flex-direction:column;gap:.5rem}
+.pc-feat li{display:flex;gap:.45rem}
+.pc-feat li::before{content:'v';color:var(--green);font-weight:700;flex-shrink:0}
+.pc-feat li.x::before{content:'-';color:var(--text3)}
+footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.06);padding:2.5rem 2rem 1.5rem}
+.foot-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem}
+.foot-brand p{font-size:.84rem;color:var(--text2);line-height:1.7;margin-top:.65rem;max-width:250px}
+.foot-col h5{font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.85rem}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.foot-col a{font-size:.83rem;color:var(--text2);text-decoration:none;transition:color .2s}
 .foot-col a:hover{color:var(--gold)}
-.foot-bot{max-width:1200px;margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
-.foot-bot p{font-size:.76rem;color:var(--text3)}
-.sbadge{font-size:.7rem;color:var(--teal);background:rgba(26,188,156,.08);border:1px solid rgba(26,188,156,.2);padding:.28rem .7rem;border-radius:4px;letter-spacing:.05em}
-
-/* PRINT */
-@media print{
-  nav,footer,.cta-btns,.btn-sm,.fnav,#loading,.cta-pro{display:none!important}
-  body{background:white;color:#111}
-  .rcard,.chart-section,.pvgis-detail .detail-card,.cost-card{border-color:#ddd}
-  .rcard-val,.cost-range{color:#c47d10}
-}
-@media(max-width:768px){
-  .hero-content{grid-template-columns:1fr}
-  .hero-visual{display:none}
-  .price-grid{grid-template-columns:1fr}
-  .how-grid{grid-template-columns:1fr;gap:1.5rem}
-  .how-grid::before{display:none}
-  .foot-inner{grid-template-columns:1fr 1fr}
-  .fgrid{grid-template-columns:1fr}
-  .pvgis-detail{grid-template-columns:1fr}
-  .batt-stats{grid-template-columns:1fr 1fr}
-  nav ul{display:none}
-}
+.foot-bot{max-width:1200px;margin:1.5rem auto 0;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+.foot-bot p{font-size:.74rem;color:var(--text3)}
+.sbadge{font-size:.7rem;color:var(--teal);background:rgba(26,188,156,.08);border:1px solid rgba(26,188,156,.2);padding:.25rem .65rem;border-radius:4px}
+#manualCoords{display:none;margin-top:1.25rem;background:rgba(245,166,35,.05);border:1px solid rgba(245,166,35,.2);border-radius:var(--r2);padding:1.25rem}
+@media print{nav,footer,.cta-row,.bsm,.fnav,#loading,.cta-pro,#manualCoords,.chart-tabs{display:none!important}body{background:#fff;color:#111}#results{display:block!important}.rc,.chart-box,.det-card,.cost-card{border-color:#ddd;background:#f9f9f9}.rc-val,.cost-range{color:#c47d10}}
+@media(max-width:768px){.hero-content{grid-template-columns:1fr}.hero-visual{display:none}.price-grid,.how-grid{grid-template-columns:1fr}.foot-in{grid-template-columns:1fr 1fr}.fgrid,.det-grid{grid-template-columns:1fr}.batt-stats{grid-template-columns:1fr 1fr}nav ul{display:none}}
 </style>
 </head>
 <body>
-
-<!-- NAV -->
 <nav>
   <a href="#" class="logo">STELIO<span>SUN</span></a>
   <ul>
     <li><a href="#services">Services</a></li>
-    <li><a href="#simulator">Simulateur</a></li>
+    <li><a href="#sim">Simulateur</a></li>
     <li><a href="#comment">Fonctionnement</a></li>
     <li><a href="#tarifs">Tarifs</a></li>
-    <li><a href="#simulator" class="nav-cta">Démarrer gratuitement</a></li>
+    <li><a href="#sim" class="nav-cta">Demarrer</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="home">
+<section class="hero">
   <div class="hero-bg"></div><div class="hero-grid"></div>
   <div class="hero-content">
     <div>
-      <div class="hero-tag">⚡ Données PVGIS · Commission Européenne</div>
+      <div class="hero-tag">Donnees PVGIS - Commission Europeenne</div>
       <h1>Votre projet <em>solaire</em> commence ici</h1>
-      <p class="hero-sub">STELIOSUN prédimensionne votre centrale photovoltaïque — toiture, sol, ombrière — et génère un prévisionnel de production annuel et mensuel basé sur les données réelles d'irradiation PVGIS.</p>
+      <p class="hero-sub">STELIOSUN predimensionne votre centrale photovoltaique &mdash; toiture, sol, ombriere &mdash; et genere un previsionnel mensuel base sur les donnees reelles PVGIS.</p>
       <div class="hero-btns">
-        <a href="#simulator" class="btn btn-primary">Lancer le simulateur gratuit →</a>
-        <a href="#comment" class="btn btn-outline">Comment ça marche</a>
+        <a href="#sim" class="btn btn-primary">Lancer le simulateur &rarr;</a>
+        <a href="#comment" class="btn btn-outline">Comment ca marche</a>
       </div>
       <div class="hero-stats">
-        <div class="stat"><span class="stat-val">PVGIS</span><span class="stat-lbl">Données UE réelles</span></div>
-        <div class="stat"><span class="stat-val">12</span><span class="stat-lbl">Mois de prévision</span></div>
-        <div class="stat"><span class="stat-val">100%</span><span class="stat-lbl">Gratuit</span></div>
+        <div><span class="stat-val">PVGIS</span><span class="stat-lbl">Donnees UE reelles</span></div>
+        <div><span class="stat-val">12</span><span class="stat-lbl">Mois de prevision</span></div>
+        <div><span class="stat-val">100%</span><span class="stat-lbl">Gratuit</span></div>
       </div>
     </div>
     <div class="hero-visual">
       <div class="sun-wrap">
         <div class="sun-ring"></div><div class="sun-ring"></div><div class="sun-ring"></div>
-        <div class="sun-core"><div class="sun-kw">☀<br>PVGIS<br>READY</div></div>
+        <div class="sun-core"><div class="sun-kw">PVGIS<br>READY</div></div>
         <div class="panels-wrap"><div class="spanel"></div><div class="spanel"></div><div class="spanel"></div><div class="spanel"></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
 <section class="section" id="services">
   <div class="container">
     <div class="stag">Nos services</div>
     <h2 class="stitle">Toutes les typologies de projets</h2>
-    <p class="ssub">Prédimensionnement basé sur les données d'irradiation réelles PVGIS (Commission Européenne) pour chaque site d'implantation.</p>
+    <p class="ssub">Predimensionnement base sur les donnees PVGIS pour chaque site, sans inscription.</p>
     <div class="srv-grid">
-      <div class="srv-card"><div class="srv-ico">🏠</div><h3>Solaire en toiture</h3><p>Toiture inclinée ou terrasse. Orientation, pente et pertes thermiques du bâtiment prises en compte via PVGIS.</p><span class="badge badge-free">Gratuit</span></div>
-      <div class="srv-card"><div class="srv-ico">🌾</div><h3>Centrale au sol</h3><p>Parc photovoltaïque sur structures fixes. Modèle thermique "open-rack" pour une production optimisée.</p><span class="badge badge-free">Gratuit</span></div>
-      <div class="srv-card"><div class="srv-ico">🅿️</div><h3>Ombrière solaire</h3><p>Ombrières de parking. Calcul adapté aux structures surélevées avec ventilation et double usage du foncier.</p><span class="badge badge-free">Gratuit</span></div>
-      <div class="srv-card"><div class="srv-ico">🔋</div><h3>Stockage batterie</h3><p>Capacité de stockage optimale selon consommation, profil PV et autonomie souhaitée. Li-ion, LFP ou Pb.</p><span class="badge badge-free">Gratuit</span></div>
-      <div class="srv-card" style="border-color:rgba(245,166,35,.2)"><div class="srv-ico">📋</div><h3>Cahier des charges</h3><p>Rédaction d'un CdC complet : spécifications techniques, critères de performance, clauses de garantie.</p><span class="badge badge-pro">Payant</span></div>
-      <div class="srv-card" style="border-color:rgba(245,166,35,.2)"><div class="srv-ico">📊</div><h3>Étude de rentabilité</h3><p>Simulation horaire, TRI, VAN, temps de retour sur investissement et analyse de sensibilité tarifaire.</p><span class="badge badge-pro">Payant</span></div>
+      <div class="srv-card"><div class="srv-ico">&#127968;</div><h3>Solaire en toiture</h3><p>Toiture inclinees ou terrasse. Orientation et pertes thermiques prises en compte via PVGIS.</p><span class="badge badge-free">Gratuit</span></div>
+      <div class="srv-card"><div class="srv-ico">&#127807;</div><h3>Centrale au sol</h3><p>Parc photovoltaique sur structures fixes. Modele thermique open-rack pour production optimisee.</p><span class="badge badge-free">Gratuit</span></div>
+      <div class="srv-card"><div class="srv-ico">&#127359;</div><h3>Ombriere solaire</h3><p>Ombrieres de parking avec double usage du foncier et calcul adapte aux structures surelevees.</p><span class="badge badge-free">Gratuit</span></div>
+      <div class="srv-card"><div class="srv-ico">&#128267;</div><h3>Stockage batterie</h3><p>Dimensionnement batterie selon consommation et autonomie souhaitee. Li-ion, LFP ou Pb.</p><span class="badge badge-free">Gratuit</span></div>
+      <div class="srv-card" style="border-color:rgba(245,166,35,.2)"><div class="srv-ico">&#128203;</div><h3>Cahier des charges</h3><p>Redaction d'un CdC complet : specifications techniques, criteres de performance et garantie.</p><span class="badge badge-pro">Payant</span></div>
+      <div class="srv-card" style="border-color:rgba(245,166,35,.2)"><div class="srv-ico">&#128202;</div><h3>Etude de rentabilite</h3><p>Simulation horaire, TRI, VAN, temps de retour et analyse de sensibilite tarifaire.</p><span class="badge badge-pro">Payant</span></div>
     </div>
   </div>
 </section>
 
-<!-- SIMULATOR -->
-<section class="section calc-section" id="simulator">
+<section class="section calc-section" id="sim">
   <div class="container">
     <div class="stag">Simulateur PVGIS gratuit</div>
-    <h2 class="stitle" style="margin-bottom:.5rem">Prédimensionnez &amp; Prévisionnez</h2>
-    <p style="color:var(--text2);margin-bottom:3rem;max-width:580px;font-size:.92rem">Renseignez votre projet en 5 étapes. STELIOSUN interroge l'API PVGIS pour calculer la production mensuelle et annuelle réelle de votre installation.</p>
+    <h2 class="stitle" style="margin-bottom:.5rem">Predimensionnez &amp; Previsionnez</h2>
+    <p style="color:var(--text2);margin-bottom:2.5rem;max-width:560px;font-size:.92rem">5 etapes. STELIOSUN interroge l'API PVGIS pour calculer votre production mensuelle et annuelle reelle.</p>
     <div class="calc-wrap">
-      <!-- Progress -->
       <div class="prog-bar" id="progBar"></div>
       <div class="plabels" id="progLbls"></div>
 
-      <!-- STEP 1: TYPE -->
+      <!-- STEP 1 -->
       <div class="fstep active" id="s1">
         <h2>Type d'installation</h2>
-        <p>Quel type de centrale souhaitez-vous prédimensionner ?</p>
+        <p>Quel type de centrale souhaitez-vous predimensionner ?</p>
         <div class="opts" style="grid-template-columns:repeat(3,1fr)">
-          <div class="opt" data-v="toiture" onclick="selOpt(this,'type')"><span class="opt-ico">🏠</span><div class="opt-name">Toiture</div><div class="opt-sub">Inclinée ou terrasse</div></div>
-          <div class="opt" data-v="sol" onclick="selOpt(this,'type')"><span class="opt-ico">🌾</span><div class="opt-name">Au sol</div><div class="opt-sub">Parc photovoltaïque</div></div>
-          <div class="opt" data-v="ombriere" onclick="selOpt(this,'type')"><span class="opt-ico">🅿️</span><div class="opt-name">Ombrière</div><div class="opt-sub">Parking couvert</div></div>
+          <div class="opt" data-v="toiture" onclick="selOpt(this,'type')"><span class="opt-ico">&#127968;</span><div class="opt-name">Toiture</div><div class="opt-sub">Inclinees ou terrasse</div></div>
+          <div class="opt" data-v="sol" onclick="selOpt(this,'type')"><span class="opt-ico">&#127807;</span><div class="opt-name">Au sol</div><div class="opt-sub">Parc photovoltaique</div></div>
+          <div class="opt" data-v="ombriere" onclick="selOpt(this,'type')"><span class="opt-ico">&#127359;</span><div class="opt-name">Ombriere</div><div class="opt-sub">Parking couvert</div></div>
         </div>
-        <div class="fnav"><span></span><button class="bnav bnext" id="n1" onclick="next(1)" disabled>Suivant →</button></div>
+        <div class="fnav"><span></span><button class="bnav bnext" id="n1" onclick="goNext(1)" disabled>Suivant &rarr;</button></div>
       </div>
 
-      <!-- STEP 2: LOCATION -->
+      <!-- STEP 2 -->
       <div class="fstep" id="s2">
         <h2>Localisation du site</h2>
-        <p>Cliquez sur la carte pour placer votre site. Zoomez pour plus de précision.</p>
+        <p>Recherchez l'adresse ou la commune d'implantation.</p>
         <div class="addr-wrap">
-          <input type="text" id="addrInput" placeholder="Rechercher une adresse ou commune (optionnel)…" oninput="onAddrInput()" autocomplete="off">
-          <button class="addr-btn" onclick="searchAddr()" title="Rechercher">🔍</button>
+          <input type="text" id="addrInput" placeholder="Ex : ZI les Milles, Aix-en-Provence" oninput="onAddrInput()" autocomplete="off">
+          <button class="addr-btn" onclick="searchAddr()" title="Rechercher">&#128269;</button>
           <div class="addr-results" id="addrResults"></div>
         </div>
-        <div id="map" style="border-radius:var(--r2);border:2px solid rgba(245,166,35,.25);margin-top:.5rem"></div>
-        <div class="note" style="margin-top:.75rem">
-          💡 <strong>Cliquez sur la carte</strong> pour placer votre site — c'est la méthode principale.
-          La recherche d'adresse fonctionne une fois le site déployé en HTTPS.
-        </div>
         <div id="locInfo" style="display:none" class="loc-info">
-          📍 <span id="locLabel">—</span> — Lat : <span id="locLat">—</span> · Lon : <span id="locLon">—</span>
-          — <strong style="color:var(--teal)">Prêt pour PVGIS ✓</strong>
+          &#128205; <span id="locLabel" style="color:var(--teal);font-weight:600">-</span>
+          &nbsp;|&nbsp;Lat:<span id="locLat">-</span> Lon:<span id="locLon">-</span>
+          &nbsp;<strong style="color:var(--green)">Pret PVGIS &#10003;</strong>
         </div>
-        <details style="margin-top:.85rem">
-          <summary style="font-size:.82rem;font-weight:600;color:var(--gold);cursor:pointer;padding:.4rem 0;user-select:none">▶ Saisir des coordonnées GPS manuellement</summary>
-          <div style="margin-top:.75rem;background:rgba(245,166,35,.05);border:1px solid rgba(245,166,35,.2);border-radius:var(--r2);padding:1.25rem">
-            <div class="fgrid" style="margin-bottom:.75rem">
-              <div class="field"><label>Latitude (ex : 43.2965)</label><input type="number" id="manLat" step="0.0001" min="-90" max="90" placeholder="43.2965"></div>
-              <div class="field"><label>Longitude (ex : 5.3698)</label><input type="number" id="manLon" step="0.0001" min="-180" max="180" placeholder="5.3698"></div>
-              <div class="field full"><label>Nom du site</label><input type="text" id="manNom" placeholder="ex : ZI Les Milles, Aix-en-Provence"></div>
-            </div>
-            <button class="bnav bnext" style="padding:.6rem 1.4rem;font-size:.88rem" onclick="applyManualCoords()">Positionner sur la carte →</button>
-            <p style="font-size:.74rem;color:var(--text3);margin-top:.7rem">Coordonnées sur <a href="https://www.openstreetmap.org" target="_blank" rel="noopener" style="color:var(--gold)">openstreetmap.org</a> (clic droit → Afficher l'adresse) ou Google Maps.</p>
+        <div id="mapCont">
+          <div class="map-ph" id="mapPh">&#128506; La carte s'affichera apres selection</div>
+          <div id="map" style="display:none"></div>
+        </div>
+        <div id="manualCoords">
+          <div style="font-size:.82rem;font-weight:600;color:var(--gold);margin-bottom:1rem">&#128205; Saisie manuelle des coordonnees GPS</div>
+          <div class="fgrid" style="margin-bottom:.75rem">
+            <div class="field"><label>Latitude (ex: 43.2965)</label><input type="number" id="manLat" step="0.0001" min="-90" max="90" placeholder="43.2965"></div>
+            <div class="field"><label>Longitude (ex: 5.3698)</label><input type="number" id="manLon" step="0.0001" min="-180" max="180" placeholder="5.3698"></div>
+            <div class="field full"><label>Nom du site</label><input type="text" id="manNom" placeholder="ex: ZI Les Milles, Aix-en-Provence"></div>
           </div>
-        </details>
-        <div class="fnav" style="margin-top:1.25rem">
-          <button class="bnav bprev" onclick="prev(2)">← Retour</button>
-          <button class="bnav bnext" id="n2" onclick="next(2)" disabled>Suivant →</button>
+          <button class="bnav bnext" style="padding:.55rem 1.3rem;font-size:.87rem" onclick="applyManual()">Valider &rarr;</button>
+          <p style="font-size:.73rem;color:var(--text3);margin-top:.6rem">Coordonnees sur <a href="https://www.openstreetmap.org" target="_blank" style="color:var(--gold)">openstreetmap.org</a> (clic droit) ou Google Maps.</p>
+        </div>
+        <div class="note" style="margin-top:1rem">&#128161; Geocodage via BAN (gouv.fr), Nominatim (OSM) et Open-Meteo, lances en parallele. En cas d'echec, saisie manuelle disponible ci-dessus.</div>
+        <div class="fnav">
+          <button class="bnav bprev" onclick="goPrev(2)">&larr; Retour</button>
+          <button class="bnav bnext" id="n2" onclick="goNext(2)" disabled>Suivant &rarr;</button>
         </div>
       </div>
 
-      <!-- STEP 3: SURFACE & MODULES -->
+      <!-- STEP 3 -->
       <div class="fstep" id="s3">
         <h2>Surface &amp; Modules</h2>
-        <p>Définissez la surface disponible et les paramètres des panneaux photovoltaïques.</p>
+        <p>Definissez la surface disponible et les parametres des panneaux.</p>
         <div class="fgrid">
-          <div class="field"><label>Surface disponible totale (m²)</label><input type="number" id="surface" min="10" max="500000" placeholder="ex : 500" oninput="D.surface=parseFloat(this.value)||0;updatePower()"></div>
+          <div class="field"><label>Surface disponible (m2)</label><input type="number" id="surface" min="10" max="500000" placeholder="ex: 500" oninput="D.surface=parseFloat(this.value)||0;updatePw()"></div>
           <div class="field"><label>Type de modules</label>
-            <select id="moduleType" onchange="D.moduleType=this.value;updatePower()">
-              <option value="mono">Monocristallin (η ≈ 20%)</option>
-              <option value="bifacial">Bifacial (η ≈ 22%)</option>
-              <option value="poly">Polycristallin (η ≈ 17%)</option>
-              <option value="cis">CIS/CIGS (η ≈ 15%)</option>
+            <select id="modType" onchange="D.moduleType=this.value;updatePw()">
+              <option value="mono">Monocristallin (20.5%)</option>
+              <option value="bifacial">Bifacial (22.5%)</option>
+              <option value="poly">Polycristallin (17.5%)</option>
+              <option value="cis">CIS/CIGS (15.5%)</option>
             </select>
           </div>
-          <div class="field" id="fOrient"><label>Orientation principale</label>
-            <select id="orientation" onchange="D.orientation=this.value">
-              <option value="0">Sud — 0° (optimal)</option>
-              <option value="-45">Sud-Est — -45°</option>
-              <option value="45">Sud-Ouest — +45°</option>
-              <option value="-90">Est — -90°</option>
-              <option value="90">Ouest — +90°</option>
-              <option value="180">Nord — 180° (déconseillé)</option>
+          <div class="field"><label>Orientation</label>
+            <select id="orient" onchange="D.orientation=this.value">
+              <option value="0">Sud 0deg (optimal)</option>
+              <option value="-45">Sud-Est -45deg</option>
+              <option value="45">Sud-Ouest +45deg</option>
+              <option value="-90">Est -90deg</option>
+              <option value="90">Ouest +90deg</option>
+              <option value="180">Nord 180deg</option>
             </select>
           </div>
-          <div class="field"><label>Inclinaison : <span class="rval" id="tiltV">30°</span></label>
-            <input type="range" min="0" max="75" step="5" value="30" id="tilt" oninput="D.tilt=parseInt(this.value);document.getElementById('tiltV').textContent=this.value+'°'">
-            <div class="rlbls"><span>0° plat</span><span>35° optimal</span><span>75°</span></div>
+          <div class="field"><label>Inclinaison: <span class="rval" id="tiltV">30deg</span></label>
+            <input type="range" min="0" max="75" step="5" value="30" id="tilt" oninput="D.tilt=+this.value;document.getElementById('tiltV').textContent=this.value+'deg'">
+            <div class="rlbls"><span>0 plat</span><span>35 optimal</span><span>75</span></div>
           </div>
-          <div class="field full" style="background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.15);border-radius:var(--r);padding:.85rem 1rem">
-            <label>Puissance crête estimée</label>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);letter-spacing:.03em" id="pwDisplay">— kWc</div>
-            <div style="font-size:.78rem;color:var(--text2)" id="pwSub">Renseignez la surface pour calculer</div>
+          <div class="field full" style="background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.15);border-radius:var(--r);padding:.8rem 1rem">
+            <label>Puissance crete estimee</label>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--gold)" id="pwD">- kWc</div>
+            <div style="font-size:.77rem;color:var(--text2)" id="pwS">Renseignez la surface pour calculer</div>
           </div>
         </div>
         <div class="fnav">
-          <button class="bnav bprev" onclick="prev(3)">← Retour</button>
-          <button class="bnav bnext" id="n3" onclick="next(3)" disabled>Suivant →</button>
+          <button class="bnav bprev" onclick="goPrev(3)">&larr; Retour</button>
+          <button class="bnav bnext" id="n3" onclick="goNext(3)" disabled>Suivant &rarr;</button>
         </div>
       </div>
 
-      <!-- STEP 4: CONSOMMATION -->
+      <!-- STEP 4 -->
       <div class="fstep" id="s4">
-        <h2>Consommation électrique</h2>
-        <p>Renseignez votre consommation pour estimer le taux de couverture de vos besoins.</p>
+        <h2>Consommation electrique</h2>
+        <p>Renseignez votre consommation pour estimer le taux de couverture.</p>
         <div class="fgrid">
-          <div class="field full"><label>Consommation annuelle (kWh/an) — optionnel</label><input type="number" id="conso" min="0" max="100000000" placeholder="ex : 150 000" oninput="D.consumption=parseFloat(this.value)||0"></div>
+          <div class="field full"><label>Consommation annuelle (kWh/an) - optionnel</label><input type="number" id="conso" min="0" placeholder="ex: 150 000" oninput="D.consumption=parseFloat(this.value)||0"></div>
           <div class="field full"><label>Profil de consommation</label>
             <select id="profile" onchange="D.profile=this.value">
-              <option value="industriel">Industriel / Tertiaire (semaine, heures creuses = nuit)</option>
-              <option value="commercial">Commerce (journée étendue)</option>
-              <option value="agricole">Agricole (variable, pompage…)</option>
-              <option value="residentiel">Résidentiel (soir et week-end)</option>
-              <option value="continu">Fonctionnement continu 24h/24</option>
+              <option value="industriel">Industriel / Tertiaire</option>
+              <option value="commercial">Commerce (journee etendue)</option>
+              <option value="agricole">Agricole</option>
+              <option value="residentiel">Residentiel (soir/week-end)</option>
+              <option value="continu">Continu 24h/24</option>
             </select>
           </div>
         </div>
-        <div class="note">💡 Le profil "industriel" et "commercial" présentent le meilleur taux d'autoconsommation car la consommation est concentrée en journée, en phase avec la production solaire.</div>
+        <div class="note">&#128161; Les profils industriel et commercial offrent le meilleur taux d'autoconsommation car la consommation est concentree en journee.</div>
         <div class="fnav">
-          <button class="bnav bprev" onclick="prev(4)">← Retour</button>
-          <button class="bnav bnext" onclick="next(4)">Suivant →</button>
+          <button class="bnav bprev" onclick="goPrev(4)">&larr; Retour</button>
+          <button class="bnav bnext" onclick="goNext(4)">Suivant &rarr;</button>
         </div>
       </div>
 
-      <!-- STEP 5: STORAGE -->
+      <!-- STEP 5 -->
       <div class="fstep" id="s5">
         <h2>Stockage batterie</h2>
         <p>Souhaitez-vous inclure une estimation de stockage ?</p>
-        <div class="opts" style="grid-template-columns:1fr 1fr;max-width:380px">
-          <div class="opt" data-v="non" onclick="selOpt(this,'storage');toggleBatt(false)"><span class="opt-ico">⚡</span><div class="opt-name">Sans stockage</div></div>
-          <div class="opt" data-v="oui" onclick="selOpt(this,'storage');toggleBatt(true)"><span class="opt-ico">🔋</span><div class="opt-name">Avec batterie</div></div>
+        <div class="opts" style="grid-template-columns:1fr 1fr;max-width:360px">
+          <div class="opt" data-v="non" onclick="selOpt(this,'storage');showBatt(false)"><span class="opt-ico">&#9889;</span><div class="opt-name">Sans stockage</div></div>
+          <div class="opt" data-v="oui" onclick="selOpt(this,'storage');showBatt(true)"><span class="opt-ico">&#128267;</span><div class="opt-name">Avec batterie</div></div>
         </div>
         <div id="battP" style="display:none;margin-top:1.5rem">
           <div class="fgrid">
-            <div class="field"><label>Autonomie : <span class="rval" id="autoV">1 jour</span></label>
-              <input type="range" min="0.5" max="7" step="0.5" value="1" id="autoSlider" oninput="D.autonomy=parseFloat(this.value);document.getElementById('autoV').textContent=this.value+' jour'+(this.value>1?'s':'')">
-              <div class="rlbls"><span>½ j</span><span>2 j</span><span>7 j</span></div>
+            <div class="field"><label>Autonomie: <span class="rval" id="autoV">1 jour</span></label>
+              <input type="range" min="0.5" max="7" step="0.5" value="1" id="autoR" oninput="D.autonomy=+this.value;document.getElementById('autoV').textContent=this.value+(+this.value>1?' jours':' jour')">
+              <div class="rlbls"><span>0.5j</span><span>2j</span><span>7j</span></div>
             </div>
             <div class="field"><label>Technologie batterie</label>
               <select id="battT" onchange="D.battType=this.value">
-                <option value="lithium">Lithium-ion NMC (DoD 80%)</option>
+                <option value="lithium">Li-ion NMC (DoD 80%)</option>
                 <option value="lifepo4">LiFePO4 (DoD 90%)</option>
-                <option value="plomb">Plomb-acide AGM (DoD 50%)</option>
+                <option value="plomb">Plomb-acide (DoD 50%)</option>
               </select>
             </div>
           </div>
         </div>
         <div class="fnav">
-          <button class="bnav bprev" onclick="prev(5)">← Retour</button>
-          <button class="bnav bnext" id="n5" onclick="runCalc()" disabled>Calculer avec PVGIS →</button>
+          <button class="bnav bprev" onclick="goPrev(5)">&larr; Retour</button>
+          <button class="bnav bnext" id="n5" onclick="runCalc()" disabled>Calculer avec PVGIS &rarr;</button>
         </div>
       </div>
 
       <!-- LOADING -->
       <div id="loading">
-        <div class="loader-sun"></div>
-        <h3>Calcul en cours…</h3>
-        <p>Interrogation de l'API PVGIS et génération du prévisionnel de production</p>
-        <div class="load-steps">
-          <div class="lstep" id="ls1"><div class="lstep-dot"></div>Localisation GPS confirmée</div>
-          <div class="lstep" id="ls2"><div class="lstep-dot"></div>Envoi des paramètres à l'API PVGIS (JRC)</div>
-          <div class="lstep" id="ls3"><div class="lstep-dot"></div>Récupération des données d'irradiation</div>
-          <div class="lstep" id="ls4"><div class="lstep-dot"></div>Calcul du prévisionnel mensuel 12 mois</div>
-          <div class="lstep" id="ls5"><div class="lstep-dot"></div>Génération du rapport de prédimensionnement</div>
+        <div class="spin"></div>
+        <h3>Calcul en cours...</h3>
+        <p>Interrogation de l'API PVGIS et generation du previsionnel</p>
+        <div class="lsteps">
+          <div class="ls" id="ls1"><div class="ls-dot"></div>Localisation GPS confirmee</div>
+          <div class="ls" id="ls2"><div class="ls-dot"></div>Envoi des parametres PVGIS</div>
+          <div class="ls" id="ls3"><div class="ls-dot"></div>Reception des donnees d'irradiation</div>
+          <div class="ls" id="ls4"><div class="ls-dot"></div>Calcul du previsionnel 12 mois</div>
+          <div class="ls" id="ls5"><div class="ls-dot"></div>Generation du rapport</div>
         </div>
       </div>
 
       <!-- RESULTS -->
       <div id="results">
-        <div class="res-header">
-          <div class="pvgis-badge">✓ Données PVGIS · JRC Commission Européenne</div>
-          <h2 class="stitle" style="text-align:center;margin-bottom:.25rem" id="resTitle">—</h2>
-          <p style="color:var(--text2);text-align:center;font-size:.85rem" id="resSub">—</p>
+        <div class="res-hdr">
+          <div class="pvgis-badge">PVGIS - JRC Commission Europeenne</div>
+          <h2 class="stitle" style="text-align:center;margin-bottom:.25rem" id="resT">-</h2>
+          <p style="color:var(--text2);text-align:center;font-size:.84rem" id="resS">-</p>
         </div>
-        <div class="rcard-grid" id="rCards"></div>
-
-        <!-- MONTHLY CHART -->
-        <div class="chart-section">
-          <div class="chart-header">
-            <div>
-              <div class="chart-title">Prévisionnel de production — 12 mois</div>
-              <div style="font-size:.78rem;color:var(--text2);margin-top:.2rem">Basé sur les données d'irradiation PVGIS (moyennes 2005-2023)</div>
-            </div>
-            <div class="chart-legend">
-              <div class="cleg"><div class="cleg-dot" style="background:rgba(245,166,35,.85)"></div>Production kWh</div>
-              <div class="cleg"><div class="cleg-dot" style="background:var(--teal);border-radius:50%"></div>Irradiation kWh/m²</div>
-            </div>
+        <div class="rcards" id="rCards"></div>
+        <div class="chart-box">
+          <div class="chart-hdr">
+            <div><div class="chart-ttl">Previsionnel de production - 12 mois</div><div style="font-size:.75rem;color:var(--text2);margin-top:.2rem">Moyennes PVGIS 2005-2023</div></div>
+            <div class="cleg"><div class="cl"><div class="cl-dot" style="background:rgba(245,166,35,.85)"></div>Production kWh</div><div class="cl"><div class="cl-dot" style="background:var(--teal);border-radius:50%"></div>Irradiation kWh/m2</div></div>
           </div>
           <div class="chart-tabs">
-            <button class="ctab active" onclick="switchChart('prod')">Production mensuelle</button>
-            <button class="ctab" onclick="switchChart('daily')">Production journalière moy.</button>
-            <button class="ctab" onclick="switchChart('irr')">Irradiation sur plan incliné</button>
+            <button class="ctab active" onclick="swChart(this,'prod')">Production mensuelle</button>
+            <button class="ctab" onclick="swChart(this,'daily')">Journaliere moy.</button>
+            <button class="ctab" onclick="swChart(this,'irr')">Irradiation</button>
           </div>
-          <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
+          <div class="chart-wrap"><canvas id="myChart"></canvas></div>
         </div>
-
-        <!-- PVGIS DETAILS -->
-        <div class="pvgis-detail" id="pvgisDetail"></div>
-
-        <!-- COST -->
+        <div class="det-grid" id="detGrid"></div>
         <div class="cost-card">
           <div>
-            <div style="font-size:.78rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem">Estimation d'investissement (pose comprise)</div>
-            <div class="cost-range" id="rCost">—</div>
-            <div style="font-size:.76rem;color:var(--text2);margin-top:.2rem">Hors aides d'état · TVA 10% · Fourchette indicative</div>
+            <div style="font-size:.76rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">Estimation investissement (pose comprise)</div>
+            <div class="cost-range" id="rCost">-</div>
+            <div style="font-size:.74rem;color:var(--text2);margin-top:.15rem">Hors aides - TVA 10% - Indicatif</div>
           </div>
           <div style="text-align:right">
-            <div style="font-size:.75rem;color:var(--text3);margin-bottom:.35rem">Coût moyen / kWc</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--text2)" id="rCpw">—</div>
-            <div style="font-size:.72rem;color:var(--text3);margin-top:.5rem">Temps retour brut estimé</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--gold)" id="rPayback">—</div>
+            <div style="font-size:.73rem;color:var(--text3)">Cout/kWc</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--text2)" id="rCpw">-</div>
+            <div style="font-size:.71rem;color:var(--text3);margin-top:.4rem">Retour brut estime</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gold)" id="rPb">-</div>
           </div>
         </div>
-
-        <!-- BATTERY -->
-        <div class="batt-card" id="battResult" style="display:none">
-          <div class="batt-title">🔋 Dimensionnement stockage batterie</div>
+        <div class="batt-card" id="battR" style="display:none">
+          <div class="batt-ttl">&#128267; Dimensionnement stockage</div>
           <div class="batt-stats">
-            <div class="bstat"><span id="bCap">—</span><small>kWh capacité utile</small></div>
-            <div class="bstat"><span id="bAuto">—</span><small>jours d'autonomie</small></div>
-            <div class="bstat"><span id="bCost">—</span><small>€ estimation batterie</small></div>
-            <div class="bstat"><span id="bCycles">—</span><small>cycles vie estimés</small></div>
+            <div class="bstat"><span id="bCap">-</span><small>kWh capacite</small></div>
+            <div class="bstat"><span id="bAuto">-</span><small>jours autonomie</small></div>
+            <div class="bstat"><span id="bCost">-</span><small>EUR batterie</small></div>
+            <div class="bstat"><span id="bCyc">-</span><small>cycles vie</small></div>
           </div>
         </div>
-
-        <!-- INTERANNUAL -->
-        <div class="iav-card" id="iavCard" style="display:none">
-          <div class="iav-icon">📊</div>
-          <div class="iav-text" id="iavText">—</div>
-        </div>
-
-        <div class="disc">
-          <strong>⚠ Prédimensionnement indicatif :</strong> Les résultats sont issus des données PVGIS (JRC — Commission Européenne) qui utilisent des irradiations moyennes sur la période 2005–2023. La production réelle peut varier de ±15 à ±20% selon l'état exact du site, les ombres portées, la marque et vieillissement des équipements, et les conditions réseau. <strong>Une étude technique complète est requise avant tout investissement.</strong>
-        </div>
-
+        <div class="iav" id="iavD" style="display:none" id="iavD"></div>
+        <div class="disc"><strong>Predimensionnement indicatif :</strong> Resultats issus des donnees PVGIS (JRC, moyennes 2005-2023). La production reelle peut varier de +/-15 a 20% selon les conditions du site. <strong>Une etude technique complete est requise avant investissement.</strong></div>
         <div class="cta-pro">
           <h3>Aller plus loin avec STELIOSUN Pro</h3>
-          <p>Cahier des charges complet, simulation horaire annuelle, analyse de rentabilité (TRI/VAN), bilan carbone et rapport de production exportable PDF.</p>
-          <div class="cta-btns">
-            <a href="#contact" class="btn btn-primary">Demander une étude complète →</a>
-            <button class="btn-sm gold" onclick="printResults()">⬇ Télécharger le rapport</button>
-            <button class="btn-sm" onclick="resetAll()">↩ Nouvelle simulation</button>
+          <p>Cahier des charges, simulation horaire, analyse TRI/VAN et rapport PDF exportable.</p>
+          <div class="cta-row">
+            <a href="#contact" class="btn btn-primary">Demander une etude &rarr;</a>
+            <button class="bsm g" onclick="doPrint()">Telecharger rapport</button>
+            <button class="bsm" onclick="doReset()">Nouvelle simulation</button>
           </div>
         </div>
       </div><!-- /results -->
@@ -578,516 +482,289 @@ footer{background:var(--navy2);border-top:1px solid rgba(255,255,255,.06);paddin
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
 <section class="section" id="comment">
   <div class="container">
     <div class="stag">Fonctionnement</div>
-    <h2 class="stitle">Données réelles, résultats fiables</h2>
-    <p class="ssub">STELIOSUN connecte vos paramètres de projet aux données d'irradiation officielles de la Commission Européenne.</p>
+    <h2 class="stitle">Donnees reelles, resultats fiables</h2>
+    <p class="ssub">STELIOSUN connecte vos parametres aux donnees d'irradiation officielles de la Commission Europeenne.</p>
     <div class="how-grid">
-      <div class="how-step"><div class="hnum">01</div><h4>Paramétrez votre projet</h4><p>Type d'installation, localisation GPS, surface, orientation et consommation électrique.</p></div>
-      <div class="how-step"><div class="hnum">02</div><h4>PVGIS calcule pour vous</h4><p>L'API PVGIS (JRC) renvoie l'irradiation réelle sur site, la production mensuelle et les pertes système.</p></div>
-      <div class="how-step"><div class="hnum">03</div><h4>Rapport complet en secondes</h4><p>Puissance crête, prévisionnel 12 mois, CO₂ évité, coût estimé et dimensionnement batterie.</p></div>
+      <div class="how-step"><div class="hnum">01</div><h4>Parametrez votre projet</h4><p>Type, localisation GPS, surface, orientation et consommation electrique.</p></div>
+      <div class="how-step"><div class="hnum">02</div><h4>PVGIS calcule pour vous</h4><p>L'API PVGIS renvoie l'irradiation reelle, la production mensuelle et les pertes systeme.</p></div>
+      <div class="how-step"><div class="hnum">03</div><h4>Rapport complet</h4><p>Puissance crete, previsionnel 12 mois, CO2 evite, cout estime et stockage batterie.</p></div>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
-<section class="section" id="tarifs" style="background:var(--navy2);border-top:1px solid rgba(255,255,255,.05)">
+<section class="section" id="tarifs" style="background:var(--navy2)">
   <div class="container">
     <div class="stag" style="text-align:center">Tarifs</div>
-    <h2 class="stitle" style="text-align:center;margin-bottom:.5rem">Gratuit pour démarrer</h2>
-    <p style="color:var(--text2);text-align:center;max-width:460px;margin:0 auto 3rem;line-height:1.7;font-size:.92rem">Le prédimensionnement PVGIS est toujours gratuit. Pour un dossier d'investissement ou un appel d'offres, nos experts vous accompagnent.</p>
+    <h2 class="stitle" style="text-align:center;margin-bottom:.5rem">Gratuit pour demarrer</h2>
+    <p style="color:var(--text2);text-align:center;max-width:440px;margin:0 auto 2.5rem;line-height:1.7;font-size:.9rem">Le predimensionnement PVGIS est toujours gratuit. Pour un dossier d'investissement, nos experts vous accompagnent.</p>
     <div class="price-grid">
-      <div class="pc">
-        <div class="pc-name">Prédimensionnement</div>
-        <div class="pc-price">0 <span>€</span></div>
-        <div class="pc-sub">Sans inscription requise</div>
-        <ul class="pc-feat">
-          <li>Puissance crête (kWc)</li>
-          <li>Production mensuelle PVGIS (12 mois)</li>
-          <li>Irradiation sur plan incliné</li>
-          <li>CO₂ évité estimé</li>
-          <li>Fourchette d'investissement</li>
-          <li>Dimensionnement batterie</li>
-          <li>Taux de couverture des besoins</li>
-          <li class="x">Cahier des charges</li>
-          <li class="x">Simulation horaire</li>
-          <li class="x">Analyse de rentabilité</li>
-        </ul>
+      <div class="pc"><div class="pc-name">Predimensionnement</div><div class="pc-price">0 <span>EUR</span></div><div class="pc-sub">Sans inscription</div>
+        <ul class="pc-feat"><li>Puissance crete (kWc)</li><li>Production PVGIS 12 mois</li><li>Irradiation plan incline</li><li>CO2 evite</li><li>Fourchette investissement</li><li>Dimensionnement batterie</li><li>Couverture des besoins</li><li class="x">Cahier des charges</li><li class="x">Simulation horaire</li><li class="x">Analyse rentabilite</li></ul>
       </div>
-      <div class="pc feat">
-        <div class="pc-badge">Recommandé</div>
-        <div class="pc-name">Étude complète</div>
-        <div class="pc-price">Sur <span>devis</span></div>
-        <div class="pc-sub">Selon complexité du projet</div>
-        <ul class="pc-feat">
-          <li>Tout le prédimensionnement</li>
-          <li>Cahier des charges complet</li>
-          <li>Spécifications techniques détaillées</li>
-          <li>Simulation horaire (8 760 h)</li>
-          <li>Analyse de rentabilité TRI/VAN/TRS</li>
-          <li>Bilan carbone cycle de vie (ACV)</li>
-          <li>Recommandations d'équipements</li>
-          <li>Rapport PDF exportable</li>
-          <li>Assistance appel d'offres</li>
-          <li>Suivi post-installation</li>
-        </ul>
+      <div class="pc feat"><div class="pc-badge">Recommande</div><div class="pc-name">Etude complete</div><div class="pc-price">Sur <span>devis</span></div><div class="pc-sub">Selon complexite</div>
+        <ul class="pc-feat"><li>Tout le predimensionnement</li><li>Cahier des charges complet</li><li>Specifications techniques</li><li>Simulation horaire (8760h)</li><li>Analyse TRI/VAN/TRS</li><li>Bilan carbone ACV</li><li>Rapport PDF exportable</li><li>Assistance appel d'offres</li></ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer id="contact">
-  <div class="foot-inner">
-    <div class="foot-brand">
-      <a href="#" class="logo">STELIO<span>SUN</span></a>
-      <p>Plateforme de prédimensionnement solaire PV basée sur les données d'irradiation PVGIS. Toiture, sol, ombrière et stockage.</p>
-    </div>
-    <div class="foot-col"><h5>Services</h5><ul><li><a href="#simulator">Simulateur PVGIS gratuit</a></li><li><a href="#tarifs">Étude complète</a></li><li><a href="#tarifs">Cahier des charges</a></li></ul></div>
-    <div class="foot-col"><h5>Solutions</h5><ul><li><a href="#">Toiture industrielle</a></li><li><a href="#">Centrale au sol</a></li><li><a href="#">Ombrière parking</a></li><li><a href="#">Stockage batterie</a></li></ul></div>
-    <div class="foot-col"><h5>Contact</h5><ul><li><a href="mailto:contact@steliosun.fr">contact@steliosun.fr</a></li><li><a href="#">Mentions légales</a></li><li><a href="#">Politique de confidentialité</a></li></ul></div>
+  <div class="foot-in">
+    <div class="foot-brand"><a href="#" class="logo">STELIO<span>SUN</span></a><p>Predimensionnement solaire PV base sur PVGIS. Toiture, sol, ombriere et stockage.</p></div>
+    <div class="foot-col"><h5>Services</h5><ul><li><a href="#sim">Simulateur PVGIS</a></li><li><a href="#tarifs">Etude complete</a></li></ul></div>
+    <div class="foot-col"><h5>Solutions</h5><ul><li><a href="#sim">Toiture</a></li><li><a href="#sim">Centrale au sol</a></li><li><a href="#sim">Ombriere</a></li></ul></div>
+    <div class="foot-col"><h5>Contact</h5><ul><li><a href="mailto:contact@steliosun.fr">contact@steliosun.fr</a></li><li><a href="#">Mentions legales</a></li></ul></div>
   </div>
   <div class="foot-bot">
-    <p>© 2025 STELIOSUN — Tous droits réservés. Données d'irradiation : PVGIS © Commission Européenne 2001-2024</p>
-    <span class="sbadge">⚡ Powered by PVGIS</span>
+    <p>2025 STELIOSUN - Donnees PVGIS (c) Commission Europeenne 2001-2024</p>
+    <span class="sbadge">Powered by PVGIS</span>
   </div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-// ── ETAT ──────────────────────────────────────────────────────
-var D = {
-  type:null, lat:null, lon:null, locName:'',
-  surface:0, moduleType:'mono', orientation:'0', tilt:30,
-  consumption:0, profile:'industriel',
-  storage:null, autonomy:1, battType:'lithium',
-  peakPower:0
-};
-var curStep=1, leafMap=null, leafMarker=null, chartInst=null, pvgisRaw=null;
 
-// ── CONSTANTES ────────────────────────────────────────────────
-var STEPS=5;
-var LBLS=['Type','Lieu','Surface','Conso','Stockage'];
-var MONTHS_FR=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
-var ELEC_PRICE=0.13;
-var MOD_EFF={mono:0.205,bifacial:0.225,poly:0.175,cis:0.155};
-var MOD_NAMES={mono:'Monocristallins',bifacial:'Bifaciaux',poly:'Polycristallins',cis:'CIS/CIGS'};
-var TYPE_PARAMS={
-  toiture:{occ:0.85,mounting:'building',minCost:1300,maxCost:2000,label:'Toiture'},
-  sol:    {occ:0.70,mounting:'free',    minCost:900, maxCost:1500,label:'Centrale au sol'},
-  ombriere:{occ:0.80,mounting:'free',  minCost:1500,maxCost:2700,label:'Ombrière'}
-};
-var BATT_CFG={
-  lithium: {dod:0.80,minC:450,maxC:700, cycles:3500,name:'Li-ion NMC'},
-  lifepo4: {dod:0.90,minC:550,maxC:850, cycles:5000,name:'LiFePO4'},
-  plomb:   {dod:0.50,minC:180,maxC:300, cycles:800, name:'Plomb-acide'}
-};
+var D={type:null,lat:null,lon:null,locName:'',surface:0,moduleType:'mono',orientation:'0',tilt:30,consumption:0,profile:'industriel',storage:null,autonomy:1,battType:'lithium',peakPower:0};
+var step=1,lmap=null,lmkr=null,ch=null,pvRaw=null;
+var MO=['Jan','Fev','Mar','Avr','Mai','Jun','Jul','Aou','Sep','Oct','Nov','Dec'];
+var EP=0.13;
+var MEFF={mono:.205,bifacial:.225,poly:.175,cis:.155};
+var MNM={mono:'Monocristallins',bifacial:'Bifaciaux',poly:'Polycristallins',cis:'CIS/CIGS'};
+var TP={toiture:{occ:.85,mnt:'building',lo:1300,hi:2000,lbl:'Toiture'},sol:{occ:.70,mnt:'free',lo:900,hi:1500,lbl:'Centrale au sol'},ombriere:{occ:.80,mnt:'free',lo:1500,hi:2700,lbl:'Ombriere'}};
+var BC={lithium:{dod:.80,lc:450,hc:700,cy:3500},lifepo4:{dod:.90,lc:550,hc:850,cy:5000},plomb:{dod:.50,lc:180,hc:300,cy:800}};
 
-// ── BARRE DE PROGRESSION ──────────────────────────────────────
-function buildProg() {
-  var bar=document.getElementById('progBar'), lbl=document.getElementById('progLbls');
-  bar.innerHTML=''; lbl.innerHTML='';
-  for (var i=1;i<=STEPS;i++) {
+function buildProg(){
+  var b=document.getElementById('progBar'),l=document.getElementById('progLbls');
+  var lb=['Type','Lieu','Surface','Conso','Stockage'];
+  b.innerHTML='';l.innerHTML='';
+  for(var i=1;i<=5;i++){
     var d=document.createElement('div');
-    d.className='pdot'+(i<curStep?' done':i===curStep?' active':'');
-    d.textContent=i<curStep?'✓':String(i);
-    bar.appendChild(d);
-    if(i<STEPS){var l=document.createElement('div');l.className='pline'+(i<curStep?' done':'');bar.appendChild(l);}
-    var ll=document.createElement('div');
-    ll.className='plbl'+(i===curStep?' active':'');
-    ll.textContent=LBLS[i-1]; lbl.appendChild(ll);
+    d.className='pdot'+(i<step?' done':i===step?' active':'');
+    d.textContent=i<step?'ok':String(i);
+    b.appendChild(d);
+    if(i<5){var ln=document.createElement('div');ln.className='pline'+(i<step?' done':'');b.appendChild(ln);}
+    var ll=document.createElement('div');ll.className='plbl'+(i===step?' active':'');ll.textContent=lb[i-1];l.appendChild(ll);
   }
 }
 
-// ── NAVIGATION ÉTAPES ─────────────────────────────────────────
-function next(s) {
-  if(s===3&&(!D.surface||D.surface<10)){alert('Surface minimale : 10 m²');return;}
+function goNext(s){
+  if(s===3&&D.surface<10){alert('Surface minimale: 10 m2');return;}
   document.getElementById('s'+s).classList.remove('active');
-  curStep=s+1; document.getElementById('s'+curStep).classList.add('active');
-  buildProg(); scrollToCalc();
+  step=s+1;document.getElementById('s'+step).classList.add('active');
+  buildProg();goSim();
 }
-function prev(s) {
+function goPrev(s){
   document.getElementById('s'+s).classList.remove('active');
-  curStep=s-1; document.getElementById('s'+curStep).classList.add('active');
-  buildProg(); scrollToCalc();
+  step=s-1;document.getElementById('s'+step).classList.add('active');
+  buildProg();goSim();
 }
-function scrollToCalc(){
-  var el=document.getElementById('simulator');
-  if(el) window.scrollTo({top:el.offsetTop-80,behavior:'smooth'});
-}
+function goSim(){var el=document.getElementById('sim');if(el)window.scrollTo({top:el.offsetTop-80,behavior:'smooth'});}
 
-// ── SÉLECTION OPTIONS ─────────────────────────────────────────
-function selOpt(el, group) {
-  var opts=el.closest('.opts').querySelectorAll('.opt');
-  for(var i=0;i<opts.length;i++) opts[i].classList.remove('sel');
+function selOpt(el,group){
+  var all=el.closest('.opts').querySelectorAll('.opt');
+  for(var i=0;i<all.length;i++)all[i].classList.remove('sel');
   el.classList.add('sel');
-  if(group==='type'){D.type=el.dataset.v; document.getElementById('n1').disabled=false;}
-  if(group==='storage'){D.storage=el.dataset.v; document.getElementById('n5').disabled=false;}
+  if(group==='type'){D.type=el.dataset.v;document.getElementById('n1').disabled=false;}
+  if(group==='storage'){D.storage=el.dataset.v;document.getElementById('n5').disabled=false;}
 }
 
-// ── PUISSANCE ─────────────────────────────────────────────────
-function updatePower() {
-  var pwDisp=document.getElementById('pwDisplay'), pwSub=document.getElementById('pwSub'), n3=document.getElementById('n3');
-  if(!D.surface||D.surface<1){pwDisp.textContent='— kWc';pwSub.textContent='Renseignez la surface pour calculer';n3.disabled=true;return;}
-  var p=TYPE_PARAMS[D.type]||TYPE_PARAMS.toiture;
-  var eff=MOD_EFF[D.moduleType||'mono'];
-  D.peakPower=Math.round(D.surface*p.occ*eff*10)/10;
-  pwDisp.textContent=D.peakPower.toFixed(1)+' kWc';
-  pwSub.textContent=Math.floor(D.surface*p.occ/1.75)+' modules · Surface active : '+Math.round(D.surface*p.occ)+' m²';
-  n3.disabled=D.surface<10;
+function updatePw(){
+  var p=TP[D.type]||TP.toiture,e=MEFF[D.moduleType||'mono'];
+  if(!D.surface||D.surface<1){document.getElementById('pwD').textContent='- kWc';document.getElementById('pwS').textContent='Renseignez la surface';document.getElementById('n3').disabled=true;return;}
+  D.peakPower=Math.round(D.surface*p.occ*e*10)/10;
+  document.getElementById('pwD').textContent=D.peakPower.toFixed(1)+' kWc';
+  document.getElementById('pwS').textContent=Math.floor(D.surface*p.occ/1.75)+' modules - Surface active: '+Math.round(D.surface*p.occ)+' m2';
+  document.getElementById('n3').disabled=D.surface<10;
 }
 
-// ── BATTERIE TOGGLE ───────────────────────────────────────────
-function toggleBatt(show) {
-  document.getElementById('battP').style.display=show?'':'none';
-  D.autonomy=show?parseFloat(document.getElementById('autoSlider').value):0;
+function showBatt(v){document.getElementById('battP').style.display=v?'':'none';D.autonomy=v?+document.getElementById('autoR').value:0;}
+
+var geoList=[],geoTimer=null;
+function onAddrInput(){clearTimeout(geoTimer);var v=document.getElementById('addrInput').value;if(v.length<3){document.getElementById('addrResults').style.display='none';return;}geoTimer=setTimeout(searchAddr,400);}
+
+function ftch(url,ms,hdrs){var c=new AbortController(),t=setTimeout(function(){c.abort();},ms);var o={signal:c.signal};if(hdrs)o.headers=hdrs;return fetch(url,o).finally(function(){clearTimeout(t);});}
+
+function gBAN(q){return ftch('https://api-adresse.data.gouv.fr/search/?q='+encodeURIComponent(q)+'&limit=8&autocomplete=1',5000).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){var tm={municipality:'commune',street:'voie',housenumber:'adresse',locality:'lieu-dit'};var res=(d.features||[]).map(function(f){return{lat:f.geometry.coordinates[1],lon:f.geometry.coordinates[0],display:f.properties.label||f.properties.name,type:tm[f.properties.type]||'lieu'};}).filter(function(x){return x.display&&x.lat!=null;});if(!res.length)throw 0;return res;});}
+
+function gNom(q){return ftch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=jsonv2&limit=6&addressdetails=0',6000,{'Accept-Language':'fr'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){var res=(d||[]).map(function(x){return{lat:parseFloat(x.lat),lon:parseFloat(x.lon),display:x.display_name,type:x.type||'lieu'};}).filter(function(x){return x.display&&!isNaN(x.lat);});if(!res.length)throw 0;return res;});}
+
+function gOM(q){return ftch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=7&language=fr&format=json',6000).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){var res=(d.results||[]).map(function(x){return{lat:x.latitude,lon:x.longitude,display:[x.name,x.admin2,x.admin1,x.country].filter(Boolean).join(', '),type:'commune'};}).filter(function(x){return x.display&&x.lat!=null;});if(!res.length)throw 0;return res;});}
+
+function searchAddr(){
+  var q=document.getElementById('addrInput').value.trim();
+  if(!q||q.length<3)return;
+  var el=document.getElementById('addrResults');
+  el.innerHTML='<div class="addr-item" style="color:var(--text3);cursor:default">Recherche...</div>';
+  el.style.display='';
+  Promise.any([gBAN(q),gNom(q),gOM(q)]).then(function(res){geoList=res;showGeo();}).catch(function(){geoList=[];el.innerHTML='<div class="addr-item" style="color:var(--red);cursor:default">Geocodage indisponible - saisie manuelle ci-dessous</div>';el.style.display='';document.getElementById('manualCoords').style.display='';});
 }
 
-// ── CARTE LEAFLET (localisation principale, sans API externe) ─
-var mapInited=false;
-
-function initMapStep2() {
-  if(mapInited) return;
-  mapInited=true;
-  var mapDiv=document.getElementById('map');
-  // Centré sur la France par défaut
-  leafMap=L.map('map').setView([46.5,2.5],6);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
-    attribution:'© OpenStreetMap, © CARTO',subdomains:'abcd',maxZoom:19
-  }).addTo(leafMap);
-  // CLIC sur la carte = placer le site
-  leafMap.on('click',function(e){
-    placeMarker(e.latlng.lat, e.latlng.lng,
-      'Site sélectionné ('+e.latlng.lat.toFixed(4)+'°N, '+e.latlng.lng.toFixed(4)+'°E)');
-  });
-  setTimeout(function(){if(leafMap)leafMap.invalidateSize();},200);
+function showGeo(){
+  var el=document.getElementById('addrResults');
+  if(!geoList.length){el.innerHTML='<div class="addr-item" style="color:var(--text3);cursor:default">Aucun resultat</div>';el.style.display='';return;}
+  var h='';
+  for(var i=0;i<geoList.length;i++){var it=geoList[i];h+='<div class="addr-item" onclick="pickAddr('+i+')"><strong>'+it.type+'</strong>'+it.display.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</div>';}
+  el.innerHTML=h;el.style.display='';
 }
 
-function placeMarker(lat, lon, name) {
-  D.lat=lat; D.lon=lon; D.locName=name||'Site PV';
-  var icon=L.divIcon({
-    className:'',
-    html:'<div style="width:28px;height:28px;border-radius:50%;background:#f5a623;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:14px">☀</div>',
-    iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-16]
-  });
-  if(leafMarker) leafMarker.remove();
-  leafMarker=L.marker([lat,lon],{icon:icon}).addTo(leafMap)
-    .bindPopup('<b>Site PV</b><br>'+D.locName).openPopup();
+function pickAddr(i){var it=geoList[i];if(!it)return;D.lat=it.lat;D.lon=it.lon;D.locName=it.display;document.getElementById('addrInput').value=it.display;document.getElementById('addrResults').style.display='none';applyLoc();}
+
+function applyManual(){
+  var lat=parseFloat(document.getElementById('manLat').value),lon=parseFloat(document.getElementById('manLon').value),nom=document.getElementById('manNom').value.trim()||'Site manuel';
+  if(isNaN(lat)||isNaN(lon)||lat<-90||lat>90||lon<-180||lon>180){alert('Coordonnees invalides');return;}
+  D.lat=lat;D.lon=lon;D.locName=nom;document.getElementById('addrInput').value=nom;document.getElementById('addrResults').style.display='none';applyLoc();
+}
+
+function applyLoc(){
   document.getElementById('locLabel').textContent=D.locName.split(',').slice(0,2).join(',');
   document.getElementById('locLat').textContent=D.lat.toFixed(4);
   document.getElementById('locLon').textContent=D.lon.toFixed(4);
   document.getElementById('locInfo').style.display='flex';
   document.getElementById('n2').disabled=false;
+  initMap();
 }
 
-// ── GÉOCODAGE (optionnel - recherche adresse sur HTTPS) ───────
-var addrTimer=null, geoList=[];
-
-function onAddrInput(){
-  clearTimeout(addrTimer);
-  var v=document.getElementById('addrInput').value;
-  if(!v||v.length<3){document.getElementById('addrResults').style.display='none';return;}
-  addrTimer=setTimeout(searchAddr,600);
+function initMap(){
+  document.getElementById('mapPh').style.display='none';
+  var md=document.getElementById('map');md.style.display='';
+  if(!lmap){
+    lmap=L.map('map').setView([D.lat,D.lon],13);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'OSM/CARTO',subdomains:'abcd',maxZoom:19}).addTo(lmap);
+    var ic=L.divIcon({className:'',html:'<div style="width:26px;height:26px;border-radius:50%;background:#f5a623;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:12px">S</div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-14]});
+    lmkr=L.marker([D.lat,D.lon],{icon:ic}).addTo(lmap).bindPopup('<b>Site PV</b><br>'+D.locName).openPopup();
+    lmap.on('click',function(e){D.lat=e.latlng.lat;D.lon=e.latlng.lng;lmkr.setLatLng(e.latlng).setPopupContent('<b>Site PV</b><br>Position ajustee').openPopup();document.getElementById('locLat').textContent=D.lat.toFixed(4);document.getElementById('locLon').textContent=D.lon.toFixed(4);});
+  }else{lmap.setView([D.lat,D.lon],13);if(lmkr)lmkr.setLatLng([D.lat,D.lon]).setPopupContent('<b>Site PV</b><br>'+D.locName).openPopup();}
+  setTimeout(function(){if(lmap)lmap.invalidateSize();},150);
 }
 
-function searchAddr(){
-  var q=(document.getElementById('addrInput').value||'').trim();
-  if(!q||q.length<3) return;
-  var el=document.getElementById('addrResults');
-  el.innerHTML='<div class="addr-item" style="color:var(--text2);cursor:default">🔍 Recherche en cours…</div>';
-  el.style.display='';
-  // BAN (gouv.fr) → Open-Meteo fallback
-  fetch('https://api-adresse.data.gouv.fr/search/?q='+encodeURIComponent(q)+'&limit=8&autocomplete=1')
-  .then(function(r){return r.json();})
-  .then(function(d){
-    var tm={municipality:'commune',street:'voie',housenumber:'adresse',locality:'lieu-dit'};
-    geoList=(d.features||[]).map(function(f){
-      return{lat:f.geometry.coordinates[1],lon:f.geometry.coordinates[0],
-             display:f.properties.label||f.properties.name,
-             type:tm[f.properties.type]||'lieu'};
-    }).filter(function(x){return x.display&&x.lat!=null;});
-    if(geoList.length){showAddrResults();return;}
-    return fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=7&language=fr&format=json')
-      .then(function(r2){return r2.json();})
-      .then(function(d2){
-        geoList=(d2.results||[]).map(function(x){
-          return{lat:x.latitude,lon:x.longitude,
-                 display:[x.name,x.admin2,x.admin1,x.country].filter(Boolean).join(', '),
-                 type:'commune'};
-        }).filter(function(x){return x.display&&x.lat!=null;});
-        showAddrResults();
-      });
-  })
-  .catch(function(e){
-    console.warn('Géocodage indisponible:',e.message);
-    el.innerHTML='<div class="addr-item" style="color:var(--text3);cursor:default">Géocodage indisponible — cliquez directement sur la carte</div>';
-    el.style.display='';
-  });
+function pvgisCall(){
+  var p=TP[D.type],url='https://re.jrc.ec.europa.eu/api/v5_2/PVcalc?lat='+D.lat+'&lon='+D.lon+'&peakpower='+D.peakPower+'&loss=14&angle='+D.tilt+'&aspect='+parseInt(D.orientation||0)+'&mountingplace='+p.mnt+'&pvtechchoice=crystSi&outputformat=json&browser=1';
+  return ftch(url,18000).then(function(r){if(!r.ok)throw new Error('PVGIS '+r.status);return r.json();});
 }
 
-function showAddrResults(){
-  var el=document.getElementById('addrResults');
-  if(!geoList.length){
-    el.innerHTML='<div class="addr-item" style="color:var(--text3);cursor:default">Aucun résultat</div>';
-    el.style.display=''; return;
-  }
-  var h='';
-  for(var i=0;i<geoList.length;i++){
-    var it=geoList[i];
-    h+='<div class="addr-item" onclick="selectAddr('+i+')"><strong>'+it.type+'</strong>'+
-       it.display.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</div>';
-  }
-  el.innerHTML=h; el.style.display='';
+function localFallback(){
+  var lat=D.lat||44,bi=Math.max(900,Math.min(1700,1000+(lat-48.5)*-60));
+  var of={'0':1.0,'-45':.95,'45':.95,'-90':.85,'90':.85,'180':.60};
+  var tf=Math.max(.70,1-Math.abs(D.tilt-32)*.004);
+  var pr=D.type==='sol'?.82:D.type==='ombriere'?.75:.78;
+  var an=D.peakPower*bi*pr*(of[String(D.orientation)]||1)*tf;
+  var md=[.055,.065,.090,.102,.115,.115,.115,.108,.090,.072,.052,.041];
+  return{annual:Math.round(an),monthly_prod:md.map(function(f){return Math.round(an*f);}),monthly_daily:md.map(function(f){return Math.round(an*f/30*10)/10;}),monthly_irr:md.map(function(f){return Math.round(bi*f*12);}),irr_annual:Math.round(bi),losses:{aoi:-2.8,spec:-.8,tg:-3.5,total:-20},isFallback:true};
 }
 
-function selectAddr(i){
-  var it=geoList[i]; if(!it) return;
-  document.getElementById('addrInput').value=it.display;
-  document.getElementById('addrResults').style.display='none';
-  leafMap.setView([it.lat,it.lon],14);
-  placeMarker(it.lat,it.lon,it.display);
-}
+function setLS(n){for(var i=1;i<=5;i++)document.getElementById('ls'+i).className='ls'+(i<n?' done':i===n?' active':'');}
+function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}
 
-function applyManualCoords(){
-  var lat=parseFloat(document.getElementById('manLat').value);
-  var lon=parseFloat(document.getElementById('manLon').value);
-  var nom=document.getElementById('manNom').value.trim()||'Site défini manuellement';
-  if(isNaN(lat)||isNaN(lon)||lat<-90||lat>90||lon<-180||lon>180){
-    alert('Coordonnées invalides.\nLatitude : −90 à +90\nLongitude : −180 à +180'); return;
-  }
-  leafMap.setView([lat,lon],13);
-  placeMarker(lat,lon,nom);
-}
-
-// ── API PVGIS ─────────────────────────────────────────────────
-function callPVGIS(){
-  var p=TYPE_PARAMS[D.type];
-  var url='https://re.jrc.ec.europa.eu/api/v5_2/PVcalc?lat='+D.lat+'&lon='+D.lon+
-    '&peakpower='+D.peakPower+'&loss=14&angle='+D.tilt+'&aspect='+parseInt(D.orientation||0)+
-    '&mountingplace='+p.mounting+'&pvtechchoice=crystSi&outputformat=json&browser=1';
-  return fetch(url).then(function(r){if(!r.ok)throw new Error('PVGIS HTTP '+r.status);return r.json();});
-}
-
-// ── CALCUL LOCAL (fallback si PVGIS indisponible) ─────────────
-function localCalc(){
-  var lat=D.lat||44;
-  var baseIrr=Math.max(900,Math.min(1700,1000+(lat-48.5)*-60));
-  var of={'0':1.0,'-45':0.95,'45':0.95,'-90':0.85,'90':0.85,'180':0.60};
-  var tf=Math.max(0.70,1-Math.abs(D.tilt-32)*0.004);
-  var pr=D.type==='sol'?0.82:D.type==='ombriere'?0.75:0.78;
-  var annual=D.peakPower*baseIrr*pr*(of[String(D.orientation)]||1.0)*tf;
-  var md=[0.055,0.065,0.090,0.102,0.115,0.115,0.115,0.108,0.090,0.072,0.052,0.041];
-  return{
-    annual:Math.round(annual),
-    monthly_prod:md.map(function(f){return Math.round(annual*f);}),
-    monthly_daily:md.map(function(f){return Math.round(annual*f/30*10)/10;}),
-    monthly_irr:md.map(function(f){return Math.round(baseIrr*f*12);}),
-    irr_annual:Math.round(baseIrr),
-    losses:{aoi:-2.8,spec:-0.8,tg:-3.5,total:-20},
-    isFallback:true
-  };
-}
-
-function setLS(n){for(var i=1;i<=5;i++)document.getElementById('ls'+i).className='lstep'+(i<n?' done':i===n?' active':'');}
-function delay(ms){return new Promise(function(r){setTimeout(r,ms);});}
-
-// ── CALCUL PRINCIPAL ──────────────────────────────────────────
 function runCalc(){
-  var p=TYPE_PARAMS[D.type], eff=MOD_EFF[D.moduleType||'mono'];
-  D.peakPower=Math.round(D.surface*p.occ*eff*10)/10;
+  var p=TP[D.type];D.peakPower=Math.round(D.surface*p.occ*MEFF[D.moduleType||'mono']*10)/10;
   document.getElementById('s5').classList.remove('active');
   document.getElementById('results').style.display='none';
   document.getElementById('loading').style.display='';
-  buildProg(); scrollToCalc(); setLS(1);
-  delay(400).then(function(){setLS(2);return delay(300);})
-  .then(function(){return callPVGIS();})
-  .then(function(pv){
-    pvgisRaw=pv; setLS(3);
-    var mo=pv.outputs.monthly.fixed, tot=pv.outputs.totals.fixed;
-    return delay(400).then(function(){return{
-      annual:Math.round(tot.E_y),
-      monthly_prod:mo.map(function(m){return Math.round(m.E_m);}),
-      monthly_daily:mo.map(function(m){return Math.round(m.E_d*10)/10;}),
-      monthly_irr:mo.map(function(m){return Math.round(m['H(i)_m']);}),
-      irr_annual:Math.round(tot['H(i)_y']),
-      losses:{aoi:tot.l_aoi,spec:tot.l_spec,tg:tot.l_tg,total:tot.l_total},
-      sd_year:tot.SD_y, isFallback:false
-    };});
-  })
-  .catch(function(e){console.warn('PVGIS fallback:',e.message);pvgisRaw=null;return localCalc();})
-  .then(function(calc){setLS(4);return delay(400).then(function(){setLS(5);return delay(500).then(function(){return calc;});});})
-  .then(function(calc){document.getElementById('loading').style.display='none';renderResults(calc);});
+  buildProg();goSim();
+  setLS(1);
+  wait(400).then(function(){setLS(2);return wait(300);}).then(function(){return pvgisCall();}).then(function(pv){
+    pvRaw=pv;setLS(3);
+    var mo=pv.outputs.monthly.fixed,tot=pv.outputs.totals.fixed;
+    return wait(400).then(function(){return{annual:Math.round(tot.E_y),monthly_prod:mo.map(function(m){return Math.round(m.E_m);}),monthly_daily:mo.map(function(m){return Math.round(m.E_d*10)/10;}),monthly_irr:mo.map(function(m){return Math.round(m['H(i)_m']);}),irr_annual:Math.round(tot['H(i)_y']),losses:{aoi:tot.l_aoi,spec:tot.l_spec,tg:tot.l_tg,total:tot.l_total},sd:tot.SD_y,isFallback:false};});
+  }).catch(function(e){console.warn('PVGIS fallback:',e.message);pvRaw=null;return localFallback();}).then(function(calc){
+    setLS(4);return wait(400).then(function(){setLS(5);return wait(500).then(function(){return calc;});});
+  }).then(function(calc){
+    document.getElementById('loading').style.display='none';showResults(calc);
+  });
 }
 
-// ── RÉSULTATS ─────────────────────────────────────────────────
 function fmt(n){return Number(n).toLocaleString('fr-FR');}
 
-function renderResults(calc){
-  var p=TYPE_PARAMS[D.type];
-  var panels=Math.floor(D.surface*p.occ/1.75), co2=Math.round(calc.annual*0.060);
-  var sc=D.consumption>0?Math.min(100,Math.round(calc.annual/D.consumption*100)):null;
-  var costMin=Math.round(D.peakPower*p.minCost), costMax=Math.round(D.peakPower*p.maxCost);
-  var avgRev=Math.round(calc.annual*ELEC_PRICE);
-  var payback=avgRev>0?Math.round((costMin+costMax)/2/avgRev*10)/10:null;
+function showResults(c){
+  var p=TP[D.type];
+  var pnl=Math.floor(D.surface*p.occ/1.75),co2=Math.round(c.annual*.060);
+  var sc=D.consumption>0?Math.min(100,Math.round(c.annual/D.consumption*100)):null;
+  var cmin=Math.round(D.peakPower*p.lo),cmax=Math.round(D.peakPower*p.hi);
+  var pb=Math.round(c.annual*EP)>0?Math.round((cmin+cmax)/2/Math.round(c.annual*EP)*10)/10:null;
 
-  document.getElementById('resTitle').textContent=p.label+' — '+D.locName.split(',')[0];
-  document.getElementById('resSub').textContent=
-    D.peakPower.toFixed(1)+' kWc · '+MOD_NAMES[D.moduleType]+
-    ' · Inclinaison '+D.tilt+'° · '+Math.round(D.lat*100)/100+'°N, '+Math.round(D.lon*100)/100+'°E'+
-    (calc.isFallback?' · [Estimation locale — PVGIS indisponible]':' · Source : PVGIS JRC');
+  document.getElementById('resT').textContent=p.lbl+' - '+D.locName.split(',')[0];
+  document.getElementById('resS').textContent=D.peakPower.toFixed(1)+' kWc - '+MNM[D.moduleType]+' - '+D.tilt+'deg - '+Math.round(D.lat*100)/100+'N '+Math.round(D.lon*100)/100+'E'+(c.isFallback?' [Estimation locale]':' - PVGIS JRC');
 
-  var cards=[
-    {ico:'⚡',val:D.peakPower.toFixed(1),unit:'kWc',lbl:'Puissance crête',hl:true},
-    {ico:'☀️',val:fmt(calc.annual),unit:'kWh/an',lbl:'Production annuelle',hl:true},
-    {ico:'📐',val:fmt(Math.round(D.surface*p.occ)),unit:'m²',lbl:'Surface active'},
-    {ico:'🪟',val:fmt(panels),unit:'modules',lbl:'Nombre de panneaux'},
-    {ico:'🌍',val:fmt(co2),unit:'kg CO₂/an',lbl:'Émissions évitées'},
-    {ico:'☀',val:fmt(calc.irr_annual),unit:'kWh/m²/an',lbl:'Irradiation site'}
-  ];
-  if(sc!==null) cards.push({ico:'🔄',val:sc,unit:'%',lbl:'Couverture des besoins'});
-  document.getElementById('rCards').innerHTML=cards.map(function(c){
-    return'<div class="rcard'+(c.hl?' highlight':'')+'"><div class="rcard-ico">'+c.ico+'</div>'+
-      '<div class="rcard-val">'+c.val+'</div><div class="rcard-unit">'+c.unit+'</div>'+
-      '<div class="rcard-div"></div><div class="rcard-lbl">'+c.lbl+'</div></div>';
-  }).join('');
-
-  document.getElementById('rCost').textContent=fmt(costMin)+' – '+fmt(costMax)+' €';
-  document.getElementById('rCpw').textContent=p.minCost+'–'+p.maxCost+' €/kWc';
-  document.getElementById('rPayback').textContent=payback?payback+' ans':'—';
+  var cd=[{i:'E',v:D.peakPower.toFixed(1),u:'kWc',l:'Puissance crete',hl:true},{i:'S',v:fmt(c.annual),u:'kWh/an',l:'Production annuelle',hl:true},{i:'A',v:fmt(Math.round(D.surface*p.occ)),u:'m2',l:'Surface active'},{i:'P',v:fmt(pnl),u:'modules',l:'Nb panneaux'},{i:'G',v:fmt(co2),u:'kg CO2/an',l:'CO2 evite'},{i:'I',v:fmt(c.irr_annual),u:'kWh/m2/an',l:'Irradiation site'}];
+  if(sc!==null)cd.push({i:'R',v:sc,u:'%',l:'Couverture besoins'});
+  var h='';for(var i=0;i<cd.length;i++){var x=cd[i];h+='<div class="rc'+(x.hl?' hl':'')+'"><div class="rc-ico">'+x.i+'</div><div class="rc-val">'+x.v+'</div><div class="rc-unit">'+x.u+'</div><div class="rc-div"></div><div class="rc-lbl">'+x.l+'</div></div>';}
+  document.getElementById('rCards').innerHTML=h;
+  document.getElementById('rCost').textContent=fmt(cmin)+' - '+fmt(cmax)+' EUR';
+  document.getElementById('rCpw').textContent=p.lo+' - '+p.hi+' EUR/kWc';
+  document.getElementById('rPb').textContent=pb?pb+' ans':'-';
 
   if(D.storage==='oui'&&D.consumption>0&&D.autonomy>0){
-    var bc=BATT_CFG[D.battType];
-    var cap=Math.ceil(D.consumption/365*D.autonomy/bc.dod*10)/10;
+    var b=BC[D.battType],cap=Math.ceil(D.consumption/365*D.autonomy/b.dod*10)/10;
     document.getElementById('bCap').textContent=cap.toFixed(1);
     document.getElementById('bAuto').textContent=D.autonomy;
-    document.getElementById('bCost').textContent=fmt(Math.round(cap*bc.minC))+' – '+fmt(Math.round(cap*bc.maxC));
-    document.getElementById('bCycles').textContent=fmt(bc.cycles);
-    document.getElementById('battResult').style.display='';
-  } else {document.getElementById('battResult').style.display='none';}
+    document.getElementById('bCost').textContent=fmt(Math.round(cap*b.lc))+' - '+fmt(Math.round(cap*b.hc));
+    document.getElementById('bCyc').textContent=fmt(b.cy);
+    document.getElementById('battR').style.display='';
+  }else{document.getElementById('battR').style.display='none';}
 
-  var iavCard=document.getElementById('iavCard');
-  if(calc.sd_year){
-    var lo=Math.round(calc.annual-1.28*calc.sd_year), hi=Math.round(calc.annual+1.28*calc.sd_year);
-    document.getElementById('iavText').innerHTML=
-      '<strong>Variabilité interannuelle (PVGIS) :</strong> Production entre <strong>'+
-      fmt(lo)+' et '+fmt(hi)+' kWh/an</strong> dans 80% des années (±'+fmt(Math.round(calc.sd_year))+' kWh/an).';
-    iavCard.style.display='flex';
-  } else {iavCard.style.display='none';}
+  var iav=document.getElementById('iavD');
+  if(c.sd){var lo=Math.round(c.annual-1.28*c.sd),hi=Math.round(c.annual+1.28*c.sd);iav.innerHTML='<strong>Variabilite interannuelle PVGIS:</strong> Production entre <strong>'+fmt(lo)+' et '+fmt(hi)+' kWh/an</strong> dans 80% des annees (ecart-type +/-'+fmt(Math.round(c.sd))+' kWh/an).';iav.style.display='';}else{iav.style.display='none';}
 
-  renderPVGISDetail(calc);
+  var lo2=c.losses,lt=Math.abs(lo2.total||20).toFixed(1);
+  document.getElementById('detGrid').innerHTML=
+    '<div class="det-card"><h4>Pertes systeme</h4>'+dr('AOI',lo2.aoi?lo2.aoi.toFixed(1)+'%':'-2.8%')+dr('Spectrales',lo2.spec?lo2.spec.toFixed(1)+'%':'-.8%')+dr('Thermiques',lo2.tg?lo2.tg.toFixed(1)+'%':'-3.5%')+dr('Cablage+onduleur','-10.0%')+dr('Total','-'+lt+'%')+'<div class="loss-bar"><div class="loss-fill" style="width:'+Math.min(100,lt)+'%"></div></div></div>'+
+    '<div class="det-card"><h4>Donnees site</h4>'+dr('Latitude',D.lat.toFixed(4)+'N')+dr('Longitude',D.lon.toFixed(4)+'E')+dr('Inclinaison',D.tilt+'deg')+dr('Orientation',D.orientation+'deg')+dr('Irradiation',fmt(c.irr_annual)+' kWh/m2/an')+dr('Source',c.isFallback?'Estimation locale':'PVGIS 5 JRC')+'</div>';
+
   document.getElementById('results').style.display='';
   document.querySelectorAll('.ctab').forEach(function(t,i){t.classList.toggle('active',i===0);});
-  renderChart('prod',calc);
-  window._calcData=calc;
-  scrollToCalc();
+  doChart('prod',c);window._c=c;goSim();
 }
 
-function renderPVGISDetail(calc){
-  var lo=calc.losses, lt=Math.abs(lo.total||20).toFixed(1);
-  function dr(l,v){return'<div class="detail-row"><span>'+l+'</span><span>'+v+'</span></div>';}
-  document.getElementById('pvgisDetail').innerHTML=
-    '<div class="detail-card"><h4>Pertes système</h4>'+
-    dr('Pertes angulaires (AOI)',lo.aoi?lo.aoi.toFixed(1)+'%':'−2,8%')+
-    dr('Pertes spectrales',lo.spec?lo.spec.toFixed(1)+'%':'−0,8%')+
-    dr('Pertes thermiques',lo.tg?lo.tg.toFixed(1)+'%':'−3,5%')+
-    dr('Câblage + onduleur','−10,0%')+dr('Total pertes','−'+lt+'%')+
-    '<div class="loss-bar"><div class="loss-fill" style="width:'+Math.min(100,lt)+'%"></div></div></div>'+
-    '<div class="detail-card"><h4>Données PVGIS site</h4>'+
-    dr('Latitude',D.lat.toFixed(4)+'° N')+dr('Longitude',D.lon.toFixed(4)+'° E')+
-    dr('Inclinaison',D.tilt+'°')+dr('Orientation',D.orientation+'° (0=Sud)')+
-    dr('Irradiation inclinée',fmt(calc.irr_annual)+' kWh/m²/an')+
-    dr('Source',calc.isFallback?'Estimation locale':'PVGIS 5 — JRC')+'</div>';
-}
+function dr(l,v){return'<div class="det-row"><span>'+l+'</span><span>'+v+'</span></div>';}
 
-// ── GRAPHIQUES ────────────────────────────────────────────────
-function switchChart(btn,type){
-  document.querySelectorAll('.ctab').forEach(function(t){t.classList.remove('active');});
-  btn.classList.add('active');
-  if(window._calcData) renderChart(type,window._calcData);
-}
+function swChart(btn,t){document.querySelectorAll('.ctab').forEach(function(x){x.classList.remove('active');});btn.classList.add('active');if(window._c)doChart(t,window._c);}
 
-function renderChart(type,calc){
-  var ctx=document.getElementById('mainChart').getContext('2d');
-  if(chartInst){chartInst.destroy();chartInst=null;}
+function doChart(t,c){
+  var ctx=document.getElementById('myChart').getContext('2d');
+  if(ch){ch.destroy();ch=null;}
   var ds=[],yL='',y1L='';
-  if(type==='prod'){
-    yL='Production (kWh/mois)';y1L='Irradiation (kWh/m²)';
-    ds=[
-      {type:'bar',label:'Production',data:calc.monthly_prod,backgroundColor:'rgba(245,166,35,.75)',borderColor:'rgba(245,166,35,1)',borderWidth:1,borderRadius:4,yAxisID:'y'},
-      {type:'line',label:'Irradiation',data:calc.monthly_irr,borderColor:'rgba(26,188,156,.85)',backgroundColor:'transparent',pointBackgroundColor:'rgba(26,188,156,1)',borderWidth:2.5,pointRadius:4,yAxisID:'y1',tension:.35}
-    ];
-  } else if(type==='daily'){
-    yL='kWh/j';
-    ds=[{type:'bar',label:'Journalière',data:calc.monthly_daily||(calc.monthly_prod.map(function(v){return+(v/30).toFixed(1);})),backgroundColor:'rgba(245,166,35,.65)',borderColor:'rgba(245,166,35,1)',borderWidth:1,borderRadius:4}];
-  } else {
-    yL='kWh/m²';
-    ds=[{type:'bar',label:'Irradiation',data:calc.monthly_irr,backgroundColor:'rgba(26,188,156,.5)',borderColor:'rgba(26,188,156,.9)',borderWidth:1,borderRadius:4}];
-  }
+  if(t==='prod'){yL='Production (kWh/mois)';y1L='Irradiation (kWh/m2)';
+    ds=[{type:'bar',label:'Production',data:c.monthly_prod,backgroundColor:'rgba(245,166,35,.75)',borderColor:'rgba(245,166,35,1)',borderWidth:1,borderRadius:4,yAxisID:'y'},{type:'line',label:'Irradiation',data:c.monthly_irr,borderColor:'rgba(26,188,156,.85)',backgroundColor:'transparent',pointBackgroundColor:'rgba(26,188,156,1)',borderWidth:2.5,pointRadius:4,yAxisID:'y1',tension:.35}];
+  }else if(t==='daily'){yL='kWh/j';ds=[{type:'bar',label:'Journaliere moy.',data:c.monthly_daily||(c.monthly_prod.map(function(v){return+(v/30).toFixed(1);})),backgroundColor:'rgba(245,166,35,.65)',borderColor:'rgba(245,166,35,1)',borderWidth:1,borderRadius:4}];
+  }else{yL='kWh/m2';ds=[{type:'bar',label:'Irradiation',data:c.monthly_irr,backgroundColor:'rgba(26,188,156,.5)',borderColor:'rgba(26,188,156,.9)',borderWidth:1,borderRadius:4}];}
   var sc={x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4d6080',font:{family:'DM Sans',size:11}}},y:{grid:{color:'rgba(255,255,255,.06)'},ticks:{color:'#8a9dc0',font:{size:11}},title:{display:true,text:yL,color:'#4d6080',font:{size:11}}}};
-  if(ds.length>1) sc.y1={position:'right',grid:{display:false},ticks:{color:'rgba(26,188,156,.7)',font:{size:11}},title:{display:true,text:y1L,color:'rgba(26,188,156,.7)',font:{size:11}}};
-  chartInst=new Chart(ctx,{data:{labels:MONTHS_FR,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(11,22,40,.95)',titleColor:'#e8eef8',bodyColor:'#8a9dc0',borderColor:'rgba(245,166,35,.3)',borderWidth:1,padding:10}},scales:sc}});
+  if(ds.length>1)sc.y1={position:'right',grid:{display:false},ticks:{color:'rgba(26,188,156,.7)',font:{size:11}},title:{display:true,text:y1L,color:'rgba(26,188,156,.7)',font:{size:11}}};
+  ch=new Chart(ctx,{data:{labels:MO,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(11,22,40,.95)',titleColor:'#e8eef8',bodyColor:'#8a9dc0',borderColor:'rgba(245,166,35,.3)',borderWidth:1,padding:10}},scales:sc}});
 }
 
-// ── IMPRESSION ────────────────────────────────────────────────
-function printResults(){
-  document.title='STELIOSUN — Rapport '+(D.locName.split(',')[0]||'PV');
-  window.print();
-  document.title='STELIOSUN — Prédimensionnement Solaire PV';
-}
+function doPrint(){document.title='STELIOSUN - Rapport '+D.locName.split(',')[0];window.print();document.title='STELIOSUN';}
 
-// ── RESET ─────────────────────────────────────────────────────
-function resetAll(){
-  D.type=null;D.lat=null;D.lon=null;D.locName='';D.surface=0;D.consumption=0;
-  D.storage=null;D.peakPower=0;D.moduleType='mono';D.orientation='0';D.tilt=30;D.autonomy=1;D.battType='lithium';
-  if(leafMarker){leafMarker.remove();leafMarker=null;}
-  if(leafMap){leafMap.setView([46.5,2.5],6);}
-  mapInited=false; leafMap=null;
-  var old=document.getElementById('map'), fresh=document.createElement('div');
-  fresh.id='map'; fresh.style.cssText='height:320px;border-radius:var(--r2);border:2px solid rgba(245,166,35,.25);margin-top:.5rem;overflow:hidden;position:relative';
-  old.parentNode.replaceChild(fresh,old);
-  if(chartInst){chartInst.destroy();chartInst=null;}
-  window._calcData=null;
-  ['results','loading','locInfo','battResult','iavCard'].forEach(function(id){
-    var e=document.getElementById(id); if(e) e.style.display='none';
-  });
+function doReset(){
+  D.type=null;D.lat=null;D.lon=null;D.locName='';D.surface=0;D.consumption=0;D.storage=null;D.peakPower=0;D.moduleType='mono';D.orientation='0';D.tilt=30;D.autonomy=1;D.battType='lithium';
+  if(lmap){lmap.remove();lmap=null;lmkr=null;var o=document.getElementById('map'),n=document.createElement('div');n.id='map';n.style.display='none';o.parentNode.replaceChild(n,o);}
+  if(ch){ch.destroy();ch=null;}window._c=null;
+  ['results','loading','locInfo','manualCoords','battP','battR','iavD'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
+  document.getElementById('mapPh').style.display='';
   document.getElementById('addrInput').value='';
   document.getElementById('addrResults').style.display='none';
   document.getElementById('surface').value='';
   document.getElementById('conso').value='';
-  document.getElementById('tilt').value='30';
-  document.getElementById('tiltV').textContent='30°';
-  document.getElementById('autoSlider').value='1';
-  document.getElementById('autoV').textContent='1 jour';
-  document.getElementById('pwDisplay').textContent='— kWc';
-  document.getElementById('pwSub').textContent='Renseignez la surface pour calculer';
-  document.getElementById('battP').style.display='none';
+  document.getElementById('tilt').value='30';document.getElementById('tiltV').textContent='30deg';
+  document.getElementById('autoR').value='1';document.getElementById('autoV').textContent='1 jour';
+  document.getElementById('pwD').textContent='- kWc';document.getElementById('pwS').textContent='Renseignez la surface';
   ['n1','n2','n3','n5'].forEach(function(id){document.getElementById(id).disabled=true;});
   document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
   document.querySelectorAll('.fstep').forEach(function(s){s.classList.remove('active');});
   document.getElementById('s1').classList.add('active');
-  curStep=1; buildProg(); scrollToCalc();
+  step=1;buildProg();goSim();
 }
 
-// ── INIT ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded',function(){
   buildProg();
   Chart.defaults.color='#8a9dc0';
   Chart.defaults.borderColor='rgba(255,255,255,.06)';
-  // Init carte quand l'étape 2 devient visible
-  var origBuildProg=buildProg;
-  buildProg=function(){
-    origBuildProg();
-    if(curStep===2 && !mapInited) setTimeout(initMapStep2,100);
-  };
-  // Fermer dropdown au clic extérieur
-  document.addEventListener('click',function(e){
-    if(!e.target.closest('.addr-wrap'))
-      document.getElementById('addrResults').style.display='none';
-  });
+  document.addEventListener('click',function(e){if(!e.target.closest('.addr-wrap'))document.getElementById('addrResults').style.display='none';});
 });
+
 </script>
 </body>
 </html>
